@@ -132,12 +132,9 @@
     <ClInclude Include="Company.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="LeaveEvent.h" />
-    <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="LinkedListNode.h" />
     <ClInclude Include="Passenger.h" />
-    <ClInclude Include="PriorityQueue.h" />
-    <ClInclude Include="Queue.h" />
     <ClInclude Include="Station.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,13 +143,10 @@
     <ClCompile Include="Company.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="LeaveEvent.cpp" />
-    <ClCompile Include="LinkedList.cpp" />
-    <ClCompile Include="LinkedListNode.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Passenger.cpp" />
-    <ClCompile Include="PriorityQueue.cpp" />
-    <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Station.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
