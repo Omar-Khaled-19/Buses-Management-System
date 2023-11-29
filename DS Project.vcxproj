@@ -127,17 +127,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayBag.h" />
+    <ClInclude Include="BagADT.h" />
     <ClInclude Include="ArrivalEvent.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Company.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="LeaveEvent.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="LinkedQueue.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Passenger.h" />
+    <ClInclude Include="QueueADT.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayBag.cpp" />
     <ClCompile Include="ArrivalEvent.cpp" />
     <ClCompile Include="Bus.cpp" />
     <ClCompile Include="Company.cpp" />

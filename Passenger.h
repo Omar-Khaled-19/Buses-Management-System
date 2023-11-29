@@ -16,7 +16,7 @@ private:
 	Time MT;
 
 public:
-
+	Passenger();
 	Passenger(int ID, char Type, Station sStation, Station eStation, Time Arr_time);
 
 

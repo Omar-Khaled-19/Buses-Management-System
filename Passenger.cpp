@@ -1,5 +1,9 @@
 #include "Passenger.h"
 
+Passenger::Passenger()
+{
+}
+
 Passenger::Passenger(int ID, char Type, Station sStation, Station eStation, Time Arr_time)
 {
 	id = ID;
