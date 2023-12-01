@@ -138,6 +138,8 @@
     <ClInclude Include="LinkedQueue.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Passenger.h" />
+    <ClInclude Include="PQnode.h" />
+    <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="QueueADT.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Time.h" />
