@@ -9,6 +9,7 @@
 #include "ArrivalEvent.h"
 #include "LeaveEvent.h"
 #include <fstream>
+#include<random>
 class Company
 {
 private:
@@ -22,13 +23,15 @@ private:
 	LinkedQueue<Bus*> BackwardMovingBusList;
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
+	int StationNumber;
 
 public:
 	Company(); // default constructor
 	~Company(); // destructor
 	Company(string FileName); // copy constructor
 	void load(string FileName);
-	
+	void simulate();
+	int generateRandom(int min, int max);
 
 
 };
