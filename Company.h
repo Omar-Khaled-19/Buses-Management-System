@@ -20,13 +20,13 @@ private:
 	LinkedQueue<Bus> BusList;
 	LinkedQueue<Bus> ForwardMovingBusList;
 	LinkedQueue<Bus> BackwardMovingBusList;
-	LinkedQueue<Bus> MovingWCBusList;
 	LinkedQueue<Bus> CheckupBusList;
 	LinkedQueue<Passenger> FinishedPassengerList;
 
 public:
-
+	Company(string FileName);
 	void load(string FileName);
+	
 
 
 };

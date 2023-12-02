@@ -1,4 +1,8 @@
 #include "Company.h"
+Company::Company(string FileName) 
+{
+	load(FileName);
+}
 void Company::load(string FileName)
 {
 		ifstream inFile(FileName);
