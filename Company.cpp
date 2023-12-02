@@ -17,17 +17,19 @@ void Company::load(string FileName)
 		inFile >> NoOfStations >> StationTime >> WBus_count >> MBus_count >> WBusCap >> MBusCap >> CheckupTrips >> C_WBus >> C_MBus >> maxWaitMin >> GetOnOffSec >> EventsNum;
 		for (int i = 0; i <= NoOfStations; i++)
 		{
-			StationPtrArray = new Station*[i];
+			StationPtrArray[i] = new Station(i);
 		}
 		for (int i = 0; i < WBus_count; i++)
 		{
 			Bus bus(i+1, WBusCap,'W');
-			BusList.enqueue(bus);
+			Bus* busptr=&bus;
+			BusList.enqueue(busptr);
 		}
 		for (int i = 0; i < MBus_count; i++)
 		{
 			Bus bus(i+WBus_count, MBusCap, 'M');
-			BusList.enqueue(bus);
+			Bus* busptr = &bus;
+			BusList.enqueue(busptr);
 		}
 		for (int i = 0; i < EventsNum; i++)
 		{
@@ -54,3 +56,16 @@ void Company::load(string FileName)
 		}
 	}
 
+Company::~Company()
+{
+	EventPtrList.~LinkedQueue();
+	BusList.~LinkedQueue();
+	ForwardMovingBusList.~LinkedQueue();
+	BackwardMovingBusList.~LinkedQueue();
+	CheckupBusList.~LinkedQueue();
+	FinishedPassengerList.~LinkedQueue();
+	delete[] StationPtrArray;
+	
+
+
+}
