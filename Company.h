@@ -6,11 +6,15 @@
 #include "Bus.h"
 #include "Station.h"
 #include "Time.h"
+#include "ArrivalEvent.h"
+#include "LeaveEvent.h"
+#include <fstream>
 class Company
 {
 private:
 	LinkedQueue<Event*> EventPtrList;
 	LinkedList<Station> SationList;
+	Station** StationPtrArray;
 	int TripCheckupsNum;
 	Time TimeBetStaions;
 	LinkedQueue<Bus> BusList;
@@ -22,7 +26,7 @@ private:
 
 public:
 
-
+	void load(string FileName);
 
 
 };

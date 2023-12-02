@@ -8,7 +8,7 @@ private:
 	int hour;
 
 public:
-
+	Time(int hr, int minute);
 	void operator = (Time t2);
 };
 

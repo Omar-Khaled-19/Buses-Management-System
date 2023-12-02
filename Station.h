@@ -15,6 +15,7 @@ private:
 	PriorityQueue<Passenger> NP_SP_ForwardWaiting;
 	PriorityQueue<Passenger> NP_SP_BackwardWaiting;
 public:
+	Station();
 	Station(int stationNum);
 };
 

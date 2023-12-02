@@ -4,11 +4,11 @@
 class ArrivalEvent : public Event
 {
 	Station end_station;
-	char type;
+	string type;
 
 public:
 	
-	ArrivalEvent(int ID, char Type, Station sStation, Station eStation, Time Arr_time);
+	ArrivalEvent(int ID, string Type, Station* sStation, Station* eStation, Time Arr_time);
 	void Excute();
 };
 
