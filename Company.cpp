@@ -1,4 +1,10 @@
 #include "Company.h"
+
+Company::Company()
+{
+
+}
+
 Company::Company(string FileName) 
 {
 	load(FileName);

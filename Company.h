@@ -21,9 +21,10 @@ private:
 	LinkedQueue<Bus> ForwardMovingBusList;
 	LinkedQueue<Bus> BackwardMovingBusList;
 	LinkedQueue<Bus> CheckupBusList;
-	LinkedQueue<Passenger> FinishedPassengerList;
+	LinkedQueue<Passenger*> FinishedPassengerList;
 
 public:
+	Company();
 	Company(string FileName);
 	void load(string FileName);
 	
