@@ -2,6 +2,7 @@
 #include "LinkedQueue.h"
 #include "Passenger.h"
 #include "PriorityQueue.h"
+#include "Company.h"
 #include "Bus.h"
 
 class Station
@@ -17,5 +18,8 @@ private:
 public:
 	Station();
 	Station(int stationNum);
+	Passenger* MovSP();
+	Passenger* MovNP();
+	Passenger* MovWC();
 };
 
