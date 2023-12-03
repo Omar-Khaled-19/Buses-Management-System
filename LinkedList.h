@@ -1,5 +1,7 @@
 #ifndef _LINKEDLIST
 #define _LINKEDLIST
+#include <iostream>
+using namespace std;
 
 #include "Node.h"
 

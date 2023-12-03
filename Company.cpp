@@ -76,9 +76,9 @@ void Company::simulate()
 	Passenger* P;
 	while (EventPtrList.isEmpty())
 	{
-		clock++;
+		++clock;
 		EventPtrList.peek(E);
-		if (E->get_time() == clock)
+		if (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
@@ -89,7 +89,7 @@ void Company::simulate()
 		int rand_number = generateRandom(1, 100);
 		if (rand_number < 25)
 		{
-			StationPtrArray[i]->get_SP_queue().dequeue(P);
+		//	StationPtrArray[i]->get_SP_queue().dequeue(P);
 			FinishedPassengerList.enqueue(P);
 		}
 		

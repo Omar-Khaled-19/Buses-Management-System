@@ -3,6 +3,7 @@
 #include "time.h"
 #include "arraybag.h"
 #include "passenger.h"
+#include "priorityqueue.h"
 
 class Bus
 {
@@ -17,7 +18,7 @@ private:
 	Time Utilization_time;
 	Time Tot_busy_time;
 	Time Tot_delievery_time;
-	ArrayBag<Passenger> Passengers;
+	PriorityQueue<Passenger> Passengers;
 
 public:
 	Bus(int id, int capacity, char type);
