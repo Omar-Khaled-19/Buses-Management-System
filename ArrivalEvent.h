@@ -3,12 +3,13 @@
 #include "Station.h"
 class ArrivalEvent : public Event
 {
-	Station end_station;
+	Station* end_station;
 	string type;
+	string Stype;
 
 public:
 	
-	ArrivalEvent(int ID, string Type, Station* sStation, Station* eStation, Time Arr_time);
+	ArrivalEvent(int ID, string Type,string Stype, Station* sStation, Station* eStation, Time etime);
 	Time get_event_time();
 	void Excute();
 };

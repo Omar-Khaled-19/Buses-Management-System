@@ -14,11 +14,12 @@ private:
 	LinkedQueue<Bus*> BackwardBusList;
 	LinkedQueue<Passenger*> WP_ForwardWaiting;
 	LinkedQueue<Passenger*> WP_BackwardWaiting;
-	Modified_Perority_Queue<Passenger*> NP_SP_ForwardWaiting;
-	Modified_Perority_Queue<Passenger*> NP_SP_BackwardWaiting;
+	Modified_Priority_Queue<Passenger*> NP_SP_ForwardWaiting;
+	Modified_Priority_Queue<Passenger*> NP_SP_BackwardWaiting;
 public:
 	Station();
 	Station(int stationNum);
 	void remove_NP(int p_id);
+	void add_NP_SP(Passenger* P);
 };
 
