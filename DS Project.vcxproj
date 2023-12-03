@@ -136,6 +136,7 @@
     <ClInclude Include="LeaveEvent.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedQueue.h" />
+    <ClInclude Include="Modified_priority_Queue.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Passenger.h" />
     <ClInclude Include="PQnode.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="LeaveEvent.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Modified_priority_Queue.cpp" />
     <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Time.cpp" />

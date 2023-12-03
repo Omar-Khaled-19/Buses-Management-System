@@ -19,3 +19,25 @@ void Time::operator=(Time t2)
 	min = t2.min;
 	hour = t2.hour;
 }
+
+bool Time::operator==(Time t2)
+{
+	if (min == t2.min && hour == t2.hour)
+		return true;
+
+	return false;
+}
+
+void Time::operator++()
+{
+	min++;
+	if (min == 60) {
+		min = 0;
+		hour++;
+	}
+	if (hour == 24) {
+		hour = 0;
+		min = 0;
+		sec = 0;
+	}
+}

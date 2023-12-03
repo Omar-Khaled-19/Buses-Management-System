@@ -8,7 +8,7 @@ using namespace std;
 template <typename T>
 class PriorityQueue
 {
-private:
+protected:
 
 	PQNode<T>* backPtr;
 	PQNode<T>* frontPtr;

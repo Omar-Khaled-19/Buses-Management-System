@@ -66,6 +66,9 @@
     <ClInclude Include="PQnode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Modified_priority_Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Event.cpp">
@@ -99,6 +102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArrayBag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modified_priority_Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
