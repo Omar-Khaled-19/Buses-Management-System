@@ -28,8 +28,11 @@ private:
 public:
 	Company(); // default constructor
 	~Company(); // destructor
-	Company(string FileName); // copy constructor
+	Company(string FileName); // non-default constructor
 	void load(string FileName);
+	void Simulator(string FileName);
+	void MovToFinishedList(Passenger* FinishedPassengerPtr);
+	
 	void simulate();
 	int generateRandom(int min, int max);
 

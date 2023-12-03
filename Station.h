@@ -1,6 +1,7 @@
 #pragma once
 #include "LinkedQueue.h"
 #include "PriorityQueue.h"
+#include "Company.h"
 #include "Bus.h"
 #include "Passenger.h"
 #include "modified_priority_queue.h"
@@ -19,6 +20,9 @@ private:
 public:
 	Station();
 	Station(int stationNum);
+	Passenger* MovSP();
+	Passenger* MovNP();
+	Passenger* MovWC();
 	void remove_NP(int p_id);
 	void add_NP_SP(Passenger* P);
 };

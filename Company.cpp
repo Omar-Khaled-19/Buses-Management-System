@@ -58,6 +58,16 @@ void Company::load(string FileName)
 		}
 	}
 
+void Company::MovToFinishedList(Passenger* FinishedPassengerPtr)
+{   
+	FinishedPassengerList.enqueue(FinishedPassengerPtr);
+}
+
+void Company::Simulator(string FileName)
+{
+ 
+}
+
 
 int Company::generateRandom(int min, int max)
 {
