@@ -57,23 +57,45 @@ Passenger* Station::MovNP()
 }
 
 
-void Station::add_NP_SP(Passenger* P)
+void Station::add_passenger(Passenger* P)
 {
 	if (P->get_start_station() < P->get_end_station())
 	{
-		if (P->get_type() == "N")
-			NP_SP_ForwardWaiting.enqueue(P, 1);
+		if (P->get_type() == "WP")
+			WP_ForwardWaiting.enqueue(P);
+		else if (P->get_type() == "NP")
+			NP_SP_ForwardWaiting.enqueue(P, 4);
 		else
 		{
 			if (P->get_special_type() == "aged")
-				NP_SP_ForwardWaiting.enqueue(P, 4);
+				NP_SP_ForwardWaiting.enqueue(P, 1);
 			else
 			{
 				if (P->get_special_type() == "POD")
-					NP_SP_ForwardWaiting.enqueue(P, 3);
-				else
 					NP_SP_ForwardWaiting.enqueue(P, 2);
+				else
+					NP_SP_ForwardWaiting.enqueue(P, 3);
 			}
 		}
 	}
+	else
+	{
+		if (P->get_type() == "WP")
+			WP_BackwardWaiting.enqueue(P);
+		else if (P->get_type() == "NP")
+			NP_SP_BackwardWaiting.enqueue(P, 4);
+		else
+		{
+			if (P->get_special_type() == "aged")
+				NP_SP_BackwardWaiting.enqueue(P, 1);
+			else
+			{
+				if (P->get_special_type() == "POD")
+					NP_SP_BackwardWaiting.enqueue(P, 2);
+				else
+					NP_SP_BackwardWaiting.enqueue(P, 3);
+			}
+		}
+	}
+
 }

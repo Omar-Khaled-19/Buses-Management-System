@@ -24,7 +24,7 @@ public:
 	Passenger* MovNP();
 	Passenger* MovWC();
 	void remove_NP(int p_id);
-	void add_NP_SP(Passenger* P);
+	void add_passenger(Passenger* P);
 
 };
 

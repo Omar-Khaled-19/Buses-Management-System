@@ -13,7 +13,7 @@ void ArrivalEvent::Excute()
 {
 	Passenger* pPassenger = new Passenger(passenger_id, type, st_station,
 		end_station, event_time, Stype);
-	st_station->add_NP_SP(pPassenger);
+	st_station->add_passenger(pPassenger);
 }
 Time ArrivalEvent::get_event_time()
 {
