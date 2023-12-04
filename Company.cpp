@@ -49,8 +49,8 @@ void Company::load(string FileName)
 			else if (EventType == "L")
 			{
 				int TimeHour, TimeMin, id, StartStation;
-				Time TimeStep(TimeHour, TimeMin);
 				inFile >> TimeHour >> temp >> TimeMin >> id >> StartStation;
+				Time TimeStep(TimeHour, TimeMin);
 				LeaveEvent* leave = new LeaveEvent(id,StationPtrArray[StartStation],TimeStep);
 				EventPtrList.enqueue(leave);
 			}
