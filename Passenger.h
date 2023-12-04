@@ -26,7 +26,6 @@ public:
 	string get_special_type();
 	Station* get_start_station();
 	Station* get_end_station();
-	char get_type();
 
 
 };

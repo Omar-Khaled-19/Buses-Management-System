@@ -9,7 +9,7 @@ class Modified_Priority_Queue : public PriorityQueue<Passenger*>
 
 public:
 	bool remove_Specific(int id);
-	bool Dequeue_First(char type, T& ptr); // dequeues the first item of a specific type and returns a ptr to it
+	bool Dequeue_First(string type, T& ptr); // dequeues the first item of a specific type and returns a ptr to it
 };
 
 
@@ -49,7 +49,7 @@ inline bool Modified_Priority_Queue<T>::remove_Specific(int id)
 
 
 template<class T>
-inline bool Modified_Perority_Queue<T>::Dequeue_First(char type,T& ptr)
+inline bool Modified_Perority_Queue<T>::Dequeue_First(string type,T& ptr)
 
 
 {
@@ -74,7 +74,7 @@ PQNode<Passenger*>* advanced = frontPtr->getNext();
   {		p_ptr = advanced->getItem();
 	    temp_type = p_ptr->get_type();
 
-		if (temp_type == char)
+		if (temp_type == type)
 		{
 			temp->setNext(advanced->getNext());
 			ptr = advanced;
