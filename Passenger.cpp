@@ -19,15 +19,12 @@ int Passenger::get_id()
 	return id;
 }
 
-char Passenger::get_type()
-{
-	return type;
-}
-
 string Passenger::get_type()
 {
 	return type;
 }
+
+
 
 string Passenger::get_special_type()
 {
