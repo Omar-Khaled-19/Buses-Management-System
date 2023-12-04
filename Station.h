@@ -20,9 +20,11 @@ private:
 public:
 	Station();
 	Station(int stationNum);
+
 	Passenger* MovSP();
 	Passenger* MovNP();
 	Passenger* MovWC();
 	void remove_NP(int p_id);
+
 };
 

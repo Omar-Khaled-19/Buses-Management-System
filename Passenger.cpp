@@ -17,3 +17,8 @@ int Passenger::get_id()
 {
 	return id;
 }
+
+char Passenger::get_type()
+{
+	return type;
+}

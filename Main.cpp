@@ -21,8 +21,5 @@ int main()
 	Company OurCompany;
     OurCompany.load(FileName);
 
-	while (OurCompany.EventPtrList().I)
-	{
-
-	}
+	
 }

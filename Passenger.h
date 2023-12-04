@@ -19,6 +19,7 @@ public:
 	Passenger();
 	Passenger(int ID, char Type, Station* sStation, Station* eStation, Time Arr_time);
 	int get_id();
+	char get_type();
 
 
 };

@@ -84,7 +84,7 @@ void Company::simulate()
 	
 	Event* E;
 	Passenger* P;
-	while (EventPtrList.isEmpty())
+	while (!EventPtrList.isEmpty())
 	{
 		++clock;
 		EventPtrList.peek(E);
@@ -97,12 +97,24 @@ void Company::simulate()
 	for (int i = 1; i <= StationNumber; i++)
 	{
 		int rand_number = generateRandom(1, 100);
-		if (rand_number < 25)
+		if (rand_number <= 25)
 		{
-		//	StationPtrArray[i]->get_SP_queue().dequeue(P);
+			P = StationPtrArray[i]->MovSP();
+			if (P != nullptr)
 			FinishedPassengerList.enqueue(P);
 		}
-		
+		if (rand_number <= 60 && rand_number>= 50)
+		{
+			P = StationPtrArray[i]->MovNP();
+			if (P!=nullptr)
+			FinishedPassengerList.enqueue(P);
+		}
+		if (rand_number <= 30 && rand_number >= 20)
+		{
+			P = StationPtrArray[i]->MovWC();
+			if (P != nullptr)
+			FinishedPassengerList.enqueue(P);
+		}
 	}
 }
 
