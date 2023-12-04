@@ -20,17 +20,21 @@ inline bool Modified_Priority_Queue<T>::remove_Specific(int id)
 	PQNode<Passenger*>* advanced = frontPtr->getNext();
 	Passenger* p_ptr = nullptr;
 	int temp_id;
+	if (isEmpty())
+		return false;
 
 	p_ptr = temp->getItem();
 	temp_id = p_ptr->get_id();
 	if (temp_id == id) 
 	{
 		PQNode<Passenger*>* deleted = frontPtr;
-		frontPtr->setNext(frontPtr->getNext());
+		frontPtr = frontPtr->getNext();
+		delete deleted;
+		return true;
 
 	}
 
-	while (!isEmpty()) {
+	while (!isEmpty() && advanced) {
 		p_ptr = advanced->getItem();
 		temp_id = p_ptr->get_id();
 		if (temp_id == id) {
