@@ -4,7 +4,7 @@
 #include "PQnode.h"
 
 template<class T>
-class Modified_Perority_Queue : public PriorityQueue<Passenger*>
+class Modified_Priority_Queue : public PriorityQueue<Passenger*>
 {
 
 public:
@@ -14,7 +14,7 @@ public:
 
 
 template<class T>
-inline bool Modified_Perority_Queue<T>::remove_Specific(int id)
+inline bool Modified_Priority_Queue<T>::remove_Specific(int id)
 {
 	PQNode<Passenger*>* temp = frontPtr;
 	PQNode<Passenger*>* advanced = frontPtr->getNext();

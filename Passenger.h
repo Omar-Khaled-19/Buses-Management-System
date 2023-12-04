@@ -1,5 +1,7 @@
 #pragma once
 #include "time.h"
+#include <iostream>
+using namespace std;
 
 class Station;
 class Passenger
@@ -7,18 +9,23 @@ class Passenger
 
 private:
 	int id;
-	char type;
-	Station* S_station;
-	Station* E_station;
-	int Max_w_time;
+	string type;
+	string special_type;
+	Station* start_station;
+	Station* end_station;
+	int Max_waiting_time;
 	Time AT;
 	Time FT;
 	Time MT;
 
 public:
 	Passenger();
-	Passenger(int ID, char Type, Station* sStation, Station* eStation, Time Arr_time);
+	Passenger(int ID, string Type, Station* sStation, Station* eStation, Time Arr_time, string Stype = NULL);
 	int get_id();
+	string get_type();
+	string get_special_type();
+	Station* get_start_station();
+	Station* get_end_station();
 	char get_type();
 
 

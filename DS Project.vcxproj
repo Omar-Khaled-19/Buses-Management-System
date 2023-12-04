@@ -154,7 +154,6 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="LeaveEvent.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Modified_priority_Queue.cpp" />
     <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Time.cpp" />

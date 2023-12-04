@@ -4,13 +4,14 @@ Passenger::Passenger()
 {
 }
 
-Passenger::Passenger(int ID, char Type, Station* sStation, Station* eStation, Time Arr_time)
+Passenger::Passenger(int ID, string Type, Station* sStation, Station* eStation, Time Arr_time, string Stype = NULL)
 {
 	id = ID;
 	type = Type;
-	S_station = sStation;
-	E_station = eStation;
+	start_station = sStation;
+	end_station = eStation;
 	AT = Arr_time;
+	special_type = Stype;
 }
 
 int Passenger::get_id()
@@ -21,4 +22,24 @@ int Passenger::get_id()
 char Passenger::get_type()
 {
 	return type;
+}
+
+string Passenger::get_type()
+{
+	return type;
+}
+
+string Passenger::get_special_type()
+{
+	return special_type;
+}
+
+Station* Passenger::get_start_station()
+{
+	return start_station;
+}
+
+Station* Passenger::get_end_station()
+{
+	return end_station;
 }
