@@ -71,8 +71,8 @@ PQNode<Passenger*>* advanced = frontPtr->getNext();
 	{
 		PQNode<Passenger*>* deleted = frontPtr;
 		frontPtr = frontPtr->getNext();
-		ptr = deleted;
-		delete deleted;
+		ptr = deleted->getItem();
+		//delete deleted;
 		return true;
 	}
 
@@ -84,8 +84,8 @@ PQNode<Passenger*>* advanced = frontPtr->getNext();
 		if (temp_type == type)
 		{
 			temp->setNext(advanced->getNext());
-			ptr = advanced;
-			delete advanced;
+			ptr = advanced->getItem();
+			//delete advanced;
 			return true;
 		}
 		else 
