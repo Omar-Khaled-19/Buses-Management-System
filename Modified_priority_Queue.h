@@ -37,7 +37,8 @@ inline bool Modified_Priority_Queue<T>::remove_Specific(int id)
 	while (!isEmpty() && advanced) {
 		p_ptr = advanced->getItem();
 		temp_id = p_ptr->get_id();
-		if (temp_id == id) {
+		if (temp_id == id)
+		{
 			temp->setNext(advanced->getNext());
 			delete advanced;
 			return true;
@@ -68,13 +69,16 @@ PQNode<Passenger*>* advanced = frontPtr->getNext();
 
 	if (temp_type == type)
 	{
-	    PQNode<Passenger*>* deleted = frontPtr;
-		frontPtr->setNext(frontPtr->getNext());
-		
+		PQNode<Passenger*>* deleted = frontPtr;
+		frontPtr = frontPtr->getNext();
+		ptr = deleted;
+		delete deleted;
+		return true;
 	}
 
 	while (!isEmpty()) 
-  {		p_ptr = advanced->getItem();
+	{
+   		p_ptr = advanced->getItem();
 	    temp_type = p_ptr->get_type();
 
 		if (temp_type == type)
@@ -82,13 +86,13 @@ PQNode<Passenger*>* advanced = frontPtr->getNext();
 			temp->setNext(advanced->getNext());
 			ptr = advanced;
 			delete advanced;
-			
+			return true;
 		}
 		else 
 		{
 			advanced->setNext(advanced->getNext());
 			temp->setNext(temp->getNext());
 		}
-}
+   }
 	return false;
 }
