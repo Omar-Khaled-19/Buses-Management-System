@@ -4,7 +4,7 @@ Passenger::Passenger()
 {
 }
 
-Passenger::Passenger(int ID, string Type, Station* sStation, Station* eStation, Time Arr_time, string Stype = NULL)
+Passenger::Passenger(int ID, string Type, Station* sStation, Station* eStation, Time Arr_time, string Stype)
 {
 	id = ID;
 	type = Type;

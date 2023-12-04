@@ -1,7 +1,6 @@
 #pragma once
 #include "LinkedQueue.h"
 #include "PriorityQueue.h"
-#include "Company.h"
 #include "Bus.h"
 #include "Passenger.h"
 #include "modified_priority_queue.h"

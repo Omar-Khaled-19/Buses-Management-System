@@ -1,6 +1,6 @@
 #include "ArrivalEvent.h"
 
-ArrivalEvent::ArrivalEvent(int ID, string Type = NULL, string Stype, Station* sStation, Station* eStation, Time etime)
+ArrivalEvent::ArrivalEvent(int ID, string Type, Station* sStation, Station* eStation, Time etime,string Stype)
 {
 	passenger_id = ID;
 	type = Type;
