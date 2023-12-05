@@ -66,10 +66,7 @@
     <ClInclude Include="PQnode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Modified_priority_Queue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ModifiedLinkedQueue.h">
+    <ClInclude Include="ModifiedQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

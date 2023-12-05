@@ -176,8 +176,8 @@ void Station:: printStation(int stationn)
 	}
 	cout << "] BCK[";
 	
-	PQNode<Passenger*>* tempQ2 = NP_BackwardWaiting.getHead();
-	for (int i = 0; i < NP_BackwardWaiting.getCount();i++)
+	PQNode<Passenger*>* tempQ2 = SP_BackwardWaiting.getHead();
+	for (int i = 0; i < SP_BackwardWaiting.getCount();i++)
 	{
 		Passenger* ptemp = tempQ2->getItem();
 

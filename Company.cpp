@@ -54,12 +54,12 @@ void Company::load(string FileName)
 					arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep);
 				EventPtrList.enqueue(arrive);
 			}
-			else if (EventType == "L")
+			if (EventType == "L")
 			{
-				int TimeHour, TimeMin, id, StartStation;
-				inFile >> TimeHour >> temp >> TimeMin >> id >> StartStation;
-				Time TimeStep(TimeHour, TimeMin);
-				LeaveEvent* leave = new LeaveEvent(id,StationPtrArray[StartStation],TimeStep);
+				int TimeHour2, TimeMin2, id, StartStation;
+				inFile >> TimeHour2 >> temp >> TimeMin2 >> id >> StartStation;
+				Time TimeStep2(TimeHour2, TimeMin2);
+				LeaveEvent* leave = new LeaveEvent(id,StationPtrArray[StartStation],TimeStep2);
 				EventPtrList.enqueue(leave);
 			}
 
@@ -95,6 +95,7 @@ void Company::simulate(string FileName)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
+			EventPtrList.peek(E);
 		}
 		clock.printTime();
 		for (int i = 1; i <= StationNumber; i++)

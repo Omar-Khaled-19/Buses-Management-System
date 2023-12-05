@@ -3,7 +3,8 @@
 #include "PriorityQueue.h"
 #include "Bus.h"
 #include "Passenger.h"
-#include "modified_priority_queue.h"
+#include "PriorityQueue.h"
+#include "ModifiedQueue.h"
 #include <iostream>
 
 
@@ -25,10 +26,10 @@ private:
 	LinkedQueue<Bus*> BackwardBusList;
 	LinkedQueue<Passenger*> WP_ForwardWaiting;
 	LinkedQueue<Passenger*> WP_BackwardWaiting;
-	Modified_Priority_Queue<Passenger*> NP_ForwardWaiting;
-	Modified_Priority_Queue<Passenger*> NP_BackwardWaiting;
-	Modified_Priority_Queue<Passenger*> SP_ForwardWaiting;
-	Modified_Priority_Queue<Passenger*> SP_BackwardWaiting;
+	ModifiedQueue<Passenger*> NP_ForwardWaiting;
+	ModifiedQueue<Passenger*> NP_BackwardWaiting;
+	PriorityQueue<Passenger*> SP_ForwardWaiting;
+	PriorityQueue<Passenger*> SP_BackwardWaiting;
 public:
 	Station();
 	Station(int stationNum);
