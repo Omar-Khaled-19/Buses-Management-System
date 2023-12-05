@@ -84,7 +84,6 @@ void Company::simulate(string FileName)
 {
 	Time clock(04, 00);
 	load(FileName);
-	cout << StationNumber;
 	Event* E;
 	Passenger* P;
 	char x;
@@ -127,7 +126,6 @@ void Company::simulate(string FileName)
 					FinishedPassengerList.enqueue(P);
 					FinishedCount++;
 				}
-
 			}
 			StationPtrArray[i]->printStation(i);
 			printFinished();

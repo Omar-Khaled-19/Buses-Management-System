@@ -2,7 +2,6 @@
 #include "QueueADT.h"
 #include "LinkedList.h"
 #include "PriorityQueue.h"
-#include "ArrayBag.h"
 #include "Company.h"
 #include "Event.h"
 #include "Passenger.h"

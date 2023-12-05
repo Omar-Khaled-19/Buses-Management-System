@@ -14,7 +14,6 @@ class Company
 {
 private:
 	LinkedQueue<Event*> EventPtrList;
-	LinkedList<Station> SationList;
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
