@@ -56,6 +56,7 @@ protected:
 	Node<T>* frontPtr;
 public:
 	LinkedQueue();
+	Node <T>* getHead();
 	bool isEmpty() const;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
@@ -128,6 +129,11 @@ bool LinkedQueue<T>::enqueue(const T& newEntry)
   Input: None.
   Output: True if the operation is successful; otherwise false.
   */
+template <typename T>
+Node <T>* LinkedQueue<T> ::getHead()
+{
+	return frontPtr;
+}
 
 template <typename T>
 bool LinkedQueue<T>::dequeue(T& frntEntry)

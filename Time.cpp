@@ -40,4 +40,9 @@ void Time::operator++()
 		min = 0;
 		sec = 0;
 	}
+	
+}
+void Time:: printTime()
+{
+	cout << "Current Time (Hour:Min)==> " << hour << ":" << min<<endl;
 }

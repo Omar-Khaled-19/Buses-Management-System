@@ -16,15 +16,20 @@ public:
 template<class T>
 inline bool Modified_Priority_Queue<T>::remove_Specific(int id)
 {
+	PQNode<Passenger*>* advanced = nullptr;
 	PQNode<Passenger*>* temp = frontPtr;
-	PQNode<Passenger*>* advanced = frontPtr->getNext();
+	if (frontPtr!=nullptr)
+	advanced = frontPtr->getNext();
+	
 	Passenger* p_ptr = nullptr;
 	int temp_id;
 	if (isEmpty())
 		return false;
-
-	p_ptr = temp->getItem();
-	temp_id = p_ptr->get_id();
+	if (temp != nullptr)
+	{
+		p_ptr = temp->getItem();
+		temp_id = p_ptr->get_id();
+	}
 	if (temp_id == id) 
 	{
 		PQNode<Passenger*>* deleted = frontPtr;
@@ -61,10 +66,11 @@ PQNode<Passenger*>* temp = frontPtr;
 PQNode<Passenger*>* advanced = frontPtr->getNext();
 	Passenger* p_ptr = nullptr;
 	string temp_type;
-
-	p_ptr = temp->getItem();
-	temp_type = p_ptr->get_type();
-
+	if (temp != nullptr)
+	{
+		p_ptr = temp->getItem();
+		temp_type = p_ptr->get_type();
+	}
 
 
 	if (temp_type == type)
@@ -78,9 +84,11 @@ PQNode<Passenger*>* advanced = frontPtr->getNext();
 
 	while (!isEmpty()) 
 	{
-   		p_ptr = advanced->getItem();
-	    temp_type = p_ptr->get_type();
-
+		if (advanced != nullptr)
+		{
+			p_ptr = advanced->getItem();
+			temp_type = p_ptr->get_type();
+		}
 		if (temp_type == type)
 		{
 			temp->setNext(advanced->getNext());

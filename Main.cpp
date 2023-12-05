@@ -18,8 +18,7 @@
 int main() 
 {
 	string FileName;
+	//cin >> FileName;
 	Company OurCompany;
-    OurCompany.load(FileName);
-
-	
+	OurCompany.simulate("TestFile.txt");
 }

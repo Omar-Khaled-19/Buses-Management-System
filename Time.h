@@ -1,4 +1,6 @@
 #pragma once
+#include<iostream>
+using namespace std;
 class Time
 {
 
@@ -13,5 +15,10 @@ public:
 	void operator = (Time t2);
 	bool operator == (Time t2);
 	void operator ++ ();
+	void printTime();
+	int GetHour()
+	{
+		return hour;
+	}
 };
 

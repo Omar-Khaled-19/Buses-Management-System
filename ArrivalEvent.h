@@ -9,7 +9,7 @@ class ArrivalEvent : public Event
 
 public:
 	
-	ArrivalEvent(int ID, string Type, Station* sStation, Station* eStation, Time etime, string Stype = NULL);
+	ArrivalEvent(int ID, string Type, Station* sStation, Station* eStation, Time etime, string Stype = "");
 	Time get_event_time();
 	void Excute();
 };

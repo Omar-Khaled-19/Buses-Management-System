@@ -15,7 +15,9 @@ class Company
 private:
 	LinkedQueue<Event*> EventPtrList;
 	LinkedList<Station> SationList;
-	Station** StationPtrArray;
+	//Station** StationPtrArray;
+	int StationNumber;
+	Station** StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
 	Time TimeBetStaions;
 	LinkedQueue<Bus*> BusList;
@@ -23,7 +25,8 @@ private:
 	LinkedQueue<Bus*> BackwardMovingBusList;
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
-	int StationNumber;
+//	int StationNumber;
+	int FinishedCount;
 
 public:
 	Company(); // default constructor
@@ -32,10 +35,10 @@ public:
 	void load(string FileName);
 	void Simulator(string FileName);
 	void MovToFinishedList(Passenger* FinishedPassengerPtr);
-	
-	void simulate();
+	void printFinished();
+	void simulate(string FileName);
 	int generateRandom(int min, int max);
-
+	
 
 };
 

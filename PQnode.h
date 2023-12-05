@@ -69,7 +69,9 @@ T PQNode<T>::getItem() const
 template < typename T>
 PQNode<T>* PQNode<T>::getNext() const
 {
+	if (next!=nullptr)
 	return next;
+	return nullptr;
 }
 
 template < typename T>

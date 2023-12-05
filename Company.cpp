@@ -2,7 +2,7 @@
 
 Company::Company()
 {
-
+	FinishedCount = 0;
 }
 
 Company::Company(string FileName) 
@@ -19,6 +19,7 @@ void Company::load(string FileName)
 		StationNumber = NoOfStations;
 		for (int i = 0; i <= NoOfStations; i++)
 		{
+			//StationPtrArray[i] = new Station(i);
 			StationPtrArray[i] = new Station(i);
 		}
 		for (int i = 0; i < WBus_count; i++)
@@ -39,11 +40,18 @@ void Company::load(string FileName)
 			inFile >> EventType;
 			if (EventType == "A")
 			{
-				string Type;
+				string Type,SType;
 				int TimeHour, TimeMin, id, StartStation, EndStation;
 				inFile >>Type>> TimeHour >> temp >>TimeMin >>id >> StartStation >> EndStation;
 				Time TimeStep(TimeHour, TimeMin);
-				ArrivalEvent *arrive= new ArrivalEvent(id,Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep);
+				ArrivalEvent* arrive;
+				if (Type == "SP")
+				{
+					inFile >> SType;
+					arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep, SType);
+				}
+				else
+					arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep);
 				EventPtrList.enqueue(arrive);
 			}
 			else if (EventType == "L")
@@ -63,10 +71,27 @@ void Company::MovToFinishedList(Passenger* FinishedPassengerPtr)
 	FinishedPassengerList.enqueue(FinishedPassengerPtr);
 }
 
-void Company::Simulator(string FileName)
-{
- 
-}
+////void Company::Simulator(string FileName)
+////{
+////	cout << "hi";
+//	Time clock(04, 00);
+//	load(FileName);
+//	cout << StationNumber;
+//	
+////	while (!EventPtrList.isEmpty())
+//	//{
+//		simulate(clock);
+//		for (int i = 1; i <= StationNumber; i++)
+//		{
+//			int x = 0;
+//			clock.printTime();
+//			StationPtrArray[i]->printStation(i);
+//			printFinished();
+//			cin >> x;
+//		}
+//		++clock;
+//	//}
+//}
 
 
 int Company::generateRandom(int min, int max)
@@ -77,22 +102,27 @@ int Company::generateRandom(int min, int max)
 	return dis(gen);
 }
 
-void Company::simulate()
+void Company::simulate(string FileName)
 {
-	load("Ay_haga.txt");
-	Time clock(04,00);
-	
+	//cout << "hi2";
+	Time clock(04, 00);
+	load(FileName);
+	cout << StationNumber;
 	Event* E;
 	Passenger* P;
-	while (!EventPtrList.isEmpty())
+	while (clock.GetHour()!=7)
 	{
-		++clock;
+		
 		EventPtrList.peek(E);
 		if (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
 		}
+		clock.printTime();
+		StationPtrArray[1]->printStation(1);
+		printFinished();
+		++clock;
 	}
 	for (int i = 1; i <= StationNumber; i++)
 	{
@@ -101,21 +131,59 @@ void Company::simulate()
 		{
 			P = StationPtrArray[i]->MovSP();
 			if (P != nullptr)
-			FinishedPassengerList.enqueue(P);
+			{
+				FinishedPassengerList.enqueue(P);
+				FinishedCount++;
+			}
+
 		}
-		if (rand_number <= 60 && rand_number>= 50)
+		else if (rand_number <= 60 && rand_number>= 50)
 		{
 			P = StationPtrArray[i]->MovNP();
-			if (P!=nullptr)
-			FinishedPassengerList.enqueue(P);
+			if (P != nullptr)
+			{
+				FinishedPassengerList.enqueue(P);
+				FinishedCount++;
+			}
 		}
-		if (rand_number <= 30 && rand_number >= 20)
+		else if (rand_number <= 45 && rand_number >= 35)
 		{
 			P = StationPtrArray[i]->MovWC();
 			if (P != nullptr)
-			FinishedPassengerList.enqueue(P);
+			{
+				FinishedPassengerList.enqueue(P);
+				FinishedCount++;
+			}
+
 		}
 	}
+
+}
+
+void Company:: printFinished()
+{
+	cout << FinishedCount << "Finished passengers: ";
+	int* Finished_id = nullptr;
+	if (FinishedCount != 0)
+	{
+		Finished_id = new int[FinishedCount - 1];
+		Node<Passenger*>* counter = FinishedPassengerList.getHead();
+		for (int i = 0; i < FinishedCount; i++)
+		{
+			Passenger* temp = counter->getItem();
+			int finish_id = temp->get_id();
+			Finished_id[i] = finish_id;
+			counter = counter->getNext();
+		}
+	}
+	for (int i = 0; i < FinishedCount; i++)
+	{
+		if (i == 0)
+			cout << " " << Finished_id[i];
+		else
+			cout << " " << Finished_id[i]<<",";
+	}
+	cout << "\nPrint any key to display next station";
 }
 
 Company::~Company()

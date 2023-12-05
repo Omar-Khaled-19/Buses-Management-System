@@ -63,7 +63,9 @@ Output: True if the queue is empty; otherwise false.
 template <typename T>
 bool PriorityQueue<T>::isEmpty() const
 {
-	return (frontPtr == nullptr);
+	if (frontPtr == nullptr)
+	return true ;
+	return false;
 }
 
 template<typename T>
