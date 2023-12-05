@@ -136,6 +136,7 @@
     <ClInclude Include="LeaveEvent.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedQueue.h" />
+    <ClInclude Include="ModifiedLinkedQueue.h" />
     <ClInclude Include="Modified_priority_Queue.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Passenger.h" />

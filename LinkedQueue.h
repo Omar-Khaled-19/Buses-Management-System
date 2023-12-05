@@ -54,6 +54,7 @@ protected:
 
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
+	int counter;
 public:
 	LinkedQueue();
 	Node <T>* getHead();
@@ -61,6 +62,10 @@ public:
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
 	bool peek(T& frntEntry)  const;
+	int get_count()
+	{
+		return counter;
+	}
 	~LinkedQueue();
 
 	//copy constructor
@@ -79,7 +84,7 @@ LinkedQueue<T>::LinkedQueue()
 {
 	backPtr = nullptr;
 	frontPtr = nullptr;
-
+	counter = 0;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -116,6 +121,7 @@ bool LinkedQueue<T>::enqueue(const T& newEntry)
 		backPtr->setNext(newNodePtr); // The queue was not empty
 
 	backPtr = newNodePtr; // New node is the last node now
+	counter++;
 	return true;
 } // end enqueue
 
@@ -150,7 +156,7 @@ bool LinkedQueue<T>::dequeue(T& frntEntry)
 
 	// Free memory reserved for the dequeued node
 	delete nodeToDeletePtr;
-
+	counter--;
 	return true;
 
 }

@@ -5,7 +5,7 @@ class ArrivalEvent : public Event
 {
 	Station* end_station;
 	string type;
-	string Stype;
+	string Special_type;
 
 public:
 	

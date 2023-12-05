@@ -33,7 +33,6 @@ public:
 	~Company(); // destructor
 	Company(string FileName); // non-default constructor
 	void load(string FileName);
-	void Simulator(string FileName);
 	void MovToFinishedList(Passenger* FinishedPassengerPtr);
 	void printFinished();
 	void simulate(string FileName);

@@ -69,29 +69,8 @@ void Company::load(string FileName)
 void Company::MovToFinishedList(Passenger* FinishedPassengerPtr)
 {   
 	FinishedPassengerList.enqueue(FinishedPassengerPtr);
+	FinishedCount++;
 }
-
-////void Company::Simulator(string FileName)
-////{
-////	cout << "hi";
-//	Time clock(04, 00);
-//	load(FileName);
-//	cout << StationNumber;
-//	
-////	while (!EventPtrList.isEmpty())
-//	//{
-//		simulate(clock);
-//		for (int i = 1; i <= StationNumber; i++)
-//		{
-//			int x = 0;
-//			clock.printTime();
-//			StationPtrArray[i]->printStation(i);
-//			printFinished();
-//			cin >> x;
-//		}
-//		++clock;
-//	//}
-//}
 
 
 int Company::generateRandom(int min, int max)
@@ -104,84 +83,74 @@ int Company::generateRandom(int min, int max)
 
 void Company::simulate(string FileName)
 {
-	//cout << "hi2";
 	Time clock(04, 00);
 	load(FileName);
 	cout << StationNumber;
 	Event* E;
 	Passenger* P;
-	while (clock.GetHour()!=7)
+	char x;
+	while (EventPtrList.peek(E))
 	{
-		
-		EventPtrList.peek(E);
-		if (E->get_event_time() == clock)
+		while (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
 		}
 		clock.printTime();
-		StationPtrArray[1]->printStation(1);
-		printFinished();
+		for (int i = 1; i <= StationNumber; i++)
+		{
+			int rand_number = generateRandom(1, 100);
+			if (rand_number <= 25)
+			{
+				P = StationPtrArray[i]->MovSP();
+				if (P != nullptr)
+				{
+					FinishedPassengerList.enqueue(P);
+					FinishedCount++;
+				}
+
+			}
+			else if (rand_number <= 60 && rand_number >= 50)
+			{
+				P = StationPtrArray[i]->MovNP();
+				if (P != nullptr)
+				{
+					FinishedPassengerList.enqueue(P);
+					FinishedCount++;
+				}
+			}
+			else if (rand_number <= 45 && rand_number >= 35)
+			{
+				P = StationPtrArray[i]->MovWC();
+				if (P != nullptr)
+				{
+					FinishedPassengerList.enqueue(P);
+					FinishedCount++;
+				}
+
+			}
+			StationPtrArray[i]->printStation(i);
+			printFinished();
+			cin >> x;
+		}
 		++clock;
 	}
-	for (int i = 1; i <= StationNumber; i++)
-	{
-		int rand_number = generateRandom(1, 100);
-		if (rand_number <= 25)
-		{
-			P = StationPtrArray[i]->MovSP();
-			if (P != nullptr)
-			{
-				FinishedPassengerList.enqueue(P);
-				FinishedCount++;
-			}
-
-		}
-		else if (rand_number <= 60 && rand_number>= 50)
-		{
-			P = StationPtrArray[i]->MovNP();
-			if (P != nullptr)
-			{
-				FinishedPassengerList.enqueue(P);
-				FinishedCount++;
-			}
-		}
-		else if (rand_number <= 45 && rand_number >= 35)
-		{
-			P = StationPtrArray[i]->MovWC();
-			if (P != nullptr)
-			{
-				FinishedPassengerList.enqueue(P);
-				FinishedCount++;
-			}
-
-		}
-	}
-
 }
 
 void Company:: printFinished()
 {
-	cout << FinishedCount << "Finished passengers: ";
-	int* Finished_id = nullptr;
-	if (FinishedCount != 0)
-	{
-		Finished_id = new int[FinishedCount - 1];
-		Node<Passenger*>* counter = FinishedPassengerList.getHead();
-		for (int i = 0; i < FinishedCount; i++)
-		{
-			Passenger* temp = counter->getItem();
-			int finish_id = temp->get_id();
-			Finished_id[i] = finish_id;
-			counter = counter->getNext();
-		}
-	}
+	cout << FinishedCount << " Finished passengers: ";
+	
+	Node<Passenger*>* counter = FinishedPassengerList.getHead();
 	for (int i = 0; i < FinishedCount; i++)
 	{
-		if (i == 0)
-			cout << " " << Finished_id[i];
-		else
-			cout << " " << Finished_id[i]<<",";
+		Passenger* temp = counter->getItem();
+		if (temp)
+		{
+			int finish_id = temp->get_id();
+			cout << finish_id << ",";
+		}
+		counter = counter->getNext();
 	}
 	cout << "\nPrint any key to display next station";
 }
