@@ -127,8 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ArrayBag.h" />
-    <ClInclude Include="BagADT.h" />
     <ClInclude Include="ArrivalEvent.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Company.h" />
@@ -147,7 +145,6 @@
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArrayBag.cpp" />
     <ClCompile Include="ArrivalEvent.cpp" />
     <ClCompile Include="Bus.cpp" />
     <ClCompile Include="Company.cpp" />

@@ -19,7 +19,6 @@ void Company::load(string FileName)
 		StationNumber = NoOfStations;
 		for (int i = 0; i <= NoOfStations; i++)
 		{
-			//StationPtrArray[i] = new Station(i);
 			StationPtrArray[i] = new Station(i);
 		}
 		for (int i = 0; i < WBus_count; i++)

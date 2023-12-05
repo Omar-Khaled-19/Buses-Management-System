@@ -15,7 +15,6 @@ class Company
 private:
 	LinkedQueue<Event*> EventPtrList;
 	LinkedList<Station> SationList;
-	//Station** StationPtrArray;
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
@@ -25,7 +24,6 @@ private:
 	LinkedQueue<Bus*> BackwardMovingBusList;
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
-//	int StationNumber;
 	int FinishedCount;
 
 public:

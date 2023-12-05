@@ -188,9 +188,6 @@ void Station:: printStation(int stationn)
 
 
 
-
-
-
 	int WP_count = WP_ForwardWaiting.get_count() + WP_BackwardWaiting.get_count();
 	
 	cout << WP_count << " Waiting WP: FWD[";

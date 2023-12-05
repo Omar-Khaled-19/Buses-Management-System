@@ -54,12 +54,6 @@
     <ClInclude Include="QueueADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BagADT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArrayBag.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PriorityQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -99,9 +93,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArrayBag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
