@@ -34,10 +34,14 @@ public:
 	Station();
 	Station(int stationNum);
 
+	int GetStaionNum();
+
 	Passenger* MovSP();
 	Passenger* MovNP();
 	Passenger* MovWC();
-	void remove_NP(int p_id);
+	void GetPassengerOn();
+	LinkedQueue<Passenger*> GetPassengerOff();
+    void remove_NP(int p_id);
 	void add_passenger(Passenger* P);
 	void printStation(int stationn);
 };

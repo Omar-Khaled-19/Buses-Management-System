@@ -17,9 +17,13 @@ private:
 	Time Utilization_time;
 	Time Tot_busy_time;
 	Time Tot_delievery_time;
-	PriorityQueue<Passenger> Passengers;
+	PriorityQueue<Passenger*> Passengers;
 
 public:
 	Bus(int id, int capacity, char type);
+	int GetPassengersCount();
+	int GetBusCapacity();
+	char GetBusType();
+	void EnqueuePassenger(Passenger* P);
 
 };
