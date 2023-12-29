@@ -20,6 +20,7 @@ void Company::load(string FileName)
 		WBusCount = WBus_count;
 		MBusCount = MBus_count;
 		StationNumber = NoOfStations;
+		TimeBetStaions = StationTime;
 		for (int i = 0; i <= NoOfStations; i++)
 		{
 			StationPtrArray[i] = new Station(i);
@@ -193,34 +194,43 @@ void Company::release_buses()
 void Company::bus_enter_station()
 {
 	Bus* tempBus;
-	LinkedQueue<Bus*> tempQueue;
-	while (ForwardMovingBusList.dequeue(tempBus))
+	while (ForwardMovingBusList.peek(tempBus))
 	{
-		if (clock - tempBus->GetLastMovingTime() == 15)
+		if (clock - tempBus->GetLastMovingTime() == TimeBetStaions)
 		{
+			ForwardMovingBusList.dequeue(tempBus);
 			tempBus->SetCurrStation(tempBus->GetNextStation());
-			tempBus->SetNextStation(tempBus->GetNextStation() + 1);
-			StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+			if (tempBus->GetCurrStation() == StationNumber) {
+				tempBus->SetNextStation(StationNumber - 1);
+				StationPtrArray[tempBus->GetNextStation()]->AddBackwardBus(tempBus);
+			}
+			else {
+				tempBus->SetNextStation(tempBus->GetNextStation() + 1);
+				StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+			}
 		}
 		else
-			tempQueue.enqueue(tempBus);
+			break;
 	}
-	while (tempQueue.dequeue(tempBus))
-		ForwardMovingBusList.enqueue(tempBus);
 
-	while (BackwardMovingBusList.dequeue(tempBus))
+	while (BackwardMovingBusList.peek(tempBus))
 	{
-		if (clock - tempBus->GetLastMovingTime() == 15)
+		if (clock - tempBus->GetLastMovingTime() == TimeBetStaions)
 		{
+			BackwardMovingBusList.dequeue(tempBus);
 			tempBus->SetCurrStation(tempBus->GetNextStation());
-			tempBus->SetNextStation(tempBus->GetNextStation() - 1);
-			StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+			if (tempBus->GetCurrStation() == 1) {
+				tempBus->SetNextStation(2);
+				StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+			}
+			else {
+				tempBus->SetNextStation(tempBus->GetCurrStation() - 1);
+				StationPtrArray[tempBus->GetNextStation()]->AddBackwardBus(tempBus);
+			}
 		}
 		else
-			tempQueue.enqueue(tempBus);
+			break;
 	}
-	while (tempQueue.dequeue(tempBus))
-		BackwardMovingBusList.enqueue(tempBus);
 }
 
 ////////////////////////////////**********************************//////////////////////////////
@@ -233,7 +243,7 @@ void Company::simulate(string FileName)
 	Event* E;
 	Passenger* P;
 	char x;
-	while (EventPtrList.peek(E))
+	while (EventPtrList.peek(E) || clock.GetHour() < 10)
 	{
 		LinkedQueue<Event*> oneminuteEventQueue;
 		while (E->get_event_time() == clock)
@@ -244,25 +254,34 @@ void Company::simulate(string FileName)
 			EventPtrList.peek(E);
 		}
 
+		if (!BusList.isEmpty()) {
+			release_buses();
+		}
+		bus_enter_station();
 
 
-
-		//for (int i = 0; i++; i <= StationNumber) {
+		for (int i = 0; i++; i <= StationNumber) {
 		//	int Num_of_ForwardBuses = StationPtrArray[i]->getnumoForwardfbuses();
 		//	int Num_of_BackwardBuses = StationPtrArray[i]->getnumoBackwardfbuses();
 
 		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
 		//		Bus* tempbus;
-		//		tempbus = StationPtrArray[i]->PeekFirstForwardBus();
-		//		////movepassengerstofinished  ******////////////// 
+		//      int remaining_time = 60
+		//		 
+		//      tempbus  stationptrarray[i]->unload(getOfTime,remaining_time (by reference) )
+		//		////movepassengerstofinished  ******//////////////       
+		// 
 		//			//movetocheckup if any
+		// 
 		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
-		//			tempbus = StationPtrArray[i]->DequeueFirstForwardBus();
+		//			temp StationPtrArray[i]->DequeueFirstForwardBus();
 		//			move_to_checkup(tempbus, clock);
 		//		}
 		//		else {
 		//			//boarding
-		//			//move to miving bus list
+		//          //sum of get on time
+		//
+		//			//move to moving bus list ?
 		//		}
 		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
 		//			Bus* tempbus2;
