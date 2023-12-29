@@ -42,7 +42,7 @@ public:
 	Station();
 	Station(int stationNum);
 
-	int GetStaionNum();
+	int GetStationNum();
 
 	Passenger* MovSP();
 	Passenger* MovNP();

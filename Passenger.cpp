@@ -1,4 +1,6 @@
 #include "Passenger.h"
+#include"Station.h"
+
 
 Passenger::Passenger()
 {

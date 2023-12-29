@@ -31,7 +31,7 @@ void Station::remove_NP(int p_id)
 		BCK_NP--;
 }
 
-int Station::GetStaionNum()
+int Station::GetStationNum()
 {
 	return StationNum;
 }
