@@ -42,6 +42,30 @@ void Time::operator++()
 	}
 	
 }
+Time Time::operator+(Time t2)
+{
+	Time new_time;
+	if (min + t2.min < 60) {
+		new_time.hour = hour + t2.hour;
+		new_time.min = min + t2.min;
+		return new_time;
+	}
+	new_time.hour = hour + t2.hour +1;
+	new_time.min = min + t2.min - 60;
+	return new_time;
+}
+Time Time::operator+(int minute)
+{
+	Time new_time;
+	if (minute + min < 60) {
+		new_time.min = min + minute;
+		new_time.hour = hour;
+		return new_time;
+	}
+	new_time.min = min + minute - 60;
+	new_time.hour = hour + 1;
+	return new_time;
+}
 void Time:: printTime()
 {
 	cout << "Current Time (Hour:Min)==> " << hour << ":" << min<<endl;

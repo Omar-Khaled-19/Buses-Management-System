@@ -43,6 +43,8 @@ public:
 	LinkedQueue<Passenger*> GetPassengerOff();
     void remove_NP(int p_id);
 	void add_passenger(Passenger* P);
+	void AddForwardBus(Bus* newBus);
+	void AddBackwardBus(Bus* newBus);
 	void printStation(int stationn);
 };
 

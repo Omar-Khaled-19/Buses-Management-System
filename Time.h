@@ -15,6 +15,8 @@ public:
 	void operator = (Time t2);
 	bool operator == (Time t2);
 	void operator ++ ();
+	Time operator + (Time t2);
+	Time operator + (int minute);
 	void printTime();
 	int GetHour()
 	{

@@ -261,6 +261,16 @@ void Station::add_passenger(Passenger* P)
 
 }
 
+void Station::AddForwardBus(Bus* newBus)
+{
+	ForwardBusList.enqueue(newBus);
+}
+
+void Station::AddBackwardBus(Bus* newBus)
+{
+	BackwardBusList.enqueue(newBus);
+}
+
 
 void Station:: printStation(int stationn)
 {

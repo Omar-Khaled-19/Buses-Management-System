@@ -80,6 +80,37 @@ int Company::generateRandom(int min, int max)
 	return dis(gen);
 }
 
+
+//////////////////////////////////////////**************////////////////////////////////////////////
+void Company::move_to_checkup(Bus* checkup_bus, Time startTime)
+{
+	checkup_bus->set_check_start_time(startTime);
+	CheckupBusList.enqueue(checkup_bus);
+}
+
+void Company::remove_from_checkup(Time curr_time)  /////////////called each minute 
+{
+	Bus* tempBus;
+	Time Leave_time;
+	while (CheckupBusList.peek(tempBus))
+	{
+		Leave_time = tempBus->GetCheckStartTime() + tempBus->GetchekupDurationInMinutes();
+		if (Leave_time == curr_time) {
+			CheckupBusList.dequeue(tempBus);
+			if (tempBus->GetNextStation() > tempBus->GetCurrStation()) {
+				ForwardMovingBusList.enqueue(tempBus);
+			}
+			else if (tempBus->GetNextStation() < tempBus->GetCurrStation()) {
+				BackwardMovingBusList.enqueue(tempBus);
+			}
+		}
+		else return;
+	}
+}
+
+
+////////////////////////////////**********************************//////////////////////////////
+
 void Company::simulate(string FileName)
 {
 	Time clock(04, 00);
