@@ -13,11 +13,6 @@ int Bus:: GetBusCapacity()
   return Capacity;
 }
 
-int Bus::GetCurrentStation()
-{
-	return Current_Station;
-}
-
 int Bus::GetPassengersCount()
 {
 	return Passengers.getCount();
@@ -95,6 +90,16 @@ int Bus::GetchekupDurationInMinutes()
 	return ChekupDurationInMinutes;
 }
 
+void Bus::SetCurrStation(int n)
+{
+	Current_Station = n;
+}
+
+void Bus::SetNextStation(int n)
+{
+	Next_Station = n;
+}
+
 int Bus::GetCurrStation()
 {
 	return Current_Station;
@@ -108,4 +113,9 @@ int Bus::GetNextStation()
 int Bus::GetNum_of_Curr_Journeys()
 {
 	return Num_of_Curr_Journeys;
+}
+
+Time Bus::GetLastMovingTime()
+{
+	return LastMovingTime;
 }

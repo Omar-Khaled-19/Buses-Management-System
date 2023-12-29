@@ -13,6 +13,14 @@ Time::Time(int hr, int minute)
 	min = minute;
 	sec = 0;
 }
+
+void Time:: setTime(int h, int m)
+{
+	hour = h;
+	min = m;
+	sec = 0;
+}
+
 void Time::operator=(Time t2)
 {
 	sec = t2.sec;
@@ -80,20 +88,15 @@ void Time::printTime()
 	cout << "Current Time (Hour:Min)==> " << hour << ":" << min << endl;
 }
 Time Time:: operator - (const Time &t2)
-{
-	Time t3;
-	if (min >= t2.min)
-	{
-		t3.min = min - t2.min;
-		t3.hour = hour - t2.hour;
-	}
-	else
-	{
-		hour--;
-		min = min + 60;
-		t3.min = min - t2.min;
-		t3.hour = hour - t2.hour;
-	}
-	return t3;
+	cout << "Current Time (Hour:Min)==> " << hour << ":" << min << endl;
 }
 
+int Time::GetHour()
+{
+	return hour;
+}
+
+int Time::GetMin()
+{
+	return min;
+}

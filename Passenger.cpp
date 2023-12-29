@@ -70,15 +70,15 @@ Time Passenger:: get_MT()
 	return MT;
 }
 
-Time Passenger:: get_finish_WT()
-{
+int Passenger:: get_finish_WT()
+{ 
 	return MT - AT;
 }
-Time Passenger:: get_upgrade_WT(Time clock)
+int Passenger:: get_upgrade_WT(Time clock)
 {
 	return clock - AT;
 }
-Time Passenger:: get_TT()
+int Passenger:: get_TT()
 {
 	return FT - MT;
 }

@@ -62,7 +62,7 @@ public:
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);
 	bool peek(T& frntEntry)  const;
-	int get_count()
+	int getCount()
 	{
 		return counter;
 	}

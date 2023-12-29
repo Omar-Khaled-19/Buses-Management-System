@@ -30,8 +30,8 @@ public:
 	Time get_FT();
 	Time get_AT();
 	Time get_MT();
-	Time get_finish_WT();
-	Time get_upgrade_WT(Time clock);
-	Time get_TT();
+	int get_finish_WT();
+	int get_upgrade_WT(Time clock);
+    int get_TT();
 };
 

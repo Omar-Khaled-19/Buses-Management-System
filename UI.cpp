@@ -5,7 +5,7 @@ int UI::ChooseMode() //First thing to call in simulation
 	int x;
 	cout << "PLease enter: \n(1) for 'Interactive Mode'  \n(2) for 'Silent Mode'";
 	cin >> x;
-	while (x != 1 || x != 2)
+	while (x != 1 && x != 2)
 	{
 		cout << "Error! Please enter 1 or 2";
 		cin >> x;

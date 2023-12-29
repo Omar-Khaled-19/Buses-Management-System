@@ -3,7 +3,6 @@
 using namespace std;
 class Time
 {
-
 private:
 	int sec;
 	int min;
@@ -12,6 +11,7 @@ private:
 public:
 	Time(); // default constructor
 	Time(int hr, int minute); // copy constructor
+	void setTime(int h, int m);
 	void operator = (Time t2);
 	bool operator == (Time t2);
 	void operator ++ ();
@@ -19,14 +19,7 @@ public:
 	Time operator + (int minute);
 	int operator - (Time t2);
 	void printTime();
-	Time operator - (const Time &t2);
-	int GetHour()
-	{
-		return hour;
-	}
-	int GetMin()
-	{
-		return min;
-	}
+	int GetHour();
+	int GetMin();
 };
 

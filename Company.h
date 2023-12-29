@@ -1,6 +1,5 @@
 #pragma once
 #include "LinkedQueue.h"
-#include "LinkedList.h"
 #include "Event.h"
 #include "Passenger.h"
 #include "Bus.h"
@@ -14,6 +13,7 @@
 class Company
 {
 private:
+	Time clock;
 	LinkedQueue<Event*> EventPtrList;
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
@@ -49,6 +49,8 @@ public:
 
 	
 
+	void release_buses();
+	void bus_enter_station();
 };
 
 
