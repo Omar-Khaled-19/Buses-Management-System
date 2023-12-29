@@ -19,7 +19,8 @@ private:
 	Station** StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
 	int NumofJourneystoCheckup;
-	int TimeBetStaions;
+	int GetOnTime;
+	Time TimeBetStaions;
 	LinkedQueue<Bus*> BusList;
 	LinkedQueue<Bus*> ForwardMovingBusList;
 	LinkedQueue<Bus*> BackwardMovingBusList;
@@ -41,6 +42,13 @@ public:
 	void CreateOutputFile();
 	void move_to_checkup(Bus* checkup_bus, Time startTime);
 	void remove_from_checkup(Time curr_time);
+	void UpdateFinishedList(Station* S);
+	void UpdateForwardMovingBusList(Station*S);
+	void UpdateBackwardMovingBusList(Station* S);
+	void UpdateCheckupBusList(Station* S);
+
+	
+
 	void release_buses();
 	void bus_enter_station();
 	

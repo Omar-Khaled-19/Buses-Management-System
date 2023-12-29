@@ -21,7 +21,15 @@ private:
 	int FWD_WP;
 	int BCK_WP;
 	LinkedQueue<Bus*> ForwardBusList;
+	LinkedQueue<Bus*> FullForwardBusList;
+	int FullForwardBusListCount;
 	LinkedQueue<Bus*> BackwardBusList;
+	LinkedQueue<Bus*> FullBackwardBusList;
+	int FullBackwardBusListCount;
+	LinkedQueue<Bus*> NeedsCheckupBusList;
+	int NeedsCheckupBusListCount;
+	LinkedQueue<Passenger*> GoToFinishedPassengerList;
+	int GoToFinishedPassengerListCount;
 	LinkedQueue<Passenger*> WP_ForwardWaiting;
 	LinkedQueue<Passenger*> WP_BackwardWaiting;
 	ModifiedQueue<Passenger*> NP_ForwardWaiting;
@@ -35,13 +43,24 @@ public:
 	Station();
 	Station(int stationNum);
 
-	int GetStaionNum();
+	int GetStationNum();
 
 	Passenger* MovSP();
 	Passenger* MovNP();
 	Passenger* MovWC();
-	void GetPassengerOn();
-	LinkedQueue<Passenger*> GetPassengerOff();
+	void LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time);
+	void LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time,int TotalStationsNum);
+	void UnloadPassengers(Bus* FBus, int& Time_count, int get_off_time);
+	void AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, int NumOfJourneysToChecup);
+	void AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations);
+	Passenger* RemovePassengerFromGoToFinishedPassengerList();
+	int GetGoToFinishedPassengerListCount();
+	Bus* RemoveBusFromNeedsCheckupBusList();
+	int GetNeedsCheckupBusListCount();
+	Bus* RemoveBusFromFullForwardBusList();
+	int GetFullForwardBusListCount();
+	Bus* RemoveBusFromFullBackwardBusList();
+	int GetFullBackwardBusListCount();
     void remove_NP(int p_id);
 	void add_passenger(Passenger* P);
 	void AddForwardBus(Bus* newBus);
