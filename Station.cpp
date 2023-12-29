@@ -383,3 +383,28 @@ Bus* Station::DequeueFirstBackwardBus()
 	BackwardBusList.dequeue(tempBus);
 	return tempBus;
 }
+
+void Station::PromoteNP(Time t, int max_waiting_time)
+{
+	Passenger* tempPass;
+	LinkedQueue<Passenger*> tempQueue;
+	while (NP_ForwardWaiting.dequeue(tempPass))
+	{
+		if (t - tempPass->get_arrival_time() > max_waiting_time)
+			SP_ForwardWaiting.enqueue(tempPass, 1);
+		else
+			tempQueue.enqueue(tempPass);
+	}
+	while (tempQueue.dequeue(tempPass))
+		NP_ForwardWaiting.enqueue(tempPass,1);
+
+	while (NP_BackwardWaiting.dequeue(tempPass))
+	{
+		if (t - tempPass->get_arrival_time() > max_waiting_time)
+			SP_BackwardWaiting.enqueue(tempPass, 1);
+		else
+			tempQueue.enqueue(tempPass);
+	}
+	while (tempQueue.dequeue(tempPass))
+		NP_BackwardWaiting.enqueue(tempPass, 1);
+}

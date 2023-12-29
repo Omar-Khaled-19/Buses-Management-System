@@ -66,6 +66,15 @@ Time Time::operator+(int minute)
 	new_time.hour = hour + 1;
 	return new_time;
 }
+
+int Time:: operator -(Time t2)
+{
+	if (hour == t2.hour)
+		return min - t2.min;
+	else
+		return ((60 - min) + t2.min) * (hour - t2.hour);
+}
+
 void Time:: printTime()
 {
 	cout << "Current Time (Hour:Min)==> " << hour << ":" << min<<endl;

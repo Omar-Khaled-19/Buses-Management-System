@@ -17,6 +17,7 @@ public:
 	void operator ++ ();
 	Time operator + (Time t2);
 	Time operator + (int minute);
+	int operator - (Time t2);
 	void printTime();
 	int GetHour()
 	{

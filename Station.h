@@ -50,6 +50,7 @@ public:
 	Bus* PeekFirstBackwardBus();
 	Bus* DequeueFirstForwardBus();
 	Bus* DequeueFirstBackwardBus();
+	void PromoteNP(Time t, int max_waiting_time);
 	
 };
 
