@@ -139,15 +139,21 @@ void Company::simulate(string FileName)
 		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
 		//		Bus* tempbus;
 		//		tempbus = StationPtrArray[i]->PeekFirstForwardBus();
+		// 
 		//		////movepassengerstofinished  ******////////////// 
+		//          sum of get off time??         
+		// 
 		//			//movetocheckup if any
+		// 
 		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
 		//			tempbus = StationPtrArray[i]->DequeueFirstForwardBus();
 		//			move_to_checkup(tempbus, clock);
 		//		}
 		//		else {
 		//			//boarding
-		//			//move to miving bus list
+		//          //sum of get on time
+		//
+		//			//move to moving bus list ?
 		//		}
 		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
 		//			Bus* tempbus2;
