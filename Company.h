@@ -43,6 +43,7 @@ public:
 	void move_to_checkup(Bus* checkup_bus, Time startTime);
 	void remove_from_checkup(Time curr_time);
 	void release_buses();
+	void bus_enter_station();
 };
 
 

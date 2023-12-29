@@ -143,12 +143,45 @@ void Company::remove_from_checkup(Time curr_time)  /////////////called each minu
 
 void Company::release_buses()
 {
-	if (clock.GetMinute() % 15 == 0)
+	if (clock.GetMin() % 15 == 0)
 	{
 		Bus* tempbus;
 		BusList.dequeue(tempbus);
 		ForwardMovingBusList.enqueue(tempbus);
 	}
+}
+
+void Company::bus_enter_station()
+{
+	Bus* tempBus;
+	LinkedQueue<Bus*> tempQueue;
+	while (ForwardMovingBusList.dequeue(tempBus))
+	{
+		if (clock - tempBus->GetLastMovingTime() == 15)
+		{
+			tempBus->SetCurrStation(tempBus->GetNextStation());
+			tempBus->SetNextStation(tempBus->GetNextStation() + 1);
+			StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+		}
+		else
+			tempQueue.enqueue(tempBus);
+	}
+	while (tempQueue.dequeue(tempBus))
+		ForwardMovingBusList.enqueue(tempBus);
+
+	while (BackwardMovingBusList.dequeue(tempBus))
+	{
+		if (clock - tempBus->GetLastMovingTime() == 15)
+		{
+			tempBus->SetCurrStation(tempBus->GetNextStation());
+			tempBus->SetNextStation(tempBus->GetNextStation() - 1);
+			StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+		}
+		else
+			tempQueue.enqueue(tempBus);
+	}
+	while (tempQueue.dequeue(tempBus))
+		BackwardMovingBusList.enqueue(tempBus);
 }
 
 ////////////////////////////////**********************************//////////////////////////////
