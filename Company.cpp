@@ -17,6 +17,8 @@ void Company::load(string FileName)
 		int NoOfStations, StationTime, WBus_count, MBus_count, WBusCap, MBusCap, CheckupTrips, C_WBus, C_MBus, maxWaitMin, GetOnOffSec, EventsNum;
 		char temp; //Not used, only used to take the ":" to be able to read time step
 		inFile >> NoOfStations >> StationTime >> WBus_count >> MBus_count >> WBusCap >> MBusCap >> CheckupTrips >> C_WBus >> C_MBus >> maxWaitMin >> GetOnOffSec >> EventsNum;
+		WBusCount = WBus_count;
+		MBusCount = MBus_count;
 		StationNumber = NoOfStations;
 		for (int i = 0; i <= NoOfStations; i++)
 		{
@@ -153,6 +155,8 @@ void Company::release_buses()
 
 void Company::simulate(string FileName)
 {
+	UI User;
+	Time clock(04, 00);
 	load(FileName);
 	Event* E;
 	Passenger* P;
@@ -262,6 +266,34 @@ void Company:: printFinished()
 		counter = counter->getNext();
 	}
 	cout << "\nPrint any key to display next station";
+}
+
+void Company::CreateOutputFile()
+{
+	ofstream Outfile;
+	Outfile.open("Output file.txt");
+	Outfile << "FT \tID\tAT \tWT \tTT\n";
+	while(!FinishedPassengerList.isEmpty())
+	{
+		Time ft, at, wt, tt;
+		Passenger* finished;
+		FinishedPassengerList.dequeue(finished);
+		ft = finished->get_FT();
+		at = finished->get_AT();
+		wt = finished->get_finish_WT();
+		tt = finished->get_TT();
+		Outfile << "\n" << ft.GetHour() << ":" << ft.GetMin()<<"\t"<<finished->get_id()<<"\t";
+		Outfile << at.GetHour() << ":" << at.GetMin() << "\t" << wt.GetHour() << ":" << wt.GetMin() << "\t" << tt.GetHour() << ":" << tt.GetMin();
+	}
+	Outfile << "......................................\n......................................\n";
+	Outfile << "Passengers: "<<FinishedCount; //need to separate passenger types
+	Outfile << "\nPassengers Avg wait time = ";  //needs calculating
+	Outfile << "\nPassenger Avg trip time = "; //needs calculating
+	Outfile << "\nnAuto-promoted passengers: "; //needs calculating
+	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
+	Outfile << "\nAvg Busy time = "; //needs calculating
+	Outfile << "\nAvg utilization = ";  //needs calculating
+	Outfile.close();
 }
 
 Company::~Company()

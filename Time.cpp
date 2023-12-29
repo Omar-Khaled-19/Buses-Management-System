@@ -86,6 +86,23 @@ int Time:: operator -(Time t2)
 void Time:: printTime()
 {
 	cout << "Current Time (Hour:Min)==> " << hour << ":" << min<<endl;
+
+Time Time:: operator - (const Time &t2)
+{
+	Time t3;
+	if (min >= t2.min)
+	{
+		t3.min = min - t2.min;
+		t3.hour = hour - t2.hour;
+	}
+	else
+	{
+		hour--;
+		min = min + 60;
+		t3.min = min - t2.min;
+		t3.hour = hour - t2.hour;
+	}
+	return t3;
 }
 
 int Time::GetHour()

@@ -26,5 +26,11 @@ public:
 	string get_special_type();
 	Station* get_start_station();
 	Station* get_end_station();
+	Time get_FT();
+	Time get_AT();
+	Time get_MT();
+	Time get_finish_WT();
+	Time get_upgrade_WT(Time clock);
+	Time get_TT();
 };
 

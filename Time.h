@@ -20,7 +20,14 @@ public:
 	Time operator + (int minute);
 	int operator - (Time t2);
 	void printTime();
-	int GetHour();
-	int GetMinute();
+	Time operator - (const Time &t2);
+	int GetHour()
+	{
+		return hour;
+	}
+	int GetMin()
+	{
+		return min;
+	}
 };
 
