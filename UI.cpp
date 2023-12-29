@@ -13,10 +13,134 @@ int UI::ChooseMode() //First thing to call in simulation
 	return x; 
 }
 
-void UI::InteractiveInterface()
-{
+void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished)
+ {
+		cout << "\n==============     STATION #" << stationn << "     ==============\n";
+		PriorityQueue<Passenger*>* FwdSP = stationptr->Get_FwdSP();
+		PriorityQueue<Passenger*>* BckSP = stationptr->Get_BckSP();
+		ModifiedQueue<Passenger*>* FwdNP = stationptr->Get_FwdNP();
+		ModifiedQueue<Passenger*>* BckNP = stationptr->Get_BckNP();
+		LinkedQueue<Passenger*>* FwdWP = stationptr->Get_FwdWP();
+		LinkedQueue<Passenger*>* BckWP = stationptr->Get_BckWP();
+		LinkedQueue<Bus*>* FwdBus = stationptr->Get_FwdBus();
+		LinkedQueue<Bus*>* BckBus = stationptr->Get_BckBus();
+		int SP_count = FwdSP->getCount() + BckSP->getCount();
+
+		cout << SP_count << " Waiting SP: FWD[";
+
+		PQNode<Passenger*>* tempQ = FwdSP->getHead();
+		for (int i = 0; i < FwdSP->getCount(); i++)
+		{
+			Passenger* ptemp = tempQ->getItem();
+
+			int SP_id = ptemp->get_id();
+			cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
+			tempQ = tempQ->getNext();
+		}
+		cout << "] BCK[";
+
+		PQNode<Passenger*>* tempQ2 = BckSP->getHead();
+		for (int i = 0; i < BckSP->getCount(); i++)
+		{
+			Passenger* ptemp = tempQ2->getItem();
+
+			int SP_id = ptemp->get_id();
+			cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
+			tempQ2 = tempQ2->getNext();
+		}
+		cout << "]" << endl;
+
+
+
+		int WP_count = FwdWP->getCount() + BckWP->getCount();
+
+		cout << WP_count << " Waiting WP: FWD[";
+
+		Node<Passenger*>* temp = FwdWP->getHead();
+		for (int i = 0; i < FwdWP->getCount(); i++)
+		{
+			Passenger* ptemp = temp->getItem();
+
+			int WP_id = ptemp->get_id();
+			cout << WP_id << ",";
+			temp = temp->getNext();
+		}
+		cout << "] BCK[";
+
+		Node<Passenger*>* temp2 = BckWP->getHead();
+		for (int i = 0; i < BckWP->getCount(); i++)
+		{
+			Passenger* ptemp = temp2->getItem();
+
+			int WP_id = ptemp->get_id();
+			cout << WP_id << ",";
+			temp2 = temp2->getNext();
+		}
+		cout << "]" << endl;
+
+
+
+
+		int NP_count = FwdNP->getCount() + BckNP->getCount();
+
+		cout << NP_count << " Waiting NP: FWD[";
+
+		Node<Passenger*>* tempQ3 = FwdNP->getHead();
+		for (int i = 0; i < FwdNP->getCount(); i++)
+		{
+			Passenger* ptemp = tempQ3->getItem();
+
+			int NP_id = ptemp->get_id();
+			cout << NP_id << ",";
+			tempQ3 = tempQ3->getNext();
+		}
+		cout << "] BCK[";
+
+		Node<Passenger*>* tempQ4 = BckNP->getHead();
+		for (int i = 0; i < BckNP->getCount(); i++)
+		{
+			Passenger* ptemp = tempQ4->getItem();
+
+			int NP_id = ptemp->get_id();
+			cout << NP_id << ",";
+			tempQ4 = tempQ4->getNext();
+		}
+		cout << "]" << endl;
+
+		int Bus_count = FwdBus->getCount() + BckBus->getCount();
+		cout << Bus_count << " Buses at this station:";
+		Node<Bus*>* tempQ5 = FwdBus->getHead();
+		for (int i = 0; i < FwdBus->getCount(); i++)
+		{
+			Bus* bustemp = tempQ5->getItem();
+			cout<<"\nB"<<bustemp->GetBusId()<<"[FWD, "<<bustemp->GetBusType()<<"Bus, "<<bustemp->GetBusCapacity()<<"] {";
+			tempQ5 = tempQ5->getNext();
+		}
+
+		Node<Bus*>* tempQ6 = BckBus->getHead();
+		for (int i = 0; i < BckBus->getCount(); i++)
+		{
+			Bus* bustemp = tempQ6->getItem();
+			cout << "\nB" << bustemp->GetBusId() << "[BCK, " << bustemp->GetBusType() << "Bus, " << bustemp->GetBusCapacity() << "] {";
+			tempQ6 = tempQ6->getNext();
+		}
+		cout << "----------------------------------------------------------------------------------------------------\n";
+
+		Node<Bus*>* tempQ7 = Checkup->getHead();
+		int Check_count = Checkup->getCount();
+		cout << Check_count <<"In_Checkup buses: ";
+		for (int i = 0; i < Check_count; i++)
+		{
+			Bus* bustemp = tempQ7->getItem();
+			if(i= Check_count-1)
+		    	cout << bustemp->GetBusId();
+			else
+				cout << bustemp->GetBusId() << ", ";
+			tempQ6 = tempQ7->getNext();
+		}
 
 }
+
 
 void UI::SilentStart()
 {
@@ -28,7 +152,8 @@ void UI::SilentEnd()
 	cout << "Simulation ends, Output file created.";
 }
 
-//void UI::printTime(Time& time)
-//{
-//	cout << "Current Time (Hour:Min)==> " << time.GetHour() << ":" << time.GetMin() << endl;
-//}
+
+void UI::printTime(Time& time)
+{
+	cout << "Current Time (Hour:Min)==> " << time.GetHour() << ":" << time.GetMin() << endl;
+}

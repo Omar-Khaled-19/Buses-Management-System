@@ -74,3 +74,13 @@ Time Bus::GetLastMovingTime()
 {
 	return LastMovingTime;
 }
+
+int Bus::GetBusId()
+{
+	return ID;
+}
+
+PriorityQueue<Passenger*>* Bus::Get_Bus_Passengers()
+{
+	return &Passengers;
+}

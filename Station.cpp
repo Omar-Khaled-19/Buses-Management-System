@@ -272,89 +272,89 @@ void Station::AddBackwardBus(Bus* newBus)
 }
 
 
-void Station:: printStation(int stationn)
-{
-	cout << "\n==============     STATION #"<<stationn<<"     ==============\n";
-
-	int SP_count = SP_ForwardWaiting.getCount() + SP_BackwardWaiting.getCount();
-
-	cout << SP_count << " Waiting SP: FWD[";
-
-	PQNode<Passenger*>* tempQ = SP_ForwardWaiting.getHead();
-	for (int i = 0; i < SP_ForwardWaiting.getCount();i++)
-	{
-		Passenger* ptemp = tempQ->getItem();
-
-		int SP_id = ptemp->get_id();
-		cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
-	}
-	cout << "] BCK[";
-	
-	PQNode<Passenger*>* tempQ2 = SP_BackwardWaiting.getHead();
-	for (int i = 0; i < SP_BackwardWaiting.getCount();i++)
-	{
-		Passenger* ptemp = tempQ2->getItem();
-
-		int SP_id = ptemp->get_id();
-		cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
-	}
-	cout << "]" << endl;
-
-
-
-	int WP_count = WP_ForwardWaiting.getCount() + WP_BackwardWaiting.getCount();
-	
-	cout << WP_count << " Waiting WP: FWD[";
-	
-	Node<Passenger*>* temp = WP_ForwardWaiting.getHead();
-	for (int i = 0; i < WP_ForwardWaiting.getCount();i++)
-	{
-		Passenger* ptemp = temp->getItem();
-		
-		int WP_id = ptemp->get_id();
-		cout << WP_id << ",";
-	}
-	cout << "] BCK[";
-
-	Node<Passenger*>* temp2 = WP_BackwardWaiting.getHead();
-	for (int i = 0; i < WP_BackwardWaiting.getCount();i++)
-	{
-		Passenger* ptemp = temp2->getItem();
-
-		int WP_id = ptemp->get_id();
-		cout << WP_id << ",";
-	}
-	cout << "]" << endl;
-
-
-
-
-	int NP_count = NP_ForwardWaiting.getCount() + NP_BackwardWaiting.getCount();
-
-	cout << NP_count << " Waiting NP: FWD[";
-
-	Node<Passenger*>* tempQ3 = NP_ForwardWaiting.getHead();
-	for (int i = 0; i < NP_ForwardWaiting.getCount();i++)
-	{
-		Passenger* ptemp = tempQ3->getItem();
-
-		int NP_id = ptemp->get_id();
-		cout << NP_id << ",";
-	}
-	cout << "] BCK[";
-	
-	Node<Passenger*>* tempQ4 = NP_BackwardWaiting.getHead();
-	for (int i = 0; i < NP_BackwardWaiting.getCount();i++)
-	{
-		Passenger* ptemp = tempQ4->getItem();
-
-		int NP_id = ptemp->get_id();
-		cout << NP_id << ",";
-	}
-	cout << "]" << endl;
-
-	cout << "----------------------------------------------------------------------------------------------------\n";
-}
+//void Station:: printStation(int stationn)
+//{
+//	cout << "\n==============     STATION #"<<stationn<<"     ==============\n";
+//
+//	int SP_count = SP_ForwardWaiting.getCount() + SP_BackwardWaiting.getCount();
+//
+//	cout << SP_count << " Waiting SP: FWD[";
+//
+//	PQNode<Passenger*>* tempQ = SP_ForwardWaiting.getHead();
+//	for (int i = 0; i < SP_ForwardWaiting.getCount();i++)
+//	{
+//		Passenger* ptemp = tempQ->getItem();
+//
+//		int SP_id = ptemp->get_id();
+//		cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
+//	}
+//	cout << "] BCK[";
+//	
+//	PQNode<Passenger*>* tempQ2 = SP_BackwardWaiting.getHead();
+//	for (int i = 0; i < SP_BackwardWaiting.getCount();i++)
+//	{
+//		Passenger* ptemp = tempQ2->getItem();
+//
+//		int SP_id = ptemp->get_id();
+//		cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
+//	}
+//	cout << "]" << endl;
+//
+//
+//
+//	int WP_count = WP_ForwardWaiting.getCount() + WP_BackwardWaiting.getCount();
+//	
+//	cout << WP_count << " Waiting WP: FWD[";
+//	
+//	Node<Passenger*>* temp = WP_ForwardWaiting.getHead();
+//	for (int i = 0; i < WP_ForwardWaiting.getCount();i++)
+//	{
+//		Passenger* ptemp = temp->getItem();
+//		
+//		int WP_id = ptemp->get_id();
+//		cout << WP_id << ",";
+//	}
+//	cout << "] BCK[";
+//
+//	Node<Passenger*>* temp2 = WP_BackwardWaiting.getHead();
+//	for (int i = 0; i < WP_BackwardWaiting.getCount();i++)
+//	{
+//		Passenger* ptemp = temp2->getItem();
+//
+//		int WP_id = ptemp->get_id();
+//		cout << WP_id << ",";
+//	}
+//	cout << "]" << endl;
+//
+//
+//
+//
+//	int NP_count = NP_ForwardWaiting.getCount() + NP_BackwardWaiting.getCount();
+//
+//	cout << NP_count << " Waiting NP: FWD[";
+//
+//	Node<Passenger*>* tempQ3 = NP_ForwardWaiting.getHead();
+//	for (int i = 0; i < NP_ForwardWaiting.getCount();i++)
+//	{
+//		Passenger* ptemp = tempQ3->getItem();
+//
+//		int NP_id = ptemp->get_id();
+//		cout << NP_id << ",";
+//	}
+//	cout << "] BCK[";
+//	
+//	Node<Passenger*>* tempQ4 = NP_BackwardWaiting.getHead();
+//	for (int i = 0; i < NP_BackwardWaiting.getCount();i++)
+//	{
+//		Passenger* ptemp = tempQ4->getItem();
+//
+//		int NP_id = ptemp->get_id();
+//		cout << NP_id << ",";
+//	}
+//	cout << "]" << endl;
+//
+//	cout << "----------------------------------------------------------------------------------------------------\n";
+//}
 
 Bus* Station::PeekFirstForwardBus()
 {
@@ -413,4 +413,37 @@ void Station::PromoteNP(Time t, int max_waiting_time)
 	}
 	while (tempQueue.dequeue(tempPass))
 		NP_BackwardWaiting.enqueue(tempPass);
+}
+
+PriorityQueue<Passenger*>* Station::Get_FwdSP()
+{
+	return &SP_ForwardWaiting;
+}
+PriorityQueue<Passenger*>* Station::Get_BckSP()
+{
+	return &SP_BackwardWaiting;
+}
+ModifiedQueue<Passenger*>* Station:: Get_FwdNP()
+{
+	return &NP_ForwardWaiting;
+}
+ModifiedQueue<Passenger*>* Station:: Get_BckNP()
+{
+	return &NP_BackwardWaiting;
+}
+LinkedQueue<Passenger*>* Station:: Get_FwdWP()
+{
+	return &WP_ForwardWaiting;
+}
+LinkedQueue<Passenger*>* Station:: Get_BckWP()
+{
+	return &WP_BackwardWaiting;
+}
+LinkedQueue<Bus*>* Station::Get_FwdBus()
+{
+	return &ForwardBusList;
+}
+LinkedQueue<Bus*>* Station::Get_BckBus()
+{
+	return &BackwardBusList;
 }

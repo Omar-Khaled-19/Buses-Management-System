@@ -283,7 +283,7 @@ void Company::simulate(string FileName)
 	}
 }
 
-void Company:: printFinished()
+void Company:: printFinished() //MOVE TO UI CLASS
 {
 	cout << FinishedCount << " Finished passengers: ";
 	
@@ -299,7 +299,7 @@ void Company:: printFinished()
 		counter = counter->getNext();
 	}
 	cout << "\nPrint any key to display next station";
-}
+} 
 
 void Company::CreateOutputFile()
 {
