@@ -16,3 +16,8 @@ Time LeaveEvent::get_event_time()
 {
     return event_time;
 }
+
+Station* LeaveEvent::LeaveStation()
+{
+    return st_station;
+}

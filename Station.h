@@ -46,5 +46,10 @@ public:
 	void AddForwardBus(Bus* newBus);
 	void AddBackwardBus(Bus* newBus);
 	void printStation(int stationn);
+	Bus* PeekFirstForwardBus();
+	Bus* PeekFirstBackwardBus();
+	Bus* DequeueFirstForwardBus();
+	Bus* DequeueFirstBackwardBus();
+	
 };
 

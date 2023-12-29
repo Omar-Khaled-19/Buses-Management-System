@@ -120,12 +120,53 @@ void Company::simulate(string FileName)
 	char x;
 	while (EventPtrList.peek(E))
 	{
+		LinkedQueue<Event*> oneminuteEventQueue;
 		while (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
+			oneminuteEventQueue.enqueue(E);
 			EventPtrList.peek(E);
 		}
+
+
+
+
+		//for (int i = 0; i++; i <= StationNumber) {
+		//	int Num_of_ForwardBuses = StationPtrArray[i]->getnumoForwardfbuses();
+		//	int Num_of_BackwardBuses = StationPtrArray[i]->getnumoBackwardfbuses();
+
+		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
+		//		Bus* tempbus;
+		//		tempbus = StationPtrArray[i]->PeekFirstForwardBus();
+		//		////movepassengerstofinished  ******////////////// 
+		//			//movetocheckup if any
+		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
+		//			tempbus = StationPtrArray[i]->DequeueFirstForwardBus();
+		//			move_to_checkup(tempbus, clock);
+		//		}
+		//		else {
+		//			//boarding
+		//			//move to miving bus list
+		//		}
+		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
+		//			Bus* tempbus2;
+		//			tempbus2 = StationPtrArray[i]->PeekFirstBackwardBus();
+		//			////movepassengerstofinished  ******////////////// 
+		//				//movetocheckup if any
+		//			if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
+		//			    tempbus2 = StationPtrArray[i]->DequeueFirstBackwardBus();
+		//				move_to_checkup(tempbus, clock);
+		//			}
+		//			else {
+		//				//boarding
+		//				//move to miving bus list
+		//			}
+		//	}
+		//	}
+		//}
+
+		//////////////////////////////////////////////////////////////////////////////////////////
 		clock.printTime();
 		for (int i = 1; i <= StationNumber; i++)
 		{

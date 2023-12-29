@@ -355,3 +355,31 @@ void Station:: printStation(int stationn)
 
 	cout << "----------------------------------------------------------------------------------------------------\n";
 }
+
+Bus* Station::PeekFirstForwardBus()
+{
+	Bus* tempBus;
+	ForwardBusList.peek(tempBus);
+	return tempBus;
+}
+
+Bus* Station::PeekFirstBackwardBus()
+{
+	Bus* tempBus;
+	BackwardBusList.peek(tempBus);
+	return tempBus;
+}
+
+Bus* Station::DequeueFirstForwardBus()
+{
+	Bus* tempBus;
+	ForwardBusList.dequeue(tempBus);
+	return tempBus;
+}
+
+Bus* Station::DequeueFirstBackwardBus()
+{
+	Bus* tempBus;
+	BackwardBusList.dequeue(tempBus);
+	return tempBus;
+}

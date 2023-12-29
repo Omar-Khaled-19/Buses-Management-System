@@ -12,7 +12,7 @@ private:
 	int Capacity;
 	int ID;
 	int total_passengers_transported;
-	int Num_Of_Curr_Journeys;
+	int Num_of_Curr_Journeys;
 	int Current_Station;
 	int Next_Station;
 	int Ch_Journeys;
@@ -35,11 +35,9 @@ public:
 	char GetBusType();
 	void EnqueuePassenger(Passenger* P);
 	void set_check_start_time(Time t);
-	char get_bus_type();
-	//Time Get_ch_time();
 	Time GetCheckStartTime();
 	int GetchekupDurationInMinutes();
 	int GetCurrStation();
 	int GetNextStation();
-
+	int GetNum_of_Curr_Journeys();
 };

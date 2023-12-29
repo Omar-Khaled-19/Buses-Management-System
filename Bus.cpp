@@ -40,18 +40,6 @@ void Bus::set_check_start_time(Time t)
 	Ch_Start_Time = t;
 }
 
-char Bus::get_bus_type()
-{
-	return Type;
-}
-
-//Time Bus::get_ch_time()
-//{
-//	return Ch_ime;
-//}
-
-
-
 Time Bus::GetCheckStartTime()
 {
 	return Ch_Start_Time;
@@ -70,4 +58,9 @@ int Bus::GetCurrStation()
 int Bus::GetNextStation()
 {
 	return Next_Station;
+}
+
+int Bus::GetNum_of_Curr_Journeys()
+{
+	return Num_of_Curr_Journeys;
 }

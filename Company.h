@@ -17,6 +17,7 @@ private:
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
+	int NumofJourneystoCheckup;
 	Time TimeBetStaions;
 	LinkedQueue<Bus*> BusList;
 	LinkedQueue<Bus*> ForwardMovingBusList;
