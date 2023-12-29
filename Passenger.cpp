@@ -19,6 +19,11 @@ int Passenger::get_id()
 	return id;
 }
 
+Time Passenger::get_arrival_time()
+{
+	return AT;
+}
+
 string Passenger::get_type()
 {
 	return type;

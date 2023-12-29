@@ -34,11 +34,23 @@ public:
 	Station();
 	Station(int stationNum);
 
+	int GetStaionNum();
+
 	Passenger* MovSP();
 	Passenger* MovNP();
 	Passenger* MovWC();
-	void remove_NP(int p_id);
+	void GetPassengerOn();
+	LinkedQueue<Passenger*> GetPassengerOff();
+    void remove_NP(int p_id);
 	void add_passenger(Passenger* P);
+	void AddForwardBus(Bus* newBus);
+	void AddBackwardBus(Bus* newBus);
 	void printStation(int stationn);
+	Bus* PeekFirstForwardBus();
+	Bus* PeekFirstBackwardBus();
+	Bus* DequeueFirstForwardBus();
+	Bus* DequeueFirstBackwardBus();
+	void PromoteNP(Time t, int max_waiting_time);
+	
 };
 

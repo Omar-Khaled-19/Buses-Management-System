@@ -82,6 +82,37 @@ int Company::generateRandom(int min, int max)
 	return dis(gen);
 }
 
+
+//////////////////////////////////////////**************////////////////////////////////////////////
+void Company::move_to_checkup(Bus* checkup_bus, Time startTime)
+{
+	checkup_bus->set_check_start_time(startTime);
+	CheckupBusList.enqueue(checkup_bus);
+}
+
+void Company::remove_from_checkup(Time curr_time)  /////////////called each minute 
+{
+	Bus* tempBus;
+	Time Leave_time;
+	while (CheckupBusList.peek(tempBus))
+	{
+		Leave_time = tempBus->GetCheckStartTime() + tempBus->GetchekupDurationInMinutes();
+		if (Leave_time == curr_time) {
+			CheckupBusList.dequeue(tempBus);
+			if (tempBus->GetNextStation() > tempBus->GetCurrStation()) {
+				ForwardMovingBusList.enqueue(tempBus);
+			}
+			else if (tempBus->GetNextStation() < tempBus->GetCurrStation()) {
+				BackwardMovingBusList.enqueue(tempBus);
+			}
+		}
+		else return;
+	}
+}
+
+
+////////////////////////////////**********************************//////////////////////////////
+
 void Company::simulate(string FileName)
 {
 	UI User;
@@ -92,13 +123,54 @@ void Company::simulate(string FileName)
 	char x;
 	while (EventPtrList.peek(E))
 	{
+		LinkedQueue<Event*> oneminuteEventQueue;
 		while (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
+			oneminuteEventQueue.enqueue(E);
 			EventPtrList.peek(E);
 		}
-		//User.printTime(clock); //changed for class responsibility
+
+
+
+
+		//for (int i = 0; i++; i <= StationNumber) {
+		//	int Num_of_ForwardBuses = StationPtrArray[i]->getnumoForwardfbuses();
+		//	int Num_of_BackwardBuses = StationPtrArray[i]->getnumoBackwardfbuses();
+
+		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
+		//		Bus* tempbus;
+		//		tempbus = StationPtrArray[i]->PeekFirstForwardBus();
+		//		////movepassengerstofinished  ******////////////// 
+		//			//movetocheckup if any
+		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
+		//			tempbus = StationPtrArray[i]->DequeueFirstForwardBus();
+		//			move_to_checkup(tempbus, clock);
+		//		}
+		//		else {
+		//			//boarding
+		//			//move to miving bus list
+		//		}
+		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
+		//			Bus* tempbus2;
+		//			tempbus2 = StationPtrArray[i]->PeekFirstBackwardBus();
+		//			////movepassengerstofinished  ******////////////// 
+		//				//movetocheckup if any
+		//			if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
+		//			    tempbus2 = StationPtrArray[i]->DequeueFirstBackwardBus();
+		//				move_to_checkup(tempbus, clock);
+		//			}
+		//			else {
+		//				//boarding
+		//				//move to miving bus list
+		//			}
+		//	}
+		//	}
+		//}
+
+		//////////////////////////////////////////////////////////////////////////////////////////
+		clock.printTime();
 		for (int i = 1; i <= StationNumber; i++)
 		{
 			int rand_number = generateRandom(1, 100);

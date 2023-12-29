@@ -18,6 +18,7 @@ private:
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
+	int NumofJourneystoCheckup;
 	Time TimeBetStaions;
 	LinkedQueue<Bus*> BusList;
 	LinkedQueue<Bus*> ForwardMovingBusList;
@@ -38,6 +39,8 @@ public:
 	void simulate(string FileName);
 	int generateRandom(int min, int max);
 	void CreateOutputFile();
+	void move_to_checkup(Bus* checkup_bus, Time startTime);
+	void remove_from_checkup(Time curr_time);
 	
 
 };

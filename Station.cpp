@@ -31,7 +31,10 @@ void Station::remove_NP(int p_id)
 		BCK_NP--;
 }
 
-
+int Station::GetStaionNum()
+{
+	return StationNum;
+}
 
 Passenger* Station::MovWC()
 {
@@ -83,6 +86,107 @@ Passenger* Station::MovNP()
 	return NP_Passenger_ptr;
 }
 
+void Station::GetPassengerOn()
+{   
+	Bus* FBus;
+	Passenger* FP;
+	ForwardBusList.peek(FBus);
+	int FMovCount = FBus->GetPassengersCount();
+	int maxCap = FBus->GetBusCapacity();
+	int Forward_Waiting_MPassengers_Count = SP_ForwardWaiting.getCount() + NP_ForwardWaiting.getCount();
+	int Forward_Waiting_WPassengers_Count = WP_ForwardWaiting.get_count();
+	int Total = Forward_Waiting_MPassengers_Count + Forward_Waiting_WPassengers_Count;
+
+
+	while (FMovCount<maxCap || Total!=0 )
+	{
+		if (FBus->GetBusType() == 'M'&& Forward_Waiting_MPassengers_Count!=0)
+		{
+			if (SP_ForwardWaiting.getCount() != 0)
+			{
+				SP_ForwardWaiting.dequeue(FP);
+				FBus->EnqueuePassenger(FP);
+				FMovCount = FBus->GetPassengersCount();
+				Forward_Waiting_MPassengers_Count--;
+				if (Forward_Waiting_MPassengers_Count == 0)
+					break;
+
+			}
+			else
+			{
+				NP_ForwardWaiting.dequeue(FP);
+				FBus->EnqueuePassenger(FP);
+				FMovCount = FBus->GetPassengersCount();
+				Forward_Waiting_MPassengers_Count--;
+				if (Forward_Waiting_MPassengers_Count == 0)
+					break;
+			}
+
+
+	    }
+		else if (FBus->GetBusType() == 'W')
+		{
+			WP_ForwardWaiting.dequeue(FP);
+			FBus->EnqueuePassenger(FP);
+			FMovCount = FBus->GetPassengersCount();
+			if (Forward_Waiting_WPassengers_Count == 0)
+				break;
+		}
+
+
+
+    }
+
+
+
+	Bus* BBus;
+	Passenger* BP;
+	BackwardBusList.peek(BBus);
+	int BMovCount = BBus->GetPassengersCount();
+	int BmaxCap = BBus->GetBusCapacity();
+	int Backward_Waiting_MPassengers_Count = SP_BackwardWaiting.getCount() + NP_BackwardWaiting.getCount();
+	int Backward_Waiting_WPassengers_Count = WP_BackwardWaiting.get_count();
+   
+	while (BMovCount < BmaxCap)
+	{
+		if (BBus->GetBusType() == 'M')
+		{
+			if (SP_BackwardWaiting.getCount() != 0)
+			{
+				SP_BackwardWaiting.dequeue(BP);
+				BBus->EnqueuePassenger(BP);
+				BMovCount = BBus->GetPassengersCount();
+				Backward_Waiting_MPassengers_Count--;
+				if (Backward_Waiting_MPassengers_Count == 0)
+					break;
+
+			}
+			else
+			{
+				NP_BackwardWaiting.dequeue(BP);
+				BBus->EnqueuePassenger(BP);
+				BMovCount = BBus->GetPassengersCount();
+				Backward_Waiting_MPassengers_Count--;
+				if (Backward_Waiting_MPassengers_Count == 0)
+					break;
+			}
+
+
+		}
+		else if (BBus->GetBusType() == 'W')
+		{
+			WP_BackwardWaiting.dequeue(BP);
+			BBus->EnqueuePassenger(BP);
+			BMovCount = FBus->GetPassengersCount();
+			if (Backward_Waiting_WPassengers_Count == 0)
+				break;
+		}
+
+
+
+	}
+
+}
 
 void Station::add_passenger(Passenger* P)
 {
@@ -155,6 +259,16 @@ void Station::add_passenger(Passenger* P)
 		}
 	}
 
+}
+
+void Station::AddForwardBus(Bus* newBus)
+{
+	ForwardBusList.enqueue(newBus);
+}
+
+void Station::AddBackwardBus(Bus* newBus)
+{
+	BackwardBusList.enqueue(newBus);
 }
 
 
@@ -240,4 +354,57 @@ void Station:: printStation(int stationn)
 	cout << "]" << endl;
 
 	cout << "----------------------------------------------------------------------------------------------------\n";
+}
+
+Bus* Station::PeekFirstForwardBus()
+{
+	Bus* tempBus;
+	ForwardBusList.peek(tempBus);
+	return tempBus;
+}
+
+Bus* Station::PeekFirstBackwardBus()
+{
+	Bus* tempBus;
+	BackwardBusList.peek(tempBus);
+	return tempBus;
+}
+
+Bus* Station::DequeueFirstForwardBus()
+{
+	Bus* tempBus;
+	ForwardBusList.dequeue(tempBus);
+	return tempBus;
+}
+
+Bus* Station::DequeueFirstBackwardBus()
+{
+	Bus* tempBus;
+	BackwardBusList.dequeue(tempBus);
+	return tempBus;
+}
+
+void Station::PromoteNP(Time t, int max_waiting_time)
+{
+	Passenger* tempPass;
+	LinkedQueue<Passenger*> tempQueue;
+	while (NP_ForwardWaiting.dequeue(tempPass))
+	{
+		if (t - tempPass->get_arrival_time() > max_waiting_time)
+			SP_ForwardWaiting.enqueue(tempPass, 1);
+		else
+			tempQueue.enqueue(tempPass);
+	}
+	while (tempQueue.dequeue(tempPass))
+		NP_ForwardWaiting.enqueue(tempPass,1);
+
+	while (NP_BackwardWaiting.dequeue(tempPass))
+	{
+		if (t - tempPass->get_arrival_time() > max_waiting_time)
+			SP_BackwardWaiting.enqueue(tempPass, 1);
+		else
+			tempQueue.enqueue(tempPass);
+	}
+	while (tempQueue.dequeue(tempPass))
+		NP_BackwardWaiting.enqueue(tempPass, 1);
 }
