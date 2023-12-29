@@ -8,6 +8,7 @@
 #include "Time.h"
 #include "ArrivalEvent.h"
 #include "LeaveEvent.h"
+#include "UI.h"
 #include <fstream>
 #include<random>
 class Company
@@ -24,6 +25,8 @@ private:
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
 	int FinishedCount;
+	int WBusCount;
+	int MBusCount;
 
 public:
 	Company(); // default constructor
@@ -34,6 +37,7 @@ public:
 	void printFinished();
 	void simulate(string FileName);
 	int generateRandom(int min, int max);
+	void CreateOutputFile();
 	
 
 };

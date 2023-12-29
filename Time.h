@@ -15,10 +15,14 @@ public:
 	void operator = (Time t2);
 	bool operator == (Time t2);
 	void operator ++ ();
-	void printTime();
+	Time operator - (const Time &t2);
 	int GetHour()
 	{
 		return hour;
+	}
+	int GetMin()
+	{
+		return min;
 	}
 };
 
