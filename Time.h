@@ -21,13 +21,7 @@ public:
 	int operator - (Time t2);
 	void printTime();
 	Time operator - (const Time &t2);
-	int GetHour()
-	{
-		return hour;
-	}
-	int GetMin()
-	{
-		return min;
-	}
+	int GetHour();
+	int GetMinute();
 };
 
