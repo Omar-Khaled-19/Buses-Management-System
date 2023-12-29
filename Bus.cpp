@@ -57,7 +57,6 @@ bool Bus::GetPassengerOff(Passenger* P,int station_num) //dequeues a passenger o
 	Passengers.peek(P);
 	if (P != nullptr)
 	{
-		
 		int EndStationNum = P->get_end_station_num();
 		if (EndStationNum == station_num)
 		{

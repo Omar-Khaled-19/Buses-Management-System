@@ -1,5 +1,6 @@
 #include "Station.h"
-#include "Company.h"
+//#include "Company.h"
+
 Station::Station()
 {
 
@@ -189,24 +190,24 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 
 void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int TotalStationsNum)
 {
-		Passenger* BP = nullptr;
-		char BBusType = BBus->GetBusType();
-		if (BBusType == 'M')
-	Bus* BBus;
+	Passenger* BP = nullptr;
+	char BBusType = BBus->GetBusType();
+	if (BBusType == 'M')
+		Bus* BBus;
 	Passenger* BP;
 	BackwardBusList.peek(BBus);
 	int BMovCount = BBus->GetPassengersCount();
 	int BmaxCap = BBus->GetBusCapacity();
 	int Backward_Waiting_MPassengers_Count = SP_BackwardWaiting.getCount() + NP_BackwardWaiting.getCount();
 	int Backward_Waiting_WPassengers_Count = WP_BackwardWaiting.getCount();
-   
+
 	while (BMovCount < BmaxCap)
 	{
 		if (BBus->GetBusType() == 'M')
 		{
 			while (SP_BackwardWaiting.dequeue(BP) && Time_count < 60)
 			{
-				if (BBus->GetPassengerOnBWD(BP,TotalStationsNum))
+				if (BBus->GetPassengerOnBWD(BP, TotalStationsNum))
 				{
 					Time_count + get_on_time;
 				}
@@ -224,7 +225,7 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 			{
 				while (NP_BackwardWaiting.dequeue(BP) && Time_count < 60)
 				{
-					if (BBus->GetPassengerOnBWD(BP,TotalStationsNum))
+					if (BBus->GetPassengerOnBWD(BP, TotalStationsNum))
 					{
 						Time_count + get_on_time;
 					}
@@ -244,7 +245,7 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 		{
 			while (WP_BackwardWaiting.dequeue(BP) && Time_count < 60)
 			{
-				if (BBus->GetPassengerOnBWD(BP,TotalStationsNum))
+				if (BBus->GetPassengerOnBWD(BP, TotalStationsNum))
 				{
 					Time_count + get_on_time;
 				}
@@ -258,8 +259,8 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 			}
 
 		}
+	}
 }
-
 
 void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, int NumOfJourneysToChecup)
 {
@@ -287,6 +288,7 @@ void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, in
 	}
 	return;
 }
+
 
 void Station::AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations)
 {
