@@ -33,7 +33,9 @@ public:
 	int GetBusCapacity();
 	int GetCurrentStation();
 	char GetBusType();
-	void EnqueuePassenger(Passenger* P);
+	bool GetPassengerOnFWD(Passenger* P);
+	bool GetPassengerOnBWD(Passenger* P,int num_of_stations);
+	bool GetPassengerOff(Passenger* P, int station_num);
 	void set_check_start_time(Time t);
 	Time GetCheckStartTime();
 	int GetchekupDurationInMinutes();

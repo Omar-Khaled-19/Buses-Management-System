@@ -47,6 +47,14 @@ Station* Passenger::get_end_station()
 	return end_station;
 }
 
+int Passenger::get_end_station_num()
+{
+	int EndStationNum = end_station->GetStationNum();
+	return EndStationNum;
+}
+
+
+
 Time Passenger:: get_FT()
 {
 	return FT;

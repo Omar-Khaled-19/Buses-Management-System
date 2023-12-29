@@ -81,6 +81,43 @@ int Company::generateRandom(int min, int max)
 	uniform_int_distribution<>dis(1, 100);
 	return dis(gen);
 }
+/////////////////////////////////////////////UPDATES/////////////////////////////////////////////////////////
+
+void Company::UpdateFinishedList(Station* S)
+{
+	int x = S->GetGoToFinishedPassengerListCount();
+	for (int i = 0;i < x;i++)
+	{
+		FinishedPassengerList.enqueue(S->RemovePassengerFromGoToFinishedPassengerList());
+	}
+}
+
+void Company::UpdateForwardMovingBusList(Station* S)
+{
+	int x = S->GetFullForwardBusListCount();
+	for (int i = 0;i < x;i++)
+	{
+		ForwardMovingBusList.enqueue(S->RemoveBusFromFullForwardBusList());
+	}
+}
+
+void Company::UpdateBackwardMovingBusList(Station* S)
+{
+	int x = S->GetFullForwardBusListCount();
+	for (int i = 0;i < x;i++)
+	{
+		BackwardMovingBusList.enqueue(S->RemoveBusFromFullForwardBusList());
+	}
+}
+
+void Company::UpdateCheckupBusList(Station* S)
+{
+	int x = S->GetNeedsCheckupBusListCount();
+	for (int i = 0;i < x;i++)
+	{
+		CheckupBusList.enqueue(S->RemoveBusFromNeedsCheckupBusList());
+	}
+}
 
 
 //////////////////////////////////////////**************////////////////////////////////////////////
