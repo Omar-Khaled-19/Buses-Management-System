@@ -1,6 +1,5 @@
 #pragma once
 #include "LinkedQueue.h"
-#include "LinkedList.h"
 #include "Event.h"
 #include "Passenger.h"
 #include "Bus.h"
@@ -8,11 +7,13 @@
 #include "Time.h"
 #include "ArrivalEvent.h"
 #include "LeaveEvent.h"
+#include "UI.h"
 #include <fstream>
 #include<random>
 class Company
 {
 private:
+	Time clock;
 	LinkedQueue<Event*> EventPtrList;
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
@@ -25,6 +26,8 @@ private:
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
 	int FinishedCount;
+	int WBusCount;
+	int MBusCount;
 
 public:
 	Company(); // default constructor
@@ -35,10 +38,11 @@ public:
 	void printFinished();
 	void simulate(string FileName);
 	int generateRandom(int min, int max);
+	void CreateOutputFile();
 	void move_to_checkup(Bus* checkup_bus, Time startTime);
 	void remove_from_checkup(Time curr_time);
-	
-
+	void release_buses();
+	void bus_enter_station();
 };
 
 

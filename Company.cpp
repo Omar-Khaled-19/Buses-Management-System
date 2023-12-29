@@ -3,6 +3,7 @@
 Company::Company()
 {
 	FinishedCount = 0;
+	clock.setTime(04, 00);
 }
 
 Company::Company(string FileName) 
@@ -16,23 +17,55 @@ void Company::load(string FileName)
 		int NoOfStations, StationTime, WBus_count, MBus_count, WBusCap, MBusCap, CheckupTrips, C_WBus, C_MBus, maxWaitMin, GetOnOffSec, EventsNum;
 		char temp; //Not used, only used to take the ":" to be able to read time step
 		inFile >> NoOfStations >> StationTime >> WBus_count >> MBus_count >> WBusCap >> MBusCap >> CheckupTrips >> C_WBus >> C_MBus >> maxWaitMin >> GetOnOffSec >> EventsNum;
+		WBusCount = WBus_count;
+		MBusCount = MBus_count;
 		StationNumber = NoOfStations;
 		for (int i = 0; i <= NoOfStations; i++)
 		{
 			StationPtrArray[i] = new Station(i);
 		}
-		for (int i = 0; i < WBus_count; i++)
+		bool flag = true;
+		int tempMBus_count = MBus_count;
+		int tempWBus_count = WBus_count;
+		for (int i = 0; i < WBus_count + MBus_count; i++)
 		{
-			Bus bus(i+1, WBusCap,'W');
-			Bus* busptr=&bus;
-			BusList.enqueue(busptr);
+			if (tempMBus_count != 0 && tempWBus_count != 0)
+			{
+				if (flag)
+				{
+					Bus* bus = new Bus(i + 1, MBusCap, 'M');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempMBus_count--;
+				}
+				else if (!flag)
+				{
+					Bus* bus = new Bus(i + 1, WBusCap, 'W');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempWBus_count--;
+				}
+			}
+			else
+			{
+				if (tempMBus_count != 0)
+				{
+					Bus* bus = new Bus(i + 1, MBusCap, 'M');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempMBus_count--;
+					continue;
+				}
+				else 
+				{
+					Bus* bus = new Bus(i + 1, WBusCap, 'W');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempWBus_count--;
+				}
+			}
 		}
-		for (int i = 0; i < MBus_count; i++)
-		{
-			Bus bus(i+WBus_count, MBusCap, 'M');
-			Bus* busptr = &bus;
-			BusList.enqueue(busptr);
-		}
+		
 		for (int i = 0; i < EventsNum; i++)
 		{
 			string EventType;
@@ -108,11 +141,54 @@ void Company::remove_from_checkup(Time curr_time)  /////////////called each minu
 	}
 }
 
+void Company::release_buses()
+{
+	if (clock.GetMin() % 15 == 0)
+	{
+		Bus* tempbus;
+		BusList.dequeue(tempbus);
+		ForwardMovingBusList.enqueue(tempbus);
+	}
+}
+
+void Company::bus_enter_station()
+{
+	Bus* tempBus;
+	LinkedQueue<Bus*> tempQueue;
+	while (ForwardMovingBusList.dequeue(tempBus))
+	{
+		if (clock - tempBus->GetLastMovingTime() == 15)
+		{
+			tempBus->SetCurrStation(tempBus->GetNextStation());
+			tempBus->SetNextStation(tempBus->GetNextStation() + 1);
+			StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+		}
+		else
+			tempQueue.enqueue(tempBus);
+	}
+	while (tempQueue.dequeue(tempBus))
+		ForwardMovingBusList.enqueue(tempBus);
+
+	while (BackwardMovingBusList.dequeue(tempBus))
+	{
+		if (clock - tempBus->GetLastMovingTime() == 15)
+		{
+			tempBus->SetCurrStation(tempBus->GetNextStation());
+			tempBus->SetNextStation(tempBus->GetNextStation() - 1);
+			StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+		}
+		else
+			tempQueue.enqueue(tempBus);
+	}
+	while (tempQueue.dequeue(tempBus))
+		BackwardMovingBusList.enqueue(tempBus);
+}
 
 ////////////////////////////////**********************************//////////////////////////////
 
 void Company::simulate(string FileName)
 {
+	UI User;
 	Time clock(04, 00);
 	load(FileName);
 	Event* E;
@@ -229,6 +305,79 @@ void Company:: printFinished()
 		counter = counter->getNext();
 	}
 	cout << "\nPrint any key to display next station";
+}
+
+void Company::CreateOutputFile()
+{
+	ofstream Outfile;
+	Outfile.open("Output file.txt");
+	Outfile << "FT \tID\tAT \tWT \tTT\n";
+	int finishNP = 0;
+	int finishSP = 0; 
+	int finishWP = 0;
+	int PromotedNum = Station::numberOfPromoted;
+	Time totalWT;
+	Time totalTT;
+	int promotedPresentage = (PromotedNum / FinishedCount)*100;
+	while(!FinishedPassengerList.isEmpty())
+	{
+		Time ft, at;
+		int wt_min, tt_min;
+		int wt_hr = 0;
+		int tt_hr = 0;
+		Passenger* finished;
+		FinishedPassengerList.dequeue(finished);
+		ft = finished->get_FT();
+		at = finished->get_AT();
+		wt_min = finished->get_finish_WT();
+		totalWT = totalWT + wt_min;
+		tt_min = finished->get_TT();
+		totalTT = totalTT + tt_min;
+		string type = finished->get_type();
+		if (type == "SP")
+			finishSP++;
+		if (type == "WP")
+			finishWP++;
+		if (type == "NP")
+			finishNP++;
+		while (wt_min > 59)
+		{
+			wt_min = wt_min-60;
+			wt_hr++;
+		}
+		while (tt_min > 59)
+		{
+			tt_min = tt_min - 60;
+			tt_hr++;
+		}
+		Outfile << "\n" << ft.GetHour() << ":" << ft.GetMin()<<"\t"<<finished->get_id()<<"\t";
+	 	Outfile << at.GetHour() << ":" << at.GetMin() << "\t" << wt_hr << ":" << wt_min << "\t" << tt_hr << ":" << tt_min;
+	}
+	int totalTT_min = totalTT.GetMin() + ((totalTT.GetHour()) * 60);
+	int totalWT_min = totalWT.GetMin() + ((totalWT.GetHour()) * 60);
+	int avgTT_min = totalTT_min / FinishedCount;
+	int avgWT_min = totalWT_min / FinishedCount;
+	int avgTT_hr = 0;
+	int avgWT_hr = 0;
+	while (avgTT_min > 59)
+	{
+		avgTT_min = avgTT_min - 60;
+		avgTT_hr++;
+	}
+	while (avgWT_min > 59)
+	{
+		avgWT_min = avgWT_min - 60;
+		avgWT_hr++;
+	}
+	Outfile << "......................................\n......................................\n";
+	Outfile << "Passengers: "<<FinishedCount<<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
+	Outfile << "\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
+	Outfile << "\nPassenger Avg trip time = "<<avgTT_hr<<":"<<avgTT_min;
+	Outfile << "\nnAuto-promoted passengers: "<<promotedPresentage<<"%"; 
+	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
+	Outfile << "\nAvg Busy time = "; //needs calculating
+	Outfile << "\nAvg utilization = ";  //needs calculating
+	Outfile.close();
 }
 
 Company::~Company()

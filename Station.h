@@ -6,8 +6,6 @@
 #include "PriorityQueue.h"
 #include "ModifiedQueue.h"
 #include <iostream>
-
-
 class Station
 {
 private:
@@ -30,6 +28,9 @@ private:
 	ModifiedQueue<Passenger*> NP_BackwardWaiting;
 	PriorityQueue<Passenger*> SP_ForwardWaiting;
 	PriorityQueue<Passenger*> SP_BackwardWaiting;
+
+	
+
 public:
 	Station();
 	Station(int stationNum);
@@ -50,6 +51,8 @@ public:
 	Bus* PeekFirstBackwardBus();
 	Bus* DequeueFirstForwardBus();
 	Bus* DequeueFirstBackwardBus();
-	
+	void PromoteNP(Time t, int max_waiting_time);
+	static int numberOfPromoted;
 };
 
+int Station::numberOfPromoted = 0;
