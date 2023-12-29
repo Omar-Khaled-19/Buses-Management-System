@@ -141,12 +141,14 @@ void Company::UpdateBackwardMovingBusList(Station* S)
 	}
 }
 
-void Company::UpdateCheckupBusList(Station* S)
+void Company::UpdateCheckupBusList(Station* S,Time startTime)
 {
 	int x = S->GetNeedsCheckupBusListCount();
 	for (int i = 0;i < x;i++)
 	{
-		CheckupBusList.enqueue(S->RemoveBusFromNeedsCheckupBusList());
+		Bus* B = S->RemoveBusFromNeedsCheckupBusList();
+		B->set_check_start_time(startTime);
+		CheckupBusList.enqueue(B);
 	}
 }
 

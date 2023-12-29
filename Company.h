@@ -45,7 +45,7 @@ public:
 	void UpdateFinishedList(Station* S);
 	void UpdateForwardMovingBusList(Station*S);
 	void UpdateBackwardMovingBusList(Station* S);
-	void UpdateCheckupBusList(Station* S);
+	void UpdateCheckupBusList(Station* S, Time startTime);
 
 	
 

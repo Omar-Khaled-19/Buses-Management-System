@@ -22,14 +22,10 @@ private:
 	int BCK_WP;
 	LinkedQueue<Bus*> ForwardBusList;
 	LinkedQueue<Bus*> FullForwardBusList;
-	int FullForwardBusListCount;
 	LinkedQueue<Bus*> BackwardBusList;
 	LinkedQueue<Bus*> FullBackwardBusList;
-	int FullBackwardBusListCount;
 	LinkedQueue<Bus*> NeedsCheckupBusList;
-	int NeedsCheckupBusListCount;
 	LinkedQueue<Passenger*> GoToFinishedPassengerList;
-	int GoToFinishedPassengerListCount;
 	LinkedQueue<Passenger*> WP_ForwardWaiting;
 	LinkedQueue<Passenger*> WP_BackwardWaiting;
 	ModifiedQueue<Passenger*> NP_ForwardWaiting;
