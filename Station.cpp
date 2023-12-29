@@ -199,7 +199,7 @@ void Station::add_passenger(Passenger* P)
 		}
 		else if (P->get_type() == "NP")
 		{
-			NP_ForwardWaiting.enqueue(P, 1);
+			NP_ForwardWaiting.enqueue(P);
 			FWD_NP++;
 		}
 		else
@@ -233,7 +233,7 @@ void Station::add_passenger(Passenger* P)
 		}
 		else if (P->get_type() == "NP")
 		{
-			NP_BackwardWaiting.enqueue(P, 4);
+			NP_BackwardWaiting.enqueue(P);
 			BCK_NP++;
 		}
 		else
