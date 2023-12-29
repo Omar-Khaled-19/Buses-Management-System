@@ -26,6 +26,7 @@ public:
 	string get_special_type();
 	Station* get_start_station();
 	Station* get_end_station();
+	int get_end_station_num();
 	Time get_FT();
 	Time get_AT();
 	Time get_MT();
