@@ -94,7 +94,7 @@ void Station::GetPassengerOn()
 	int FMovCount = FBus->GetPassengersCount();
 	int maxCap = FBus->GetBusCapacity();
 	int Forward_Waiting_MPassengers_Count = SP_ForwardWaiting.getCount() + NP_ForwardWaiting.getCount();
-	int Forward_Waiting_WPassengers_Count = WP_ForwardWaiting.get_count();
+	int Forward_Waiting_WPassengers_Count = WP_ForwardWaiting.getCount();
 	int Total = Forward_Waiting_MPassengers_Count + Forward_Waiting_WPassengers_Count;
 
 
@@ -145,7 +145,7 @@ void Station::GetPassengerOn()
 	int BMovCount = BBus->GetPassengersCount();
 	int BmaxCap = BBus->GetBusCapacity();
 	int Backward_Waiting_MPassengers_Count = SP_BackwardWaiting.getCount() + NP_BackwardWaiting.getCount();
-	int Backward_Waiting_WPassengers_Count = WP_BackwardWaiting.get_count();
+	int Backward_Waiting_WPassengers_Count = WP_BackwardWaiting.getCount();
    
 	while (BMovCount < BmaxCap)
 	{
@@ -302,12 +302,12 @@ void Station:: printStation(int stationn)
 
 
 
-	int WP_count = WP_ForwardWaiting.get_count() + WP_BackwardWaiting.get_count();
+	int WP_count = WP_ForwardWaiting.getCount() + WP_BackwardWaiting.getCount();
 	
 	cout << WP_count << " Waiting WP: FWD[";
 	
 	Node<Passenger*>* temp = WP_ForwardWaiting.getHead();
-	for (int i = 0; i < WP_ForwardWaiting.get_count();i++)
+	for (int i = 0; i < WP_ForwardWaiting.getCount();i++)
 	{
 		Passenger* ptemp = temp->getItem();
 		
@@ -317,7 +317,7 @@ void Station:: printStation(int stationn)
 	cout << "] BCK[";
 
 	Node<Passenger*>* temp2 = WP_BackwardWaiting.getHead();
-	for (int i = 0; i < WP_BackwardWaiting.get_count();i++)
+	for (int i = 0; i < WP_BackwardWaiting.getCount();i++)
 	{
 		Passenger* ptemp = temp2->getItem();
 
@@ -333,7 +333,7 @@ void Station:: printStation(int stationn)
 
 	cout << NP_count << " Waiting NP: FWD[";
 
-	PQNode<Passenger*>* tempQ3 = NP_ForwardWaiting.getHead();
+	Node<Passenger*>* tempQ3 = NP_ForwardWaiting.getHead();
 	for (int i = 0; i < NP_ForwardWaiting.getCount();i++)
 	{
 		Passenger* ptemp = tempQ3->getItem();
@@ -343,7 +343,7 @@ void Station:: printStation(int stationn)
 	}
 	cout << "] BCK[";
 	
-	PQNode<Passenger*>* tempQ4 = NP_BackwardWaiting.getHead();
+	Node<Passenger*>* tempQ4 = NP_BackwardWaiting.getHead();
 	for (int i = 0; i < NP_BackwardWaiting.getCount();i++)
 	{
 		Passenger* ptemp = tempQ4->getItem();
@@ -399,7 +399,7 @@ void Station::PromoteNP(Time t, int max_waiting_time)
 			tempQueue.enqueue(tempPass);
 	}
 	while (tempQueue.dequeue(tempPass))
-		NP_ForwardWaiting.enqueue(tempPass,1);
+		NP_ForwardWaiting.enqueue(tempPass);
 
 	while (NP_BackwardWaiting.dequeue(tempPass))
 	{
@@ -412,5 +412,5 @@ void Station::PromoteNP(Time t, int max_waiting_time)
 			tempQueue.enqueue(tempPass);
 	}
 	while (tempQueue.dequeue(tempPass))
-		NP_BackwardWaiting.enqueue(tempPass, 1);
+		NP_BackwardWaiting.enqueue(tempPass);
 }

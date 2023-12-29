@@ -19,7 +19,6 @@ public:
 	Time operator + (int minute);
 	int operator - (Time t2);
 	void printTime();
-	Time operator - (const Time &t2);
 	int GetHour();
 	int GetMin();
 };

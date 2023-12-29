@@ -15,8 +15,8 @@ public:
 template<class T>
 inline bool ModifiedQueue<T>::remove_Specific(int id)
 {
-	PQNode<Passenger*>* advanced = nullptr;
-	PQNode<Passenger*>* temp = frontPtr;
+	Node<Passenger*>* advanced = nullptr;
+	Node<Passenger*>* temp = frontPtr;
 	if (frontPtr!=nullptr)
 	advanced = frontPtr->getNext();
 	
@@ -31,10 +31,10 @@ inline bool ModifiedQueue<T>::remove_Specific(int id)
 	}
 	if (temp_id == id) 
 	{
-		PQNode<Passenger*>* deleted = frontPtr;
+		Node<Passenger*>* deleted = frontPtr;
 		frontPtr = frontPtr->getNext();
 		delete deleted;
-		itemCount--;
+		counter--;
 		return true;
 
 	}
@@ -46,7 +46,7 @@ inline bool ModifiedQueue<T>::remove_Specific(int id)
 		{
 			temp->setNext(advanced->getNext());
 			delete advanced;
-			itemCount--;
+			counter--;
 			return true;
 		}
 		else {
@@ -79,7 +79,7 @@ inline bool ModifiedQueue<T>::remove_Specific(int id)
 //		PQNode<Passenger*>* deleted = frontPtr;
 //		frontPtr = frontPtr->getNext();
 //		ptr = deleted->getItem();
-//		itemCount--;
+//		counter--;
 //		return true;
 //	}
 //
@@ -94,7 +94,7 @@ inline bool ModifiedQueue<T>::remove_Specific(int id)
 //		{
 //			temp->setNext(advanced->getNext());
 //			ptr = advanced->getItem();
-//			itemCount--;
+//			counter--;
 //			return true;
 //		}
 //		else 

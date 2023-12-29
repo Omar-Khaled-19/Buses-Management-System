@@ -12,7 +12,7 @@ protected:
 
 	PQNode<T>* backPtr;
 	PQNode<T>* frontPtr;
-	int itemCount;
+	int counter;
 
 public:
 	PriorityQueue();
@@ -49,7 +49,7 @@ PriorityQueue<T>::PriorityQueue()
 {
 	backPtr = nullptr;
 	frontPtr = nullptr;
-	itemCount = 0;
+	counter = 0;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,7 +71,7 @@ bool PriorityQueue<T>::isEmpty() const
 template<typename T>
 int PriorityQueue<T>::getCount() const
 {
-	return itemCount;
+	return counter;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +120,7 @@ bool PriorityQueue<T>::enqueue(const T& newEntry, const int& prio)
 			backPtr = newNodePtr;
 		}
 	}
-	itemCount++;
+	counter++;
 	return true;
 } // end enqueue
 
@@ -151,7 +151,7 @@ bool PriorityQueue<T>::dequeue(T& frntEntry)
 	// Free memory reserved for the dequeued node
 	delete nodeToDeletePtr;
 
-	itemCount--;
+	counter--;
 	return true;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -218,7 +218,7 @@ PriorityQueue<T>::PriorityQueue(const PriorityQueue<T>& LQ)
 		backPtr = ptr;
 		NodePtr = NodePtr->getNext();
 	}
-	itemCount = LQ.getCount();
+	counter = LQ.getCount();
 }
 
 template <typename T>
@@ -245,5 +245,5 @@ void PriorityQueue<T>::clear()
 		T temp;
 		dequeue(temp);
 	}
-	itemCount = 0;
+	counter = 0;
 }
