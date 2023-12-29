@@ -306,23 +306,68 @@ void Company::CreateOutputFile()
 	ofstream Outfile;
 	Outfile.open("Output file.txt");
 	Outfile << "FT \tID\tAT \tWT \tTT\n";
+	int finishNP = 0;
+	int finishSP = 0; 
+	int finishWP = 0;
+	int PromotedNum = Station::numberOfPromoted;
+	Time totalWT;
+	Time totalTT;
+	int promotedPresentage = (PromotedNum / FinishedCount)*100;
 	while(!FinishedPassengerList.isEmpty())
 	{
-		Time ft, at, wt, tt;
+		Time ft, at;
+		int wt_min, tt_min;
+		int wt_hr = 0;
+		int tt_hr = 0;
 		Passenger* finished;
 		FinishedPassengerList.dequeue(finished);
 		ft = finished->get_FT();
 		at = finished->get_AT();
-		wt = finished->get_finish_WT();
-		tt = finished->get_TT();
+		wt_min = finished->get_finish_WT();
+		totalWT = totalWT + wt_min;
+		tt_min = finished->get_TT();
+		totalTT = totalTT + tt_min;
+		string type = finished->get_type();
+		if (type == "SP")
+			finishSP++;
+		if (type == "WP")
+			finishWP++;
+		if (type == "NP")
+			finishNP++;
+		while (wt_min > 59)
+		{
+			wt_min = wt_min-60;
+			wt_hr++;
+		}
+		while (tt_min > 59)
+		{
+			tt_min = tt_min - 60;
+			tt_hr++;
+		}
 		Outfile << "\n" << ft.GetHour() << ":" << ft.GetMin()<<"\t"<<finished->get_id()<<"\t";
-		Outfile << at.GetHour() << ":" << at.GetMin() << "\t" << wt.GetHour() << ":" << wt.GetMin() << "\t" << tt.GetHour() << ":" << tt.GetMin();
+	 	Outfile << at.GetHour() << ":" << at.GetMin() << "\t" << wt_hr << ":" << wt_min << "\t" << tt_hr << ":" << tt_min;
+	}
+	int totalTT_min = totalTT.GetMin() + ((totalTT.GetHour()) * 60);
+	int totalWT_min = totalWT.GetMin() + ((totalWT.GetHour()) * 60);
+	int avgTT_min = totalTT_min / FinishedCount;
+	int avgWT_min = totalWT_min / FinishedCount;
+	int avgTT_hr = 0;
+	int avgWT_hr = 0;
+	while (avgTT_min > 59)
+	{
+		avgTT_min = avgTT_min - 60;
+		avgTT_hr++;
+	}
+	while (avgWT_min > 59)
+	{
+		avgWT_min = avgWT_min - 60;
+		avgWT_hr++;
 	}
 	Outfile << "......................................\n......................................\n";
-	Outfile << "Passengers: "<<FinishedCount; //need to separate passenger types
-	Outfile << "\nPassengers Avg wait time = ";  //needs calculating
-	Outfile << "\nPassenger Avg trip time = "; //needs calculating
-	Outfile << "\nnAuto-promoted passengers: "; //needs calculating
+	Outfile << "Passengers: "<<FinishedCount<<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
+	Outfile << "\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
+	Outfile << "\nPassenger Avg trip time = "<<avgTT_hr<<":"<<avgTT_min;
+	Outfile << "\nnAuto-promoted passengers: "<<promotedPresentage<<"%"; 
 	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
 	Outfile << "\nAvg Busy time = "; //needs calculating
 	Outfile << "\nAvg utilization = ";  //needs calculating

@@ -29,7 +29,7 @@ private:
 	PriorityQueue<Passenger*> SP_ForwardWaiting;
 	PriorityQueue<Passenger*> SP_BackwardWaiting;
 
-	static int numberOfPromoted;
+	
 
 public:
 	Station();
@@ -52,6 +52,7 @@ public:
 	Bus* DequeueFirstForwardBus();
 	Bus* DequeueFirstBackwardBus();
 	void PromoteNP(Time t, int max_waiting_time);
+	static int numberOfPromoted;
 };
 
 int Station::numberOfPromoted = 0;
