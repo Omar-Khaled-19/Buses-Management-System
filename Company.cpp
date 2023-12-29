@@ -3,6 +3,7 @@
 Company::Company()
 {
 	FinishedCount = 0;
+	clock.setTime(04, 00);
 }
 
 Company::Company(string FileName) 
@@ -21,18 +22,48 @@ void Company::load(string FileName)
 		{
 			StationPtrArray[i] = new Station(i);
 		}
-		for (int i = 0; i < WBus_count; i++)
+		bool flag = true;
+		int tempMBus_count = MBus_count;
+		int tempWBus_count = WBus_count;
+		for (int i = 0; i < WBus_count + MBus_count; i++)
 		{
-			Bus bus(i+1, WBusCap,'W');
-			Bus* busptr=&bus;
-			BusList.enqueue(busptr);
+			if (tempMBus_count != 0 && tempWBus_count != 0)
+			{
+				if (flag)
+				{
+					Bus* bus = new Bus(i + 1, MBusCap, 'M');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempMBus_count--;
+				}
+				else if (!flag)
+				{
+					Bus* bus = new Bus(i + 1, WBusCap, 'W');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempWBus_count--;
+				}
+			}
+			else
+			{
+				if (tempMBus_count != 0)
+				{
+					Bus* bus = new Bus(i + 1, MBusCap, 'M');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempMBus_count--;
+					continue;
+				}
+				else 
+				{
+					Bus* bus = new Bus(i + 1, WBusCap, 'W');
+					BusList.enqueue(bus);
+					flag = !flag;
+					tempWBus_count--;
+				}
+			}
 		}
-		for (int i = 0; i < MBus_count; i++)
-		{
-			Bus bus(i+WBus_count, MBusCap, 'M');
-			Bus* busptr = &bus;
-			BusList.enqueue(busptr);
-		}
+		
 		for (int i = 0; i < EventsNum; i++)
 		{
 			string EventType;
@@ -108,12 +139,20 @@ void Company::remove_from_checkup(Time curr_time)  /////////////called each minu
 	}
 }
 
+void Company::release_buses()
+{
+	if (clock.GetMinute() % 15 == 0)
+	{
+		Bus* tempbus;
+		BusList.dequeue(tempbus);
+		ForwardMovingBusList.enqueue(tempbus);
+	}
+}
 
 ////////////////////////////////**********************************//////////////////////////////
 
 void Company::simulate(string FileName)
 {
-	Time clock(04, 00);
 	load(FileName);
 	Event* E;
 	Passenger* P;

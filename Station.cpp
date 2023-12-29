@@ -391,7 +391,10 @@ void Station::PromoteNP(Time t, int max_waiting_time)
 	while (NP_ForwardWaiting.dequeue(tempPass))
 	{
 		if (t - tempPass->get_arrival_time() > max_waiting_time)
+		{
 			SP_ForwardWaiting.enqueue(tempPass, 1);
+			numberOfPromoted++;
+		}
 		else
 			tempQueue.enqueue(tempPass);
 	}
@@ -401,7 +404,10 @@ void Station::PromoteNP(Time t, int max_waiting_time)
 	while (NP_BackwardWaiting.dequeue(tempPass))
 	{
 		if (t - tempPass->get_arrival_time() > max_waiting_time)
+		{
 			SP_BackwardWaiting.enqueue(tempPass, 1);
+			numberOfPromoted++;
+		}
 		else
 			tempQueue.enqueue(tempPass);
 	}

@@ -13,6 +13,7 @@
 class Company
 {
 private:
+	Time clock;
 	LinkedQueue<Event*> EventPtrList;
 	int StationNumber;
 	Station** StationPtrArray = new Station*[StationNumber];
@@ -37,8 +38,7 @@ public:
 	int generateRandom(int min, int max);
 	void move_to_checkup(Bus* checkup_bus, Time startTime);
 	void remove_from_checkup(Time curr_time);
-	
-
+	void release_buses();
 };
 
 
