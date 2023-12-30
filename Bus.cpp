@@ -133,3 +133,13 @@ PriorityQueue<Passenger*>* Bus::Get_Bus_Passengers()
 {
 	return &Passengers;
 }
+
+void Bus::increment_journeys()
+{
+	Num_of_Curr_Journeys++;
+}
+
+void Bus::reset_journeys()
+{
+	Num_of_Curr_Journeys = 0;
+}

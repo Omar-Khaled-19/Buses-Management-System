@@ -2,7 +2,6 @@
 
 Company::Company()
 {
-	FinishedCount = 0;
 	clock.setTime(04, 00);
 }
 
@@ -13,96 +12,91 @@ Company::Company(string FileName)
 
 void Company::load(string FileName)
 {
-		ifstream inFile(FileName);
-		int NoOfStations, StationTime, WBus_count, MBus_count, WBusCap, MBusCap, CheckupTrips, C_WBus, C_MBus, maxWaitMin, GetOnOffSec, EventsNum;
-		char temp; //Not used, only used to take the ":" to be able to read time step
-		inFile >> NoOfStations >> StationTime >> WBus_count >> MBus_count >> WBusCap >> MBusCap >> CheckupTrips >> C_WBus >> C_MBus >> maxWaitMin >> GetOnOffSec >> EventsNum;
-		WBusCount = WBus_count;
-		MBusCount = MBus_count;
-		StationNumber = NoOfStations;
-		TimeBetStaions = StationTime;
-		for (int i = 0; i <= NoOfStations; i++)
+	ifstream inFile(FileName);
+	int NoOfStations, StationTime, WBus_count, MBus_count, WBusCap, MBusCap, CheckupTrips, C_WBus, C_MBus, maxWaitMin, GetOnOffSec, EventsNum;
+	char temp; //Not used, only used to take the ":" to be able to read time step
+	inFile >> NoOfStations >> StationTime >> WBus_count >> MBus_count >> WBusCap >> MBusCap >> CheckupTrips >> C_WBus >> C_MBus >> maxWaitMin >> GetOnOffSec >> EventsNum;
+	WBusCount = WBus_count;
+	MBusCount = MBus_count;
+	StationNumber = NoOfStations;
+	TimeBetStaions = StationTime;
+	GetOnTime = GetOnOffSec;
+	for (int i = 0; i <= NoOfStations; i++)
+	{
+		StationPtrArray[i] = new Station(i);
+	}
+	bool flag = true;
+	int tempMBus_count = MBus_count;
+	int tempWBus_count = WBus_count;
+	for (int i = 0; i < WBus_count + MBus_count; i++)
+	{
+		if (tempMBus_count != 0 && tempWBus_count != 0)
 		{
-			StationPtrArray[i] = new Station(i);
-		}
-		bool flag = true;
-		int tempMBus_count = MBus_count;
-		int tempWBus_count = WBus_count;
-		for (int i = 0; i < WBus_count + MBus_count; i++)
-		{
-			if (tempMBus_count != 0 && tempWBus_count != 0)
+			if (flag)
 			{
-				if (flag)
-				{
-					Bus* bus = new Bus(i + 1, MBusCap, 'M');
-					BusList.enqueue(bus);
-					flag = !flag;
-					tempMBus_count--;
-				}
-				else if (!flag)
-				{
-					Bus* bus = new Bus(i + 1, WBusCap, 'W');
-					BusList.enqueue(bus);
-					flag = !flag;
-					tempWBus_count--;
-				}
+				Bus* bus = new Bus(i + 1, MBusCap, 'M');
+				BusList.enqueue(bus);
+				flag = !flag;
+				tempMBus_count--;
 			}
-			else
+			else if (!flag)
 			{
-				if (tempMBus_count != 0)
-				{
-					Bus* bus = new Bus(i + 1, MBusCap, 'M');
-					BusList.enqueue(bus);
-					flag = !flag;
-					tempMBus_count--;
-					continue;
-				}
-				else 
-				{
-					Bus* bus = new Bus(i + 1, WBusCap, 'W');
-					BusList.enqueue(bus);
-					flag = !flag;
-					tempWBus_count--;
-				}
+				Bus* bus = new Bus(i + 1, WBusCap, 'W');
+				BusList.enqueue(bus);
+				flag = !flag;
+				tempWBus_count--;
 			}
 		}
-		
-		for (int i = 0; i < EventsNum; i++)
+		else
 		{
-			string EventType;
-			inFile >> EventType;
-			if (EventType == "A")
+			if (tempMBus_count != 0)
 			{
-				string Type,SType;
-				int TimeHour, TimeMin, id, StartStation, EndStation;
-				inFile >>Type>> TimeHour >> temp >>TimeMin >>id >> StartStation >> EndStation;
-				Time TimeStep(TimeHour, TimeMin);
-				ArrivalEvent* arrive;
-				if (Type == "SP")
-				{
-					inFile >> SType;
-					arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep, SType);
-				}
-				else
-					arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep);
-				EventPtrList.enqueue(arrive);
+				Bus* bus = new Bus(i + 1, MBusCap, 'M');
+				BusList.enqueue(bus);
+				flag = !flag;
+				tempMBus_count--;
+				continue;
 			}
-			if (EventType == "L")
+			else 
 			{
-				int TimeHour2, TimeMin2, id, StartStation;
-				inFile >> TimeHour2 >> temp >> TimeMin2 >> id >> StartStation;
-				Time TimeStep2(TimeHour2, TimeMin2);
-				LeaveEvent* leave = new LeaveEvent(id,StationPtrArray[StartStation],TimeStep2);
-				EventPtrList.enqueue(leave);
+				Bus* bus = new Bus(i + 1, WBusCap, 'W');
+				BusList.enqueue(bus);
+				flag = !flag;
+				tempWBus_count--;
 			}
-
 		}
 	}
+		
+	for (int i = 0; i < EventsNum; i++)
+	{
+		string EventType;
+		inFile >> EventType;
+		if (EventType == "A")
+		{
+			string Type,SType;
+			int TimeHour, TimeMin, id, StartStation, EndStation;
+			inFile >>Type>> TimeHour >> temp >>TimeMin >>id >> StartStation >> EndStation;
+			Time TimeStep(TimeHour, TimeMin);
+			ArrivalEvent* arrive;
+			if (Type == "SP")
+			{
+				inFile >> SType;
+				arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep, SType);
+			}
+			else
+				arrive = new ArrivalEvent(id, Type, StationPtrArray[StartStation], StationPtrArray[EndStation], TimeStep);
+			EventPtrList.enqueue(arrive);
+		}
+		if (EventType == "L")
+		{
+			int TimeHour2, TimeMin2, id, StartStation;
+			inFile >> TimeHour2 >> temp >> TimeMin2 >> id >> StartStation;
+			Time TimeStep2(TimeHour2, TimeMin2);
+			LeaveEvent* leave = new LeaveEvent(id,StationPtrArray[StartStation],TimeStep2);
+			EventPtrList.enqueue(leave);
+		}
 
-void Company::MovToFinishedList(Passenger* FinishedPassengerPtr)
-{   
-	FinishedPassengerList.enqueue(FinishedPassengerPtr);
-	FinishedCount++;
+	}
 }
 
 
@@ -146,33 +140,29 @@ void Company::UpdateBackwardMovingBusList(Station* S)
 	}
 }
 
-void Company::UpdateCheckupBusList(Station* S,Time startTime)
+void Company::UpdateCheckupBusList(Station* S)
 {
 	int x = S->GetNeedsCheckupBusListCount();
 	for (int i = 0;i < x;i++)
 	{
 		Bus* B = S->RemoveBusFromNeedsCheckupBusList();
-		B->set_check_start_time(startTime);
+		B->set_check_start_time(clock);
+		B->reset_journeys();
 		CheckupBusList.enqueue(B);
 	}
 }
 
 
 //////////////////////////////////////////**************////////////////////////////////////////////
-void Company::move_to_checkup(Bus* checkup_bus, Time startTime)
-{
-	checkup_bus->set_check_start_time(startTime);
-	CheckupBusList.enqueue(checkup_bus);
-}
 
-void Company::remove_from_checkup(Time curr_time)  /////////////called each minute 
+void Company::remove_from_checkup()  /////////////called each minute 
 {
 	Bus* tempBus;
 	Time Leave_time;
 	while (CheckupBusList.peek(tempBus))
 	{
 		Leave_time = tempBus->GetCheckStartTime() + tempBus->GetchekupDurationInMinutes();
-		if (Leave_time == curr_time) {
+		if (Leave_time == clock) {
 			CheckupBusList.dequeue(tempBus);
 			if (tempBus->GetNextStation() > tempBus->GetCurrStation()) {
 				ForwardMovingBusList.enqueue(tempBus);
@@ -225,6 +215,7 @@ void Company::bus_enter_station()
 			BackwardMovingBusList.dequeue(tempBus);
 			tempBus->SetCurrStation(tempBus->GetNextStation());
 			if (tempBus->GetCurrStation() == 1) {
+				tempBus->increment_journeys();
 				tempBus->SetNextStation(2);
 				StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
 			}
@@ -243,19 +234,19 @@ void Company::bus_enter_station()
 void Company::simulate(string FileName)
 {
 	UI User;
-	Time clock(04, 00);
+	Time clock(04, 02);
 	load(FileName);
 	Event* E;
 	Passenger* P;
 	char x;
 	while (EventPtrList.peek(E) || clock.GetHour() < 10)
 	{
-		LinkedQueue<Event*> oneminuteEventQueue;
+		LinkedQueue<Event*> EventQueue;
 		while (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
-			oneminuteEventQueue.enqueue(E);
+			EventQueue.enqueue(E);
 			EventPtrList.peek(E);
 		}
 
@@ -265,32 +256,35 @@ void Company::simulate(string FileName)
 
 		bus_enter_station();
 
-		for (int i = 0; i++; i <= StationNumber) {
+		for (int i = 1; i <= StationNumber ; i++) {
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber);
 			UpdateForwardMovingBusList(StationPtrArray[i]);
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
+			UpdateCheckupBusList(StationPtrArray[i]);
+			remove_from_checkup();
+		}
+		
+		for (int i = 1; i <= StationNumber;i++) {
+			User.printTime(clock);
+			User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList);
 		}
 
 		++clock;
+		if (clock.GetHour() == 5)
+			CreateOutputFile();
 	}
-
-
-		
-
-		
-
-		//////////////////////////////////////////////////////////////////////////////////////////
-		
-		
+	
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 void Company:: printFinished()
 {
-	cout << FinishedCount << " Finished passengers: ";
+	cout << FinishedPassengerList.getCount() << " Finished passengers: ";
 	
 	Node<Passenger*>* counter = FinishedPassengerList.getHead();
-	for (int i = 0; i < FinishedCount; i++)
+	for (int i = 0; i < FinishedPassengerList.getCount(); i++)
 	{
 		Passenger* temp = counter->getItem();
 		if (temp)
@@ -314,7 +308,10 @@ void Company::CreateOutputFile()
 	int PromotedNum = 10;
 	Time totalWT;
 	Time totalTT;
-	int promotedPresentage = (PromotedNum / FinishedCount)*100;
+	int promotedPresentage = 0;
+	if (FinishedPassengerList.getCount() != 0)
+		promotedPresentage = (PromotedNum / FinishedPassengerList.getCount())*100;
+	
 	while(!FinishedPassengerList.isEmpty())
 	{
 		Time ft, at;
@@ -351,8 +348,8 @@ void Company::CreateOutputFile()
 	}
 	int totalTT_min = totalTT.GetMin() + ((totalTT.GetHour()) * 60);
 	int totalWT_min = totalWT.GetMin() + ((totalWT.GetHour()) * 60);
-	int avgTT_min = totalTT_min / FinishedCount;
-	int avgWT_min = totalWT_min / FinishedCount;
+	int avgTT_min = totalTT_min; // / FinishedPassengerList.getCount();
+	int avgWT_min = totalWT_min; // / FinishedPassengerList.getCount();
 	int avgTT_hr = 0;
 	int avgWT_hr = 0;
 	while (avgTT_min > 59)
@@ -366,7 +363,7 @@ void Company::CreateOutputFile()
 		avgWT_hr++;
 	}
 	Outfile << "......................................\n......................................\n";
-	Outfile << "Passengers: "<<FinishedCount<<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
+	Outfile << "Passengers: "<< FinishedPassengerList.getCount() <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
 	Outfile << "\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
 	Outfile << "\nPassenger Avg trip time = "<<avgTT_hr<<":"<<avgTT_min;
 	Outfile << "\nnAuto-promoted passengers: "<<promotedPresentage<<"%"; 

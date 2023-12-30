@@ -1,0 +1,10 @@
+FT 	ID	AT 	WT 	TT
+......................................
+......................................
+Passengers: 0    [NP: 0, SP: 0, WP: 0
+Passengers Avg wait time = 0:0
+Passenger Avg trip time = 0:0
+nAuto-promoted passengers: 0%
+Buses: 17  [WBus: 5, MBus: 12]
+Avg Busy time = 
+Avg utilization = 

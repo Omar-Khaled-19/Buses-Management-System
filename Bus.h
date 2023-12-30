@@ -47,4 +47,6 @@ public:
 	int GetBusId();
 	PriorityQueue<Passenger*>* Get_Bus_Passengers();
 	void setLastMovingTime(Time t);
+	void increment_journeys();
+	void reset_journeys();
 };

@@ -26,7 +26,6 @@ private:
 	LinkedQueue<Bus*> BackwardMovingBusList;
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
-	int FinishedCount;
 	int WBusCount;
 	int MBusCount;
 
@@ -35,19 +34,15 @@ public:
 	~Company(); // destructor
 	Company(string FileName); // non-default constructor
 	void load(string FileName);
-	void MovToFinishedList(Passenger* FinishedPassengerPtr);
 	void printFinished();
 	void simulate(string FileName);
 	int generateRandom(int min, int max);
 	void CreateOutputFile();
-	void move_to_checkup(Bus* checkup_bus, Time startTime);
-	void remove_from_checkup(Time curr_time);
+	void remove_from_checkup();
 	void UpdateFinishedList(Station* S);
 	void UpdateForwardMovingBusList(Station*S);
 	void UpdateBackwardMovingBusList(Station* S);
-	void UpdateCheckupBusList(Station* S, Time startTime);
-
-	
+	void UpdateCheckupBusList(Station* S);
 
 	void release_buses();
 	void bus_enter_station();

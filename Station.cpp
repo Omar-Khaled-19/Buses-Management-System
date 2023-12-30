@@ -33,7 +33,6 @@ void Station:: UnloadPassengers(Bus* Buss, int& Time_count, int get_off_time)
 		else  // no passengers to drop off in this station 
 			return;
 	}
-	return;
 }
 
 
@@ -171,7 +170,7 @@ void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, in
 {
 	int count = 0;
 	Bus* B = nullptr;
-	while (!ForwardBusList.isEmpty() && count < 60)
+	while (!ForwardBusList.isEmpty() && count < 60 )
 	{
 		ForwardBusList.peek(B);
 		if (StationNum == 1)
@@ -182,7 +181,6 @@ void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, in
 			{
 				ForwardBusList.dequeue(B);
 				NeedsCheckupBusList.enqueue(B);
-				
 			}
 			else
 			LoadPassengersFWD(B, count, get_on_off_time);
@@ -193,7 +191,6 @@ void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, in
 			LoadPassengersFWD(B, count, get_on_off_time);
 		}
 	}
-	return;
 }
 
 
@@ -207,7 +204,6 @@ void Station::AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations)
 		UnloadPassengers(B, count, get_on_off_time);
 		LoadPassengersBWD(B, count, get_on_off_time,TotalNumOfStations);
 	}
-	return;
 }
 
 void Station::add_passenger(Passenger* P)
@@ -282,119 +278,6 @@ void Station::AddForwardBus(Bus* newBus)
 void Station::AddBackwardBus(Bus* newBus)
 {
 	BackwardBusList.enqueue(newBus);
-}
-
-
-//void Station:: printStation(int stationn)
-//{
-//	cout << "\n==============     STATION #"<<stationn<<"     ==============\n";
-//
-//	int SP_count = SP_ForwardWaiting.getCount() + SP_BackwardWaiting.getCount();
-//
-//	cout << SP_count << " Waiting SP: FWD[";
-//
-//	PQNode<Passenger*>* tempQ = SP_ForwardWaiting.getHead();
-//	for (int i = 0; i < SP_ForwardWaiting.getCount();i++)
-//	{
-//		Passenger* ptemp = tempQ->getItem();
-//
-//		int SP_id = ptemp->get_id();
-//		cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
-//	}
-//	cout << "] BCK[";
-//	
-//	PQNode<Passenger*>* tempQ2 = SP_BackwardWaiting.getHead();
-//	for (int i = 0; i < SP_BackwardWaiting.getCount();i++)
-//	{
-//		Passenger* ptemp = tempQ2->getItem();
-//
-//		int SP_id = ptemp->get_id();
-//		cout << SP_id << "(" << ptemp->get_special_type() << ")" << ",";
-//	}
-//	cout << "]" << endl;
-//
-//
-//
-//	int WP_count = WP_ForwardWaiting.getCount() + WP_BackwardWaiting.getCount();
-//	
-//	cout << WP_count << " Waiting WP: FWD[";
-//	
-//	Node<Passenger*>* temp = WP_ForwardWaiting.getHead();
-//	for (int i = 0; i < WP_ForwardWaiting.getCount();i++)
-//	{
-//		Passenger* ptemp = temp->getItem();
-//		
-//		int WP_id = ptemp->get_id();
-//		cout << WP_id << ",";
-//	}
-//	cout << "] BCK[";
-//
-//	Node<Passenger*>* temp2 = WP_BackwardWaiting.getHead();
-//	for (int i = 0; i < WP_BackwardWaiting.getCount();i++)
-//	{
-//		Passenger* ptemp = temp2->getItem();
-//
-//		int WP_id = ptemp->get_id();
-//		cout << WP_id << ",";
-//	}
-//	cout << "]" << endl;
-//
-//
-//
-//
-//	int NP_count = NP_ForwardWaiting.getCount() + NP_BackwardWaiting.getCount();
-//
-//	cout << NP_count << " Waiting NP: FWD[";
-//
-//	Node<Passenger*>* tempQ3 = NP_ForwardWaiting.getHead();
-//	for (int i = 0; i < NP_ForwardWaiting.getCount();i++)
-//	{
-//		Passenger* ptemp = tempQ3->getItem();
-//
-//		int NP_id = ptemp->get_id();
-//		cout << NP_id << ",";
-//	}
-//	cout << "] BCK[";
-//	
-//	Node<Passenger*>* tempQ4 = NP_BackwardWaiting.getHead();
-//	for (int i = 0; i < NP_BackwardWaiting.getCount();i++)
-//	{
-//		Passenger* ptemp = tempQ4->getItem();
-//
-//		int NP_id = ptemp->get_id();
-//		cout << NP_id << ",";
-//	}
-//	cout << "]" << endl;
-//
-//	cout << "----------------------------------------------------------------------------------------------------\n";
-//}
-
-Bus* Station::PeekFirstForwardBus()
-{
-	Bus* tempBus;
-	ForwardBusList.peek(tempBus);
-	return tempBus;
-}
-
-Bus* Station::PeekFirstBackwardBus()
-{
-	Bus* tempBus;
-	BackwardBusList.peek(tempBus);
-	return tempBus;
-}
-
-Bus* Station::DequeueFirstForwardBus()
-{
-	Bus* tempBus;
-	ForwardBusList.dequeue(tempBus);
-	return tempBus;
-}
-
-Bus* Station::DequeueFirstBackwardBus()
-{
-	Bus* tempBus;
-	BackwardBusList.dequeue(tempBus);
-	return tempBus;
 }
 
 void Station::PromoteNP(Time t, int max_waiting_time)
