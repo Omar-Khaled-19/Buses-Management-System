@@ -123,3 +123,13 @@ void Bus::setLastMovingTime(Time t)
 {
 	LastMovingTime = t;
 }
+
+int Bus::GetBusId()
+{
+	return ID;
+}
+
+PriorityQueue<Passenger*>* Bus::Get_Bus_Passengers()
+{
+	return &Passengers;
+}

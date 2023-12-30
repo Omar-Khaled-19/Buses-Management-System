@@ -44,5 +44,7 @@ public:
 	int GetNextStation();
 	int GetNum_of_Curr_Journeys();
 	Time GetLastMovingTime();
+	int GetBusId();
+	PriorityQueue<Passenger*>* Get_Bus_Passengers();
 	void setLastMovingTime(Time t);
 };

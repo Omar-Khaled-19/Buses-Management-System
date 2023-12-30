@@ -61,14 +61,22 @@ public:
 	void add_passenger(Passenger* P);
 	void AddForwardBus(Bus* newBus);
 	void AddBackwardBus(Bus* newBus);
-	void printStation(int stationn);
+	//void printStation(int stationn);
 	Bus* PeekFirstForwardBus();
 	Bus* PeekFirstBackwardBus();
 	Bus* DequeueFirstForwardBus();
 	Bus* DequeueFirstBackwardBus();
 	void PromoteNP(Time t, int max_waiting_time);
+	static int numberOfPromoted;
+	PriorityQueue<Passenger*>* Get_FwdSP(); 
+	PriorityQueue<Passenger*>* Get_BckSP();
+	ModifiedQueue<Passenger*>* Get_FwdNP(); 
+	ModifiedQueue<Passenger*>* Get_BckNP();
+	LinkedQueue<Passenger*>* Get_FwdWP();
+	LinkedQueue<Passenger*>* Get_BckWP(); 
+	LinkedQueue<Bus*>* Get_FwdBus(); 
+	LinkedQueue<Bus*>* Get_BckBus(); 
 
-	 int numberOfPromoted;
 };
 
 
