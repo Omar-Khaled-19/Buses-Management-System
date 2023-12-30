@@ -2,7 +2,7 @@
 
 Company::Company()
 {
-	clock.setTime(4, 00);
+	
 }
 
 void Company::Load(string FileName)
@@ -188,7 +188,7 @@ void Company::BusEnterStation()
 			}
 			else {
 				tempBus->SetNextStation(tempBus->GetNextStation() + 1);
-				StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+				StationPtrArray[tempBus->GetCurrStation()]->AddForwardBus(tempBus);
 			}
 		}
 		else
@@ -220,27 +220,28 @@ void Company::BusEnterStation()
 
 void Company::Simulate(string FileName)
 {
+	clock.setTime(4, 00);
 	UI User;
 	Load(FileName);
 	Event* E;
 	while (clock.GetHour() < 6)
 	{
-		/*LinkedQueue<Event*> EventQueue;
-		while (E->get_event_time() == clock)
+		LinkedQueue<Event*> EventQueue;
+		while (EventPtrList.peek(E) && E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
 			EventQueue.enqueue(E);
 			EventPtrList.peek(E);
-		}*/
+		}
 
 		if (!BusList.isEmpty()) {
 			ReleaseBuses();
 		}
 
 		BusEnterStation();
-		++clock;
-		/*for (int i = 1; i <= StationNumber ; i++) {
+		
+		for (int i = 1; i <= StationNumber ; i++) {
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber);
 			UpdateForwardMovingBusList(StationPtrArray[i]);
@@ -250,34 +251,21 @@ void Company::Simulate(string FileName)
 		}
 		
 		
-		if (clock.GetHour() == 5)
-			CreateOutputFile();
-		for (int i = 1; i <= StationNumber;i++) {
-			User.printTime(clock);
-			User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList);
-		}*/
+	
+			for (int i = 1; i <= StationNumber; i++)
+			{
+				User.printTime(clock);
+				User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
+
+			}
+	
+		++clock;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void Company:: printFinished()
-{
-	cout << FinishedPassengerList.getCount() << " Finished passengers: ";
-	
-	Node<Passenger*>* counter = FinishedPassengerList.getHead();
-	for (int i = 0; i < FinishedPassengerList.getCount(); i++)
-	{
-		Passenger* temp = counter->getItem();
-		if (temp)
-		{
-			int finish_id = temp->get_id();
-			cout << finish_id << ",";
-		}
-		counter = counter->getNext();
-	}
-	cout << "\nPrint any key to display next station";
-}
+
 
 void Company::CreateOutputFile()
 {

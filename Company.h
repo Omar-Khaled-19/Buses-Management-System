@@ -48,7 +48,6 @@ public:
 	void RemoveFromCheckup();
 	
 	/*************************Printing Data*******************************/
-	void printFinished();
 	void UpdateFinishedList(Station* S);
 	void CreateOutputFile();
 

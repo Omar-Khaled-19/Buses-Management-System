@@ -13,7 +13,7 @@ int UI::ChooseMode() //First thing to call in simulation
 	return x; 
 }
 
-void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished)
+void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished, LinkedQueue<Bus*>* FWDBusList, LinkedQueue<Bus*>* BCKBusList)
  {
 		cout << "\n==============     STATION #" << stationn << "     ==============\n";
 		PriorityQueue<Passenger*>* FwdSP = stationptr->Get_FwdSP();
@@ -24,6 +24,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 		LinkedQueue<Passenger*>* BckWP = stationptr->Get_BckWP();
 		LinkedQueue<Bus*>* FwdBus = stationptr->Get_FwdBus();
 		LinkedQueue<Bus*>* BckBus = stationptr->Get_BckBus();
+
 		int SP_count = FwdSP->getCount() + BckSP->getCount();
 
 		cout << SP_count << " Waiting SP: FWD[";
@@ -138,7 +139,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			for (int j = 0; j < Bus_passenger->getCount(); j++)
 			{
 				Passenger* tempPassenger = temp11->getItem();
-				if (i = Bus_passenger->getCount() - 1)
+				if (i == Bus_passenger->getCount() - 1)
 					cout << tempPassenger->get_id() << "}";
 				else
 					cout << tempPassenger->get_id() << ", ";
@@ -154,7 +155,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 		for (int i = 0; i < Check_count; i++)
 		{
 			Bus* bustemp = tempQ7->getItem();
-			if(i= Check_count-1)
+			if(i== Check_count-1)
 		    	cout << bustemp->GetBusId();
 			else
 				cout << bustemp->GetBusId() << ", ";
@@ -177,6 +178,35 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			}
 			tempQ8 = tempQ8->getNext();
 		}
+		
+		cout << "\n----------------------------------------------------------------------------------------------------\n";
+
+		Node<Bus*>* tempQ15 = FWDBusList->getHead();
+		int FWDmoving_count = FWDBusList->getCount();
+		cout << FWDmoving_count << " Forward moving buses: ";
+		for (int i = 0; i < FWDmoving_count; i++)
+		{
+			Bus* bustemp = tempQ15->getItem();
+			if (i == FWDmoving_count - 1)
+				cout << bustemp->GetBusId();
+			else
+				cout << bustemp->GetBusId() << ", ";
+			tempQ15 = tempQ15->getNext();
+		}
+		cout << endl;
+		Node<Bus*>* tempQ17 = BCKBusList->getHead();
+		int BCKmoving_count = BCKBusList->getCount();
+		cout << BCKmoving_count << " Backwawrd moving buses: ";
+		for (int i = 0; i < BCKmoving_count; i++)
+		{
+			Bus* bustemp = tempQ17->getItem();
+			if (i == BCKmoving_count - 1)
+				cout << bustemp->GetBusId();
+			else
+				cout << bustemp->GetBusId() << ", ";
+			tempQ17 = tempQ17->getNext();
+		}
+
 		cout << "\nPrint any key to display next station\n";
 }
 
