@@ -121,10 +121,10 @@ void Company::UpdateForwardMovingBusList(Station* S)
 
 void Company::UpdateBackwardMovingBusList(Station* S)
 {
-	int x = S->GetFullForwardBusListCount();
+	int x = S->GetFullBackwardBusListCount();
 	for (int i = 0;i < x;i++)
 	{
-		Bus* tempbus = S->RemoveBusFromFullForwardBusList();
+		Bus* tempbus = S->RemoveBusFromFullBackwardBusList();
 		tempbus->setLastMovingTime(clock);
 		BackwardMovingBusList.enqueue(tempbus);
 	}
@@ -196,7 +196,7 @@ void Company::BusEnterStation()
 			tempBus->SetCurrStation(tempBus->GetNextStation());
 			if (tempBus->GetCurrStation() == StationNumber) {
 				tempBus->SetNextStation(StationNumber - 1);
-				StationPtrArray[tempBus->GetNextStation()]->AddBackwardBus(tempBus);
+				StationPtrArray[tempBus->GetCurrStation()]->AddBackwardBus(tempBus);
 			}
 			else {
 				tempBus->SetNextStation(tempBus->GetNextStation() + 1);
@@ -216,7 +216,7 @@ void Company::BusEnterStation()
 			if (tempBus->GetCurrStation() == 1) {
 				tempBus->increment_journeys();
 				tempBus->SetNextStation(2);
-				StationPtrArray[tempBus->GetNextStation()]->AddForwardBus(tempBus);
+				StationPtrArray[tempBus->GetCurrStation()]->AddForwardBus(tempBus);
 			}
 			else {
 				tempBus->SetNextStation(tempBus->GetCurrStation() - 1);
