@@ -146,7 +146,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			}
 			tempQ6 = tempQ6->getNext();
 		}
-		cout << "----------------------------------------------------------------------------------------------------\n";
+		cout << "\n----------------------------------------------------------------------------------------------------\n";
 
 		Node<Bus*>* tempQ7 = Checkup->getHead();
 		int Check_count = Checkup->getCount();
@@ -161,6 +161,23 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			tempQ7 = tempQ7->getNext();
 		}
 
+		cout << "\n----------------------------------------------------------------------------------------------------\n";
+
+		Node<Passenger*>* tempQ8 = finished->getHead();
+		int finish_count = finished->getCount();
+		cout << finish_count << " Finished passengers: ";
+
+		for (int i = 0; i < finish_count; i++)
+		{
+			Passenger* temp = tempQ8->getItem();
+			if (temp)
+			{
+				int finish_id = temp->get_id();
+				cout << finish_id << ",";
+			}
+			tempQ8 = tempQ8->getNext();
+		}
+		cout << "\nPrint any key to display next station\n";
 }
 
 
