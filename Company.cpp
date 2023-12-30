@@ -19,6 +19,7 @@ void Company::Load(string FileName)
 	NumofJourneystoCheckup = CheckupTrips;
 	WBus_checkup_duration = C_WBus;
 	MBus_checkup_duration = C_MBus;
+	MaxWaitingTime = maxWaitMin;
 	for (int i = 0; i <= NoOfStations; i++)
 	{
 		StationPtrArray[i] = new Station(i);
@@ -220,7 +221,7 @@ void Company::BusEnterStation()
 			}
 			else {
 				tempBus->SetNextStation(tempBus->GetCurrStation() - 1);
-				StationPtrArray[tempBus->GetNextStation()]->AddBackwardBus(tempBus);
+				StationPtrArray[tempBus->GetCurrStation()]->AddBackwardBus(tempBus);
 			}
 		}
 		else
@@ -236,7 +237,7 @@ void Company::Simulate(string FileName)
 	UI User;
 	Load(FileName);
 	Event* E;
-	while (clock.GetHour() <22 )
+	while (clock.GetHour() < 6)
 	{
 		LinkedQueue<Event*> EventQueue;
 		while (EventPtrList.peek(E) && E->get_event_time() == clock)

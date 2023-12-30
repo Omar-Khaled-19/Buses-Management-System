@@ -1,15 +1,10 @@
 #pragma once
-#include "LinkedQueue.h"
 #include "Event.h"
-#include "Passenger.h"
-#include "Bus.h"
 #include "Station.h"
-#include "Time.h"
 #include "ArrivalEvent.h"
 #include "LeaveEvent.h"
 #include "UI.h"
 #include <fstream>
-#include<random>
 class Company
 {
 private:
@@ -23,6 +18,7 @@ private:
 	int TimeBetStaions;
 	int WBusCount;
 	int MBusCount;
+	int MaxWaitingTime;
 
 	Station** StationPtrArray = new Station * [StationNumber];
 	LinkedQueue<Event*> EventPtrList;
@@ -32,7 +28,6 @@ private:
 	LinkedQueue<Bus*> CheckupBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
 	
-
 public:
 	Company();  
 	

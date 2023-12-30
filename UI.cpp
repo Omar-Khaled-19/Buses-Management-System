@@ -191,7 +191,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 
 		Node<Bus*>* tempQ7 = Checkup->getHead();
 		int Check_count = Checkup->getCount();
-		cout << Check_count <<"In_Checkup buses: ";
+		cout << Check_count <<" In_Checkup buses: ";
 		for (int i = 0; i < Check_count; i++)
 		{
 			Bus* bustemp = tempQ7->getItem();
