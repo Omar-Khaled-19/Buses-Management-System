@@ -16,6 +16,8 @@ private:
 	Time clock;
 	int StationNumber;
 	int TripCheckupsNum;
+	int MBus_checkup_duration;
+	int WBus_checkup_duration;
 	int NumofJourneystoCheckup;
 	int GetOnTime;
 	int TimeBetStaions;

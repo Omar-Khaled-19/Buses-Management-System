@@ -16,6 +16,9 @@ void Company::Load(string FileName)
 	StationNumber = NoOfStations;
 	TimeBetStaions = StationTime;
 	GetOnTime = GetOnOffSec;
+	NumofJourneystoCheckup = CheckupTrips;
+	WBus_checkup_duration = C_WBus;
+	MBus_checkup_duration = C_MBus;
 	for (int i = 0; i <= NoOfStations; i++)
 	{
 		StationPtrArray[i] = new Station(i);
@@ -146,9 +149,16 @@ void Company::RemoveFromCheckup()  /////////////called each minute
 {
 	Bus* tempBus;
 	Time Leave_time;
+	char type;
+	int duration;
 	while (CheckupBusList.peek(tempBus))
 	{
-		Leave_time = tempBus->GetCheckStartTime() + tempBus->GetchekupDurationInMinutes();
+		type = tempBus->GetBusType();
+		if (type == 'M')
+			duration = MBus_checkup_duration;
+		else
+			duration = WBus_checkup_duration;
+		Leave_time = tempBus->GetCheckStartTime() +duration;
 		if (Leave_time == clock) {
 			CheckupBusList.dequeue(tempBus);
 			if (tempBus->GetNextStation() > tempBus->GetCurrStation()) {
