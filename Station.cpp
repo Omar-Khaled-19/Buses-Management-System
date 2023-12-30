@@ -319,31 +319,29 @@ void Station::PromoteNP(Time t, int max_waiting_time)
 {
 	Passenger* tempPass;
 	LinkedQueue<Passenger*> tempQueue;
-	while (NP_ForwardWaiting.dequeue(tempPass))
+	while (NP_ForwardWaiting.peek(tempPass))
 	{
 		if (t - tempPass->get_arrival_time() > max_waiting_time)
 		{
 			SP_ForwardWaiting.enqueue(tempPass, 1);
 			numberOfPromoted++;
+			NP_ForwardWaiting.dequeue(tempPass);
 		}
 		else
-			tempQueue.enqueue(tempPass);
+			return;
 	}
-	while (tempQueue.dequeue(tempPass))
-		NP_ForwardWaiting.enqueue(tempPass);
 
-	while (NP_BackwardWaiting.dequeue(tempPass))
+	while (NP_BackwardWaiting.peek(tempPass))
 	{
 		if (t - tempPass->get_arrival_time() > max_waiting_time)
 		{
 			SP_BackwardWaiting.enqueue(tempPass, 1);
 			numberOfPromoted++;
+			NP_BackwardWaiting.dequeue(tempPass);
 		}
 		else
-			tempQueue.enqueue(tempPass);
+			return;
 	}
-	while (tempQueue.dequeue(tempPass))
-		NP_BackwardWaiting.enqueue(tempPass);
 }
 
 Passenger* Station::RemovePassengerFromGoToFinishedPassengerList()

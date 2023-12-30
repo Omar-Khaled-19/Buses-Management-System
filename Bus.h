@@ -1,8 +1,7 @@
 
 #pragma once
-#include "time.h"
-#include "passenger.h"
-#include "priorityqueue.h"
+#include "Passenger.h"
+#include "PriorityQueue.h"
 
 class Bus
 {

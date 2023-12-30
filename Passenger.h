@@ -1,7 +1,6 @@
 #pragma once
-#include "time.h"
-#include <iostream>
-using namespace std;
+#include "Time.h"
+
 
 class Station;
 class Passenger
