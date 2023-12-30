@@ -10,16 +10,6 @@ class Station
 {
 private:
 	int StationNum;
-	int FWD_NP;
-	int BCK_NP;
-	int FWD_SP_age;
-	int FWD_SP_pod;
-	int FWD_SP_preg;
-	int BCK_SP_age;
-	int BCK_SP_pod;
-	int BCK_SP_preg;
-	int FWD_WP;
-	int BCK_WP;
 	LinkedQueue<Bus*> ForwardBusList;
 	LinkedQueue<Bus*> FullForwardBusList;
 	LinkedQueue<Bus*> BackwardBusList;
@@ -41,9 +31,6 @@ public:
 
 	int GetStationNum();
 
-	Passenger* MovSP();
-	Passenger* MovNP();
-	Passenger* MovWC();
 	void LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time);
 	void LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time,int TotalStationsNum);
 	void UnloadPassengers(Bus* FBus, int& Time_count, int get_off_time);
