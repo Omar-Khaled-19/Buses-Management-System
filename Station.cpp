@@ -20,12 +20,12 @@ int Station::GetStationNum()
 	return StationNum;
 }
 
-void Station:: UnloadPassengers(Bus* Buss, int& Time_count, int get_off_time)
+void Station:: UnloadPassengers(Bus* Buss, int& Time_count, int get_off_time,Time clockkk)
 {
 	Passenger* PP = nullptr;
 	while (Time_count<60)
 	{
-		if (Buss->GetPassengerOff(PP, StationNum))
+		if (Buss->GetPassengerOff(PP, StationNum,clockkk))
 		{
 			Time_count += get_off_time;
 			GoToFinishedPassengerList.enqueue(PP);
@@ -36,7 +36,7 @@ void Station:: UnloadPassengers(Bus* Buss, int& Time_count, int get_off_time)
 }
 
 
-void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
+void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time,Time clockkk )
 {
 	Passenger* FP = nullptr;
 	char FBusType = FBus->GetBusType();
@@ -44,7 +44,7 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 	{
 		while (SP_ForwardWaiting.dequeue(FP) && Time_count < 60)
 		{
-			if (FBus->GetPassengerOnFWD(FP))
+			if (FBus->GetPassengerOnFWD(FP,clockkk))
 			{
 				Time_count += get_on_time;
 			}
@@ -61,7 +61,7 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 		{
 			while (NP_ForwardWaiting.dequeue(FP) && Time_count < 60)
 			{
-				if (FBus->GetPassengerOnFWD(FP))
+				if (FBus->GetPassengerOnFWD(FP,clockkk))
 				{
 					Time_count += get_on_time;
 				}
@@ -90,7 +90,7 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 	{
 		while (WP_ForwardWaiting.dequeue(FP) && Time_count < 60)
 		{
-			if (FBus->GetPassengerOnFWD(FP))
+			if (FBus->GetPassengerOnFWD(FP,clockkk))
 			{
 				Time_count += get_on_time;
 			}
@@ -114,7 +114,7 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 }
 
 
-void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int TotalStationsNum)
+void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int TotalStationsNum,Time clockkk)
 {
 	Passenger* BP = nullptr;
 	char BBusType = BBus->GetBusType();
@@ -132,7 +132,7 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 		{
 			while (SP_BackwardWaiting.dequeue(BP) && Time_count < 60)
 			{
-				if (BBus->GetPassengerOnBWD(BP, TotalStationsNum))
+				if (BBus->GetPassengerOnBWD(BP, TotalStationsNum,clockkk))
 				{
 					Time_count += get_on_time;
 				}
@@ -149,7 +149,7 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 			{
 				while (NP_BackwardWaiting.dequeue(BP) && Time_count < 60)
 				{
-					if (BBus->GetPassengerOnBWD(BP, TotalStationsNum))
+					if (BBus->GetPassengerOnBWD(BP, TotalStationsNum,clockkk))
 					{
 						Time_count += get_on_time;
 					}
@@ -177,7 +177,7 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 		{
 			while (WP_BackwardWaiting.dequeue(BP) && Time_count < 60)
 			{
-				if (BBus->GetPassengerOnBWD(BP, TotalStationsNum))
+				if (BBus->GetPassengerOnBWD(BP, TotalStationsNum,clockkk))
 				{
 					Time_count += get_on_time;
 				}
@@ -201,7 +201,7 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 	}
 }
 
-void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, int NumOfJourneysToChecup)
+void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, int NumOfJourneysToChecup,Time clockkk)
 {
 	int count = 0;
 	Bus* B = nullptr;
@@ -210,7 +210,7 @@ void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, in
 		ForwardBusList.peek(B);
 		if (StationNum == 1)
 		{
-			UnloadPassengers(B, count, get_on_off_time);
+			UnloadPassengers(B, count, get_on_off_time,clockkk);
 			int current_journeys = B->GetNum_of_Curr_Journeys();
 			if (current_journeys >= NumOfJourneysToChecup)
 			{
@@ -218,26 +218,26 @@ void Station::AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, in
 				NeedsCheckupBusList.enqueue(B);
 			}
 			else
-			LoadPassengersFWD(B, count, get_on_off_time);
+			LoadPassengersFWD(B, count, get_on_off_time,clockkk);
 		}
 		else
 		{
-			UnloadPassengers(B, count, get_on_off_time);
-			LoadPassengersFWD(B, count, get_on_off_time);
+			UnloadPassengers(B, count, get_on_off_time,clockkk);
+			LoadPassengersFWD(B, count, get_on_off_time,clockkk);
 		}
 	}
 }
 
 
-void Station::AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations)
+void Station::AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations,Time clockkk)
 {
 	int count = 0;
 	Bus* B = nullptr;
 	while (!BackwardBusList.isEmpty() && count < 60)
 	{
 		BackwardBusList.peek(B);
-		UnloadPassengers(B, count, get_on_off_time);
-		LoadPassengersBWD(B, count, get_on_off_time,TotalNumOfStations);
+		UnloadPassengers(B, count, get_on_off_time,clockkk);
+		LoadPassengersBWD(B, count, get_on_off_time,TotalNumOfStations,clockkk);
 	}
 }
 

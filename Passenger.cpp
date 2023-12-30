@@ -82,3 +82,13 @@ int Passenger:: get_TT()
 {
 	return FT - MT;
 }
+
+void Passenger::set_MT(Time mt)
+{
+	MT = mt;
+}
+
+void Passenger::set_FT(Time ft)
+{
+	FT = ft;
+}

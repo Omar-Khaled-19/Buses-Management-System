@@ -21,10 +21,8 @@ private:
 	Time Ch_Start_Time;
 	Time Ch_time;
 	Time Ch_duration;
-	Time Busy_time;
+	int Busy_time;
 	Time Utilization_time;
-	Time Tot_busy_time;
-	Time Tot_delievery_time;
 	PriorityQueue<Passenger*> Passengers;
 
 public:
@@ -32,9 +30,9 @@ public:
 	int GetPassengersCount();
 	int GetBusCapacity();
 	char GetBusType();
-	bool GetPassengerOnFWD(Passenger* P);
-	bool GetPassengerOnBWD(Passenger* P,int num_of_stations);
-	bool GetPassengerOff(Passenger* &P, int station_num);
+	bool GetPassengerOnFWD(Passenger* P,Time clockkk);
+	bool GetPassengerOnBWD(Passenger* P,int num_of_stations,Time clockkk);
+	bool GetPassengerOff(Passenger* &P, int station_num,Time clockkk);
 	void set_check_start_time(Time t);
 	Time GetCheckStartTime();
 	int GetchekupDurationInMinutes();
@@ -49,4 +47,6 @@ public:
 	void setLastMovingTime(Time t);
 	void increment_journeys();
 	void reset_journeys();
+	void set_busyTime();
+	int get_busyTime();
 };

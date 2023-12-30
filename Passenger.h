@@ -33,5 +33,7 @@ public:
 	int get_finish_WT();
 	int get_upgrade_WT(Time clock);
     int get_TT();
+	void set_MT(Time mt);
+	void set_FT(Time ft);
 };
 

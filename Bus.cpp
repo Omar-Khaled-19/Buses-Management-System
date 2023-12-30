@@ -23,7 +23,7 @@ char Bus::GetBusType()
 	return Type;
 }
 
-bool Bus::GetPassengerOnFWD(Passenger* P)
+bool Bus::GetPassengerOnFWD(Passenger* P,Time clockkk)
 {
 	int count = GetPassengersCount();
 	if (count < Capacity)
@@ -31,13 +31,14 @@ bool Bus::GetPassengerOnFWD(Passenger* P)
 		int End = P->get_end_station_num();
 		
 		Passengers.enqueue(P, End);
+		P->set_MT(clockkk);
 		return true;
 	}
 	else
 		return false;
 }
 
-bool Bus::GetPassengerOnBWD(Passenger* P,int num_of_stations)
+bool Bus::GetPassengerOnBWD(Passenger* P,int num_of_stations,Time clockkk)
 {
 	int count = GetPassengersCount();
 	if (count < Capacity)
@@ -46,13 +47,14 @@ bool Bus::GetPassengerOnBWD(Passenger* P,int num_of_stations)
 		int EndStationNum = P->get_end_station_num();
 		int Priority = num_of_stations - EndStationNum;
 		Passengers.enqueue(P, EndStationNum);
+		P->set_MT(clockkk);
 		return true;
 	}
 	else
 		return false;
 }
 
-bool Bus::GetPassengerOff(Passenger* &P,int station_num) //dequeues a passenger only if its priority(end station) is equal to the station num of the station calling it, takes passenger ptr to return the dequeued passenger in
+bool Bus::GetPassengerOff(Passenger* &P,int station_num,Time clockkk) //dequeues a passenger only if its priority(end station) is equal to the station num of the station calling it, takes passenger ptr to return the dequeued passenger in
 {
 	if (Passengers.peek(P))
 	{
@@ -62,6 +64,7 @@ bool Bus::GetPassengerOff(Passenger* &P,int station_num) //dequeues a passenger 
 			if (EndStationNum == station_num)
 			{
 				Passengers.dequeue(P);
+				P->set_FT(clockkk);
 				total_passengers_transported++;
 				return true;
 			}
@@ -143,4 +146,15 @@ void Bus::increment_journeys()
 void Bus::reset_journeys()
 {
 	Num_of_Curr_Journeys = 0;
+}
+
+void Bus::set_busyTime()
+{
+	if (GetPassengersCount() != 0)
+		Busy_time++;
+}
+
+int Bus::get_busyTime()
+{
+	return Busy_time;
 }

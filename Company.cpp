@@ -236,7 +236,7 @@ void Company::Simulate(string FileName)
 	UI User;
 	Load(FileName);
 	Event* E;
-	while (clock.GetHour() < 5)
+	while (clock.GetHour() <22 )
 	{
 		LinkedQueue<Event*> EventQueue;
 		while (EventPtrList.peek(E) && E->get_event_time() == clock)
@@ -247,15 +247,19 @@ void Company::Simulate(string FileName)
 			EventPtrList.peek(E);
 		}
 
-		if (!BusList.isEmpty()) {
+		if (!BusList.isEmpty()) 
+		{
 			ReleaseBuses();
 		}
 
+
 		BusEnterStation();
 		
+
+
 		for (int i = 1; i <= StationNumber ; i++) {
-			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup);
-			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber);
+			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup,clock);
+			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber,clock);
 			UpdateFinishedList(StationPtrArray[i]);
 			UpdateCheckupBusList(StationPtrArray[i]);
 			RemoveFromCheckup();
@@ -265,10 +269,43 @@ void Company::Simulate(string FileName)
 			
 			UpdateForwardMovingBusList(StationPtrArray[i]);
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
-			
+		
 		}
+
+		//Bus* bustemp;
+		//LinkedQueue<Bus*> tempQB;
+		//while(ForwardMovingBusList.dequeue(bustemp))
+		//{
+		//	ForwardMovingBusList.dequeue(bustemp);
+		//	bustemp->set_busyTime();
+		//	tempQB.enqueue(bustemp);
+		//	cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
+		//}
+		//while (tempQB.dequeue(bustemp))
+		//{
+		//	tempQB.dequeue(bustemp);
+		//	ForwardMovingBusList.enqueue(bustemp);
+		//}
+
+
+		//Bus* bustemp2;
+		//LinkedQueue<Bus*> tempQB2;
+		//while (BackwardMovingBusList.dequeue(bustemp2))
+		//{
+		//	BackwardMovingBusList.dequeue(bustemp2);
+		//	bustemp2->set_busyTime();
+		//	tempQB2.enqueue(bustemp2);
+		//	cout << "BUS ID: " << bustemp2->GetBusId() << " BUSY TIME: " << bustemp2->get_busyTime() << "\t";
+		//}
+		//while (tempQB2.dequeue(bustemp2))
+		//{
+		//	tempQB2.dequeue(bustemp2);
+		//	BackwardMovingBusList.enqueue(bustemp2);
+		//}
+
 		++clock;
 	}
+	CreateOutputFile();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -280,6 +317,7 @@ void Company::CreateOutputFile()
 	ofstream Outfile;
 	Outfile.open("Output file.txt");
 	Outfile << "FT \tID\tAT \tWT \tTT\n";
+	int FinishCount = FinishedPassengerList.getCount();
 	int finishNP = 0;
 	int finishSP = 0; 
 	int finishWP = 0;
@@ -291,8 +329,8 @@ void Company::CreateOutputFile()
 	{
 		PromotedNum= PromotedNum+StationPtrArray[i]->Get_numberOfPromoted();
 	}
-	if (FinishedPassengerList.getCount() != 0)
-		promotedPresentage = (PromotedNum / FinishedPassengerList.getCount()) * 100;
+	if (FinishCount != 0)
+		promotedPresentage = (PromotedNum / FinishCount) * 100;
 	else
 		promotedPresentage = 0;
 	while(!FinishedPassengerList.isEmpty())
@@ -328,20 +366,21 @@ void Company::CreateOutputFile()
 		}
 		Outfile << "\n" << ft.GetHour() << ":" << ft.GetMin()<<"\t"<<finished->get_id()<<"\t";
 	 	Outfile << at.GetHour() << ":" << at.GetMin() << "\t" << wt_hr << ":" << wt_min << "\t" << tt_hr << ":" << tt_min;
+		delete finished;
 	}
 	int totalTT_min = totalTT.GetMin() + ((totalTT.GetHour()) * 60);
 	int totalWT_min = totalWT.GetMin() + ((totalWT.GetHour()) * 60);
 	int avgTT_min;
 	int avgWT_min;
-	if (FinishedPassengerList.getCount() == 0)
+	if (FinishCount == 0)
 	{
 		avgTT_min = 0;
 		avgWT_min = 0; 
 	}
 	else
 	{
-		avgTT_min = totalTT_min / FinishedPassengerList.getCount();
-		avgWT_min = totalWT_min / FinishedPassengerList.getCount();
+		avgTT_min = totalTT_min / FinishCount;
+		avgWT_min = totalWT_min / FinishCount;
 	}
 	
 	int avgTT_hr = 0;
@@ -356,9 +395,9 @@ void Company::CreateOutputFile()
 		avgWT_min = avgWT_min - 60;
 		avgWT_hr++;
 	}
-	Outfile << "......................................\n......................................\n";
-	Outfile << "Passengers: "<< FinishedPassengerList.getCount() <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
-	Outfile << "\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
+	Outfile << "\n......................................\n......................................\n";
+	Outfile << "Passengers: "<< FinishCount <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
+	Outfile << "]\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
 	Outfile << "\nPassenger Avg trip time = "<<avgTT_hr<<":"<<avgTT_min;
 	Outfile << "\nnAuto-promoted passengers: "<<promotedPresentage<<"%"; 
 	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
@@ -375,5 +414,5 @@ Company::~Company()
 	BackwardMovingBusList.~LinkedQueue();
 	CheckupBusList.~LinkedQueue();
 	FinishedPassengerList.~LinkedQueue();
-	//delete[] StationPtrArray;
+	delete[] StationPtrArray;
 }

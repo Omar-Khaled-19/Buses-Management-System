@@ -37,11 +37,11 @@ public:
 
 	int GetStationNum();
 
-	void LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time);
-	void LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time,int TotalStationsNum);
-	void UnloadPassengers(Bus* FBus, int& Time_count, int get_off_time);
-	void AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, int NumOfJourneysToChecup);
-	void AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations);
+	void LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time,Time clockkk);
+	void LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time,int TotalStationsNum,Time clockkk);
+	void UnloadPassengers(Bus* FBus, int& Time_count, int get_off_time,Time clockkk);
+	void AllFWDBusOperation(int get_on_off_time, int TotalNumOfStations, int NumOfJourneysToChecup,Time clockkk);
+	void AllBWDBusOperation(int get_on_off_time, int TotalNumOfStations,Time clockkk);
 	Passenger* RemovePassengerFromGoToFinishedPassengerList();
 	int GetGoToFinishedPassengerListCount();
 	Bus* RemoveBusFromNeedsCheckupBusList();
