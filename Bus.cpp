@@ -54,22 +54,23 @@ bool Bus::GetPassengerOnBWD(Passenger* P,int num_of_stations)
 
 bool Bus::GetPassengerOff(Passenger* &P,int station_num) //dequeues a passenger only if its priority(end station) is equal to the station num of the station calling it, takes passenger ptr to return the dequeued passenger in
 {
-	Passengers.peek(P);
-	if (P != nullptr)
+	if (Passengers.peek(P))
 	{
-		int EndStationNum = P->get_end_station_num();
-		if (EndStationNum == station_num)
+		if (P != nullptr)
 		{
-			Passengers.dequeue(P);
-			total_passengers_transported++;
-			return true;
+			int EndStationNum = P->get_end_station_num();
+			if (EndStationNum == station_num)
+			{
+				Passengers.dequeue(P);
+				total_passengers_transported++;
+				return true;
+			}
+			else
+				return false;
 		}
 		else
 			return false;
 	}
-	else
-		return false;
-
 }
 
 
