@@ -18,7 +18,7 @@ public:
 	PriorityQueue();
 	PQNode <T>* getHead();
 	bool isEmpty() const;
-	int getCount() const;
+	int getCount();
 	bool enqueue(const T& newEntry, const int& prio);
 	bool dequeue(T& frntEntry);
 	bool peek(T& frntEntry)  const;
@@ -69,7 +69,7 @@ bool PriorityQueue<T>::isEmpty() const
 }
 
 template<typename T>
-int PriorityQueue<T>::getCount() const
+int PriorityQueue<T>::getCount()
 {
 	return counter;
 }

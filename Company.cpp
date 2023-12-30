@@ -2,15 +2,10 @@
 
 Company::Company()
 {
-	clock.setTime(04, 00);
+	clock.setTime(4, 00);
 }
 
-Company::Company(string FileName) 
-{
-	load(FileName);
-}
-
-void Company::load(string FileName)
+void Company::Load(string FileName)
 {
 	ifstream inFile(FileName);
 	int NoOfStations, StationTime, WBus_count, MBus_count, WBusCap, MBusCap, CheckupTrips, C_WBus, C_MBus, maxWaitMin, GetOnOffSec, EventsNum;
@@ -99,14 +94,6 @@ void Company::load(string FileName)
 	}
 }
 
-
-int Company::generateRandom(int min, int max)
-{
-	random_device rand;
-	mt19937 gen(rand());
-	uniform_int_distribution<>dis(1, 100);
-	return dis(gen);
-}
 /////////////////////////////////////////////UPDATES/////////////////////////////////////////////////////////
 
 void Company::UpdateFinishedList(Station* S)
@@ -155,7 +142,7 @@ void Company::UpdateCheckupBusList(Station* S)
 
 //////////////////////////////////////////**************////////////////////////////////////////////
 
-void Company::remove_from_checkup()  /////////////called each minute 
+void Company::RemoveFromCheckup()  /////////////called each minute 
 {
 	Bus* tempBus;
 	Time Leave_time;
@@ -175,7 +162,7 @@ void Company::remove_from_checkup()  /////////////called each minute
 	}
 }
 
-void Company::release_buses()
+void Company::ReleaseBuses()
 {
 	if (clock.GetMin() % 15 == 0)
 	{
@@ -186,7 +173,7 @@ void Company::release_buses()
 	}
 }
 
-void Company::bus_enter_station()
+void Company::BusEnterStation()
 {
 	Bus* tempBus;
 	while (ForwardMovingBusList.peek(tempBus))
@@ -231,50 +218,45 @@ void Company::bus_enter_station()
 
 ////////////////////////////////**********************************//////////////////////////////
 
-void Company::simulate(string FileName)
+void Company::Simulate(string FileName)
 {
 	UI User;
-	Time clock(04, 02);
-	load(FileName);
+	Load(FileName);
 	Event* E;
-	Passenger* P;
-	char x;
-	while (EventPtrList.peek(E) || clock.GetHour() < 10)
+	while (clock.GetHour() < 6)
 	{
-		LinkedQueue<Event*> EventQueue;
+		/*LinkedQueue<Event*> EventQueue;
 		while (E->get_event_time() == clock)
 		{
 			EventPtrList.dequeue(E);
 			E->Excute();
 			EventQueue.enqueue(E);
 			EventPtrList.peek(E);
-		}
+		}*/
 
 		if (!BusList.isEmpty()) {
-			release_buses();
+			ReleaseBuses();
 		}
 
-		bus_enter_station();
-
-		for (int i = 1; i <= StationNumber ; i++) {
+		BusEnterStation();
+		++clock;
+		/*for (int i = 1; i <= StationNumber ; i++) {
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber);
 			UpdateForwardMovingBusList(StationPtrArray[i]);
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
 			UpdateCheckupBusList(StationPtrArray[i]);
-			remove_from_checkup();
+			RemoveFromCheckup();
 		}
 		
+		
+		if (clock.GetHour() == 5)
+			CreateOutputFile();
 		for (int i = 1; i <= StationNumber;i++) {
 			User.printTime(clock);
 			User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList);
-		}
-
-		++clock;
-		if (clock.GetHour() == 5)
-			CreateOutputFile();
+		}*/
 	}
-	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -382,7 +364,4 @@ Company::~Company()
 	CheckupBusList.~LinkedQueue();
 	FinishedPassengerList.~LinkedQueue();
 	delete[] StationPtrArray;
-	
-
-
 }
