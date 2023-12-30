@@ -162,9 +162,11 @@ void Company::RemoveFromCheckup()  /////////////called each minute
 		if (Leave_time == clock) {
 			CheckupBusList.dequeue(tempBus);
 			if (tempBus->GetNextStation() > tempBus->GetCurrStation()) {
+				tempBus->setLastMovingTime(clock);
 				ForwardMovingBusList.enqueue(tempBus);
 			}
 			else if (tempBus->GetNextStation() < tempBus->GetCurrStation()) {
+				tempBus->setLastMovingTime(clock);
 				BackwardMovingBusList.enqueue(tempBus);
 			}
 		}
@@ -234,7 +236,7 @@ void Company::Simulate(string FileName)
 	UI User;
 	Load(FileName);
 	Event* E;
-	while (clock.GetHour() < 6)
+	while (clock.GetHour() < 5)
 	{
 		LinkedQueue<Event*> EventQueue;
 		while (EventPtrList.peek(E) && E->get_event_time() == clock)
@@ -254,21 +256,17 @@ void Company::Simulate(string FileName)
 		for (int i = 1; i <= StationNumber ; i++) {
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber);
-			UpdateForwardMovingBusList(StationPtrArray[i]);
-			UpdateBackwardMovingBusList(StationPtrArray[i]);
+			UpdateFinishedList(StationPtrArray[i]);
 			UpdateCheckupBusList(StationPtrArray[i]);
 			RemoveFromCheckup();
-		}
-		
-		
-	
-			for (int i = 1; i <= StationNumber; i++)
-			{
-				User.printTime(clock);
-				User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
 
-			}
-	
+			User.printTime(clock);
+			User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
+			
+			UpdateForwardMovingBusList(StationPtrArray[i]);
+			UpdateBackwardMovingBusList(StationPtrArray[i]);
+			
+		}
 		++clock;
 	}
 }

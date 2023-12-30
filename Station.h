@@ -11,11 +11,16 @@ class Station
 private:
 	int StationNum;
 	LinkedQueue<Bus*> ForwardBusList;
+
+	/******************Buses Lists*************************************************/
 	LinkedQueue<Bus*> FullForwardBusList;
 	LinkedQueue<Bus*> BackwardBusList;
 	LinkedQueue<Bus*> FullBackwardBusList;
 	LinkedQueue<Bus*> NeedsCheckupBusList;
 	LinkedQueue<Passenger*> GoToFinishedPassengerList;
+	
+	
+	/*******************Waiting Passengers Lists***************************/
 	LinkedQueue<Passenger*> WP_ForwardWaiting;
 	LinkedQueue<Passenger*> WP_BackwardWaiting;
 	ModifiedQueue<Passenger*> NP_ForwardWaiting;

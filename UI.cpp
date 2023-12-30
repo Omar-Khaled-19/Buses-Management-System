@@ -120,7 +120,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			for (int j = 0; j < Bus_passenger->getCount(); j++)
 			{
 				Passenger* tempPassenger = temp10->getItem();
-				if (i = Bus_passenger->getCount() - 1)
+				if (j == Bus_passenger->getCount() - 1)
 					cout << tempPassenger->get_id()<< "}";
 				else
 			      cout << tempPassenger->get_id() << ", ";
@@ -139,7 +139,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			for (int j = 0; j < Bus_passenger->getCount(); j++)
 			{
 				Passenger* tempPassenger = temp11->getItem();
-				if (i == Bus_passenger->getCount() - 1)
+				if (j == Bus_passenger->getCount() - 1)
 					cout << tempPassenger->get_id() << "}";
 				else
 					cout << tempPassenger->get_id() << ", ";
@@ -170,12 +170,9 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 
 		for (int i = 0; i < finish_count; i++)
 		{
-			Passenger* temp = tempQ8->getItem();
-			if (temp)
-			{
-				int finish_id = temp->get_id();
-				cout << finish_id << ",";
-			}
+			Passenger* tempP = tempQ8->getItem();
+			int finish_id = tempP->get_id();
+			cout << finish_id << ",";
 			tempQ8 = tempQ8->getNext();
 		}
 		

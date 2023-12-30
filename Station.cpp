@@ -423,9 +423,9 @@ LinkedQueue<Passenger*>* Station:: Get_BckWP()
 }
 LinkedQueue<Bus*>* Station::Get_FwdBus()
 {
-	return &ForwardBusList;
+	return &FullForwardBusList;
 }
 LinkedQueue<Bus*>* Station::Get_BckBus()
 {
-	return &BackwardBusList;
+	return &FullBackwardBusList;
 }
