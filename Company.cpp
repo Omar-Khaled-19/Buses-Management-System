@@ -235,129 +235,129 @@ void Company::bus_enter_station()
 
 ////////////////////////////////**********************************//////////////////////////////
 
-void Company::simulate(string FileName)
-{
-	UI User;
-	Time clock(04, 00);
-	load(FileName);
-	Event* E;
-	Passenger* P;
-	char x;
-	while (EventPtrList.peek(E) || clock.GetHour() < 10)
-	{
-		LinkedQueue<Event*> oneminuteEventQueue;
-		while (E->get_event_time() == clock)
-		{
-			EventPtrList.dequeue(E);
-			E->Excute();
-			oneminuteEventQueue.enqueue(E);
-			EventPtrList.peek(E);
-		}
+//void Company::simulate(string FileName)
+//{
+//	UI User;
+//	Time clock(04, 00);
+//	load(FileName);
+//	Event* E;
+//	Passenger* P;
+//	char x;
+//	while (EventPtrList.peek(E) || clock.GetHour() < 10)
+//	{
+//		LinkedQueue<Event*> oneminuteEventQueue;
+//		while (E->get_event_time() == clock)
+//		{
+//			EventPtrList.dequeue(E);
+//			E->Excute();
+//			oneminuteEventQueue.enqueue(E);
+//			EventPtrList.peek(E);
+//		}
+//
+//		if (!BusList.isEmpty()) {
+//			release_buses();
+//		}
+//		bus_enter_station();
+//
+//
+//		for (int i = 0; i++; i <= StationNumber) {
+//		//	int Num_of_ForwardBuses = StationPtrArray[i]->getnumoForwardfbuses();
+//		//	int Num_of_BackwardBuses = StationPtrArray[i]->getnumoBackwardfbuses();
+//
+//		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
+//		//		Bus* tempbus;
+//		//      int remaining_time = 60
+//		//		 
+//		//      tempbus  stationptrarray[i]->unload(getOfTime,remaining_time (by reference) )
+//		//		////movepassengerstofinished  ******//////////////       
+//		// 
+//		//			//movetocheckup if any
+//		// 
+//		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
+//		//			temp StationPtrArray[i]->DequeueFirstForwardBus();
+//		//			move_to_checkup(tempbus, clock);
+//		//		}
+//		//		else {
+//		//			//boarding
+//		//          //sum of get on time
+//		//
+//		//			//move to moving bus list ?
+//		//		}
+//		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
+//		//			Bus* tempbus2;
+//		//			tempbus2 = StationPtrArray[i]->PeekFirstBackwardBus();
+//		//			////movepassengerstofinished  ******////////////// 
+//		//				//movetocheckup if any
+//		//			if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
+//		//			    tempbus2 = StationPtrArray[i]->DequeueFirstBackwardBus();
+//		//				move_to_checkup(tempbus, clock);
+//		//			}
+//		//			else {
+//		//				//boarding
+//		//				//move to miving bus list
+//		//			}
+//		//	}
+//		//	}
+//		//}
+//
+//		//////////////////////////////////////////////////////////////////////////////////////////
+//	//	clock.printTime();
+//	//	for (int i = 1; i <= StationNumber; i++)
+//	//	{
+//	//		int rand_number = generateRandom(1, 100);
+//	//		if (rand_number <= 25)
+//	//		{
+//	//			P = StationPtrArray[i]->MovSP();
+//	//			if (P != nullptr)
+//	//			{
+//	//				FinishedPassengerList.enqueue(P);
+//	//				FinishedCount++;
+//	//			}
+//
+//	//		}
+//	//		else if (rand_number <= 60 && rand_number >= 50)
+//	//		{
+//	//			P = StationPtrArray[i]->MovNP();
+//	//			if (P != nullptr)
+//	//			{
+//	//				FinishedPassengerList.enqueue(P);
+//	//				FinishedCount++;
+//	//			}
+//	//		}
+//	//		else if (rand_number <= 45 && rand_number >= 35)
+//	//		{
+//	//			P = StationPtrArray[i]->MovWC();
+//	//			if (P != nullptr)
+//	//			{
+//	//				FinishedPassengerList.enqueue(P);
+//	//				FinishedCount++;
+//	//			}
+//	//		}
+//	//		StationPtrArray[i]->printStation(i);
+//	//		printFinished();
+//	//		cin >> x;
+//	//	}
+//	//	++clock;
+//	//}
+//}
 
-		if (!BusList.isEmpty()) {
-			release_buses();
-		}
-		bus_enter_station();
-
-
-		for (int i = 0; i++; i <= StationNumber) {
-		//	int Num_of_ForwardBuses = StationPtrArray[i]->getnumoForwardfbuses();
-		//	int Num_of_BackwardBuses = StationPtrArray[i]->getnumoBackwardfbuses();
-
-		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
-		//		Bus* tempbus;
-		//      int remaining_time = 60
-		//		 
-		//      tempbus  stationptrarray[i]->unload(getOfTime,remaining_time (by reference) )
-		//		////movepassengerstofinished  ******//////////////       
-		// 
-		//			//movetocheckup if any
-		// 
-		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
-		//			temp StationPtrArray[i]->DequeueFirstForwardBus();
-		//			move_to_checkup(tempbus, clock);
-		//		}
-		//		else {
-		//			//boarding
-		//          //sum of get on time
-		//
-		//			//move to moving bus list ?
-		//		}
-		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
-		//			Bus* tempbus2;
-		//			tempbus2 = StationPtrArray[i]->PeekFirstBackwardBus();
-		//			////movepassengerstofinished  ******////////////// 
-		//				//movetocheckup if any
-		//			if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
-		//			    tempbus2 = StationPtrArray[i]->DequeueFirstBackwardBus();
-		//				move_to_checkup(tempbus, clock);
-		//			}
-		//			else {
-		//				//boarding
-		//				//move to miving bus list
-		//			}
-		//	}
-		//	}
-		//}
-
-		//////////////////////////////////////////////////////////////////////////////////////////
-		clock.printTime();
-		for (int i = 1; i <= StationNumber; i++)
-		{
-			int rand_number = generateRandom(1, 100);
-			if (rand_number <= 25)
-			{
-				P = StationPtrArray[i]->MovSP();
-				if (P != nullptr)
-				{
-					FinishedPassengerList.enqueue(P);
-					FinishedCount++;
-				}
-
-			}
-			else if (rand_number <= 60 && rand_number >= 50)
-			{
-				P = StationPtrArray[i]->MovNP();
-				if (P != nullptr)
-				{
-					FinishedPassengerList.enqueue(P);
-					FinishedCount++;
-				}
-			}
-			else if (rand_number <= 45 && rand_number >= 35)
-			{
-				P = StationPtrArray[i]->MovWC();
-				if (P != nullptr)
-				{
-					FinishedPassengerList.enqueue(P);
-					FinishedCount++;
-				}
-			}
-			StationPtrArray[i]->printStation(i);
-			printFinished();
-			cin >> x;
-		}
-		++clock;
-	}
-}
-
-void Company:: printFinished() //MOVE TO UI CLASS
-{
-	cout << FinishedCount << " Finished passengers: ";
-	
-	Node<Passenger*>* counter = FinishedPassengerList.getHead();
-	for (int i = 0; i < FinishedCount; i++)
-	{
-		Passenger* temp = counter->getItem();
-		if (temp)
-		{
-			int finish_id = temp->get_id();
-			cout << finish_id << ",";
-		}
-		counter = counter->getNext();
-	}
-	cout << "\nPrint any key to display next station";
-} 
+//void Company:: printFinished() //MOVE TO UI CLASS
+//{
+//	cout << FinishedCount << " Finished passengers: ";
+//	
+//	Node<Passenger*>* counter = FinishedPassengerList.getHead();
+//	for (int i = 0; i < FinishedCount; i++)
+//	{
+//		Passenger* temp = counter->getItem();
+//		if (temp)
+//		{
+//			int finish_id = temp->get_id();
+//			cout << finish_id << ",";
+//		}
+//		counter = counter->getNext();
+//	}
+//	cout << "\nPrint any key to display next station";
+//} 
 
 void Company::CreateOutputFile()
 {

@@ -20,7 +20,7 @@ private:
 	int TripCheckupsNum;
 	int NumofJourneystoCheckup;
 	int GetOnTime;
-	Time TimeBetStaions;
+	int TimeBetStaions;
 	LinkedQueue<Bus*> BusList;
 	LinkedQueue<Bus*> ForwardMovingBusList;
 	LinkedQueue<Bus*> BackwardMovingBusList;
