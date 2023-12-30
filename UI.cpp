@@ -259,7 +259,7 @@ void UI::SilentEnd()
 }
 
 
-void UI::printTime(Time& time)
+void UI::printTime(Time time)
 {
 	cout << "Current Time (Hour:Min)==> " << time.GetHour() << ":" << time.GetMin() << endl;
 }
