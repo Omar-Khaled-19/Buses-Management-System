@@ -72,6 +72,16 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 					return;
 				}
 			}
+			if (Time_count >= 60)
+				return;
+
+			else // no more passengers in the station
+			{
+				ForwardBusList.dequeue(FBus);
+				FullForwardBusList.enqueue(FBus);
+				return;
+			}
+
 		}
 
 
@@ -91,7 +101,15 @@ void Station::LoadPassengersFWD(Bus* FBus, int& Time_count, int get_on_time)
 				return;
 			}
 		}
+		if (Time_count >= 60)
+			return;
 
+		else // no more passengers in the station
+		{
+			ForwardBusList.dequeue(FBus);
+			FullForwardBusList.enqueue(FBus);
+			return;
+		}
 	}
 }
 
@@ -142,6 +160,15 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 						return;
 					}
 				}
+				if (Time_count >= 60)
+					return;
+
+				else // no more passengers
+				{
+					BackwardBusList.dequeue(BBus);
+					FullBackwardBusList.enqueue(BBus);
+					return;
+				}
 			}
 
 
@@ -161,7 +188,15 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 					return;
 				}
 			}
+			if (Time_count >= 60)
+				return;
 
+			else // no more passengers
+			{
+				BackwardBusList.dequeue(BBus);
+				FullBackwardBusList.enqueue(BBus);
+				return;
+			}
 		}
 	}
 }
