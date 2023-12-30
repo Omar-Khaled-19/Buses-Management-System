@@ -429,3 +429,13 @@ LinkedQueue<Bus*>* Station::Get_BckBus()
 {
 	return &FullBackwardBusList;
 }
+
+LinkedQueue<Bus*>* Station::Get_FwdBus2()
+{
+	return &ForwardBusList;
+}
+
+LinkedQueue<Bus*>* Station::Get_BckBus2()
+{
+	return &BackwardBusList;
+}

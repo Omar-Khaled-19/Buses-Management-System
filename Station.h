@@ -10,9 +10,10 @@ class Station
 {
 private:
 	int StationNum;
-	LinkedQueue<Bus*> ForwardBusList;
+	
 
 	/******************Buses Lists*************************************************/
+	LinkedQueue<Bus*> ForwardBusList;
 	LinkedQueue<Bus*> FullForwardBusList;
 	LinkedQueue<Bus*> BackwardBusList;
 	LinkedQueue<Bus*> FullBackwardBusList;
@@ -63,7 +64,8 @@ public:
 	LinkedQueue<Passenger*>* Get_BckWP(); 
 	LinkedQueue<Bus*>* Get_FwdBus(); 
 	LinkedQueue<Bus*>* Get_BckBus(); 
-
+	LinkedQueue<Bus*>* Get_FwdBus2();
+	LinkedQueue<Bus*>* Get_BckBus2();
 };
 
 

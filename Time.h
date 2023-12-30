@@ -12,12 +12,12 @@ public:
 	Time(); // default constructor
 	Time(int hr, int minute); // copy constructor
 	void setTime(int h, int m);
-	void operator = (Time t2);
-	bool operator == (Time t2);
+	void operator = (const Time &t2);
+	bool operator == (const Time &t2);
 	void operator ++ ();
-	Time operator + (Time t2);
+	Time operator + (const Time &t2);
 	Time operator + (int minute);
-	int operator - (Time t2);
+	int operator - (const Time &t2);
 	void printTime();
 	int GetHour();
 	int GetMin();

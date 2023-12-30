@@ -24,6 +24,8 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 		LinkedQueue<Passenger*>* BckWP = stationptr->Get_BckWP();
 		LinkedQueue<Bus*>* FwdBus = stationptr->Get_FwdBus();
 		LinkedQueue<Bus*>* BckBus = stationptr->Get_BckBus();
+		LinkedQueue<Bus*>* FwdBus2 = stationptr->Get_FwdBus2();
+		LinkedQueue<Bus*>* BckBus2 = stationptr->Get_BckBus2();
 
 		int SP_count = FwdSP->getCount() + BckSP->getCount();
 
@@ -108,7 +110,7 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 		}
 		cout << "]" << endl;
 
-		int Bus_count = FwdBus->getCount() + BckBus->getCount();
+		int Bus_count = FwdBus->getCount() + BckBus->getCount()+ FwdBus2->getCount() + BckBus2->getCount();
 		cout << Bus_count << " Buses at this station:";
 		Node<Bus*>* tempQ5 = FwdBus->getHead();
 		for (int i = 0; i < FwdBus->getCount(); i++)
@@ -127,6 +129,24 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 				temp10 = temp10->getNext();
 			}
 			tempQ5 = tempQ5->getNext();
+		}
+		Node<Bus*>* tempQ52 = FwdBus2->getHead();
+		for (int i = 0; i < FwdBus2->getCount(); i++)
+		{
+			Bus* bustemp = tempQ52->getItem();
+			cout << "\nB" << bustemp->GetBusId() << "[FWD, " << bustemp->GetBusType() << "Bus, " << bustemp->GetBusCapacity() << "] {";
+			PriorityQueue<Passenger*>* Bus_passenger = bustemp->Get_Bus_Passengers();
+			PQNode<Passenger*>* temp10 = Bus_passenger->getHead();
+			for (int j = 0; j < Bus_passenger->getCount(); j++)
+			{
+				Passenger* tempPassenger = temp10->getItem();
+				if (j == Bus_passenger->getCount() - 1)
+					cout << tempPassenger->get_id() << "}";
+				else
+					cout << tempPassenger->get_id() << ", ";
+				temp10 = temp10->getNext();
+			}
+			tempQ52 = tempQ52->getNext();
 		}
 
 		Node<Bus*>* tempQ6 = BckBus->getHead();
@@ -147,6 +167,26 @@ void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bu
 			}
 			tempQ6 = tempQ6->getNext();
 		}
+
+		Node<Bus*>* tempQ62 = BckBus2->getHead();
+		for (int i = 0; i < BckBus2->getCount(); i++)
+		{
+			Bus* bustemp = tempQ62->getItem();
+			cout << "\nB" << bustemp->GetBusId() << "[BCK, " << bustemp->GetBusType() << "Bus, " << bustemp->GetBusCapacity() << "] {";
+			PriorityQueue<Passenger*>* Bus_passenger = bustemp->Get_Bus_Passengers();
+			PQNode<Passenger*>* temp11 = Bus_passenger->getHead();
+			for (int j = 0; j < Bus_passenger->getCount(); j++)
+			{
+				Passenger* tempPassenger = temp11->getItem();
+				if (j == Bus_passenger->getCount() - 1)
+					cout << tempPassenger->get_id() << "}";
+				else
+					cout << tempPassenger->get_id() << ", ";
+				temp11 = temp11->getNext();
+			}
+			tempQ62 = tempQ62->getNext();
+		}
+
 		cout << "\n----------------------------------------------------------------------------------------------------\n";
 
 		Node<Bus*>* tempQ7 = Checkup->getHead();

@@ -21,14 +21,14 @@ void Time:: setTime(int h, int m)
 	sec = 0;
 }
 
-void Time::operator=(Time t2)
+void Time::operator=(const Time &t2)
 {
 	sec = t2.sec;
 	min = t2.min;
 	hour = t2.hour;
 }
 
-bool Time::operator==(Time t2)
+bool Time::operator==(const Time &t2)
 {
 	if (min == t2.min && hour == t2.hour)
 		return true;
@@ -50,7 +50,7 @@ void Time::operator++()
 	}
 	
 }
-Time Time::operator+(Time t2)
+Time Time::operator+(const Time &t2)
 {
 	Time new_time;
 	if (min + t2.min < 60) {
@@ -75,7 +75,7 @@ Time Time::operator+(int minute)
 	return new_time;
 }
 
-int Time:: operator -(Time t2)
+int Time:: operator -(const Time &t2)
 {
 	if (hour == t2.hour)
 		return min - t2.min;
