@@ -439,3 +439,8 @@ LinkedQueue<Bus*>* Station::Get_BckBus2()
 {
 	return &BackwardBusList;
 }
+
+int Station::Get_numberOfPromoted()
+{
+	return numberOfPromoted;
+}

@@ -28,7 +28,7 @@ private:
 	ModifiedQueue<Passenger*> NP_BackwardWaiting;
 	PriorityQueue<Passenger*> SP_ForwardWaiting;
 	PriorityQueue<Passenger*> SP_BackwardWaiting;
-
+	int numberOfPromoted;
 	
 
 public:
@@ -55,7 +55,6 @@ public:
 	void AddForwardBus(Bus* newBus);
 	void AddBackwardBus(Bus* newBus); 
 	void PromoteNP(Time t, int max_waiting_time);
-    int numberOfPromoted;
 	PriorityQueue<Passenger*>* Get_FwdSP(); 
 	PriorityQueue<Passenger*>* Get_BckSP();
 	ModifiedQueue<Passenger*>* Get_FwdNP(); 
@@ -66,6 +65,7 @@ public:
 	LinkedQueue<Bus*>* Get_BckBus(); 
 	LinkedQueue<Bus*>* Get_FwdBus2();
 	LinkedQueue<Bus*>* Get_BckBus2();
+	int Get_numberOfPromoted();
 };
 
 

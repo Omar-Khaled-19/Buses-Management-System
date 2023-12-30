@@ -283,13 +283,18 @@ void Company::CreateOutputFile()
 	int finishNP = 0;
 	int finishSP = 0; 
 	int finishWP = 0;
-	int PromotedNum = 10;
+	int PromotedNum=0;
 	Time totalWT;
 	Time totalTT;
-	int promotedPresentage = 0;
+	int promotedPresentage;
+	for (int i = 1; i <= StationNumber; i++)
+	{
+		PromotedNum= PromotedNum+StationPtrArray[i]->Get_numberOfPromoted();
+	}
 	if (FinishedPassengerList.getCount() != 0)
-		promotedPresentage = (PromotedNum / FinishedPassengerList.getCount())*100;
-	
+		promotedPresentage = (PromotedNum / FinishedPassengerList.getCount()) * 100;
+	else
+		promotedPresentage = 0;
 	while(!FinishedPassengerList.isEmpty())
 	{
 		Time ft, at;
@@ -326,8 +331,19 @@ void Company::CreateOutputFile()
 	}
 	int totalTT_min = totalTT.GetMin() + ((totalTT.GetHour()) * 60);
 	int totalWT_min = totalWT.GetMin() + ((totalWT.GetHour()) * 60);
-	int avgTT_min = totalTT_min; // / FinishedPassengerList.getCount();
-	int avgWT_min = totalWT_min; // / FinishedPassengerList.getCount();
+	int avgTT_min;
+	int avgWT_min;
+	if (FinishedPassengerList.getCount() == 0)
+	{
+		avgTT_min = 0;
+		avgWT_min = 0; 
+	}
+	else
+	{
+		avgTT_min = totalTT_min / FinishedPassengerList.getCount();
+		avgWT_min = totalWT_min / FinishedPassengerList.getCount();
+	}
+	
 	int avgTT_hr = 0;
 	int avgWT_hr = 0;
 	while (avgTT_min > 59)
@@ -359,5 +375,5 @@ Company::~Company()
 	BackwardMovingBusList.~LinkedQueue();
 	CheckupBusList.~LinkedQueue();
 	FinishedPassengerList.~LinkedQueue();
-	delete[] StationPtrArray;
+	//delete[] StationPtrArray;
 }
