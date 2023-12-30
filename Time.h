@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-using namespace std;
 class Time
 {
 private:
@@ -18,7 +16,6 @@ public:
 	Time operator + (const Time &t2);
 	Time operator + (int minute);
 	int operator - (const Time &t2);
-	void printTime();
 	int GetHour();
 	int GetMin();
 };

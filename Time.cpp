@@ -83,14 +83,6 @@ int Time:: operator -(const Time &t2)
 		return ((60 - min) + t2.min) * (hour - t2.hour);
 }
 
-void Time::printTime()
-{
-	cout << "Current Time (Hour:Min)==> " << hour << ":" << min << endl;
-}
-//Time Time:: operator - (const Time &t2)
-//	cout << "Current Time (Hour:Min)==> " << hour << ":" << min << endl;
-//}
-
 int Time::GetHour()
 {
 	return hour;

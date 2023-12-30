@@ -13,8 +13,10 @@ int UI::ChooseMode() //First thing to call in simulation
 	return x; 
 }
 
-void UI:: InteractiveInterface(int stationn, Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished, LinkedQueue<Bus*>* FWDBusList, LinkedQueue<Bus*>* BCKBusList)
+void UI:: InteractiveInterface(Time clockk,int stationn, Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished, LinkedQueue<Bus*>* FWDBusList, LinkedQueue<Bus*>* BCKBusList)
  {
+	cout << "Current Time (Hour:Min)==> " << clockk.GetHour() << ":" << clockk.GetMin() << endl;
+	
 		cout << "\n==============     STATION #" << stationn << "     ==============\n";
 		PriorityQueue<Passenger*>* FwdSP = stationptr->Get_FwdSP();
 		PriorityQueue<Passenger*>* BckSP = stationptr->Get_BckSP();
@@ -258,8 +260,3 @@ void UI::SilentEnd()
 	cout << "Simulation ends, Output file created.";
 }
 
-
-void UI::printTime(Time time)
-{
-	cout << "Current Time (Hour:Min)==> " << time.GetHour() << ":" << time.GetMin() << endl;
-}

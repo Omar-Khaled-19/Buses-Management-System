@@ -6,5 +6,5 @@ int main()
 	string FileName;
 	//cin >> FileName;
 	Company OurCompany;
-	OurCompany.Simulate("TestFile.txt");
+	OurCompany.Simulate("random_file_1.txt");
 }

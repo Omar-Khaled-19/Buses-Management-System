@@ -231,7 +231,7 @@ void Company::Simulate(string FileName)
 	UI User;
 	Load(FileName);
 	Event* E;
-	while (clock.GetHour() < 6)
+	while (clock.GetHour() < 22)
 	{
 		LinkedQueue<Event*> EventQueue;
 		while (EventPtrList.peek(E) && E->get_event_time() == clock)
@@ -247,24 +247,19 @@ void Company::Simulate(string FileName)
 			ReleaseBuses();
 		}
 
-
 		BusEnterStation();
-		
-
 
 		for (int i = 1; i <= StationNumber ; i++) {
+			RemoveFromCheckup();
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup,clock);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber,clock);
 			UpdateFinishedList(StationPtrArray[i]);
 			UpdateCheckupBusList(StationPtrArray[i]);
-			RemoveFromCheckup();
 
-			User.printTime(clock);
-			User.InteractiveInterface(i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
+			User.InteractiveInterface(clock,i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
 			
 			UpdateForwardMovingBusList(StationPtrArray[i]);
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
-		
 		}
 
 		//Bus* bustemp;

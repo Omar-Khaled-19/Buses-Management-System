@@ -12,7 +12,6 @@ public:
 	int ChooseMode();
 	void SilentStart();
 	void SilentEnd();
-	void InteractiveInterface(int stationn,Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished, LinkedQueue<Bus*>* FWDBusList, LinkedQueue<Bus*>* BCKBusList);
-	void printTime(Time time);
+	void InteractiveInterface(Time clockk,int stationn,Station* stationptr, LinkedQueue<Bus*>* Checkup, LinkedQueue<Passenger*>* finished, LinkedQueue<Bus*>* FWDBusList, LinkedQueue<Bus*>* BCKBusList);
 };
 
