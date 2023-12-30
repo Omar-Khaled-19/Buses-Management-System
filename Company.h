@@ -16,11 +16,11 @@ private:
 	Time clock;
 	LinkedQueue<Event*> EventPtrList;
 	int StationNumber;
-	Station** StationPtrArray = new Station*[StationNumber];
+	Station* * StationPtrArray = new Station*[StationNumber];
 	int TripCheckupsNum;
 	int NumofJourneystoCheckup;
 	int GetOnTime;
-	Time TimeBetStaions;
+	int TimeBetStaions;
 	LinkedQueue<Bus*> BusList;
 	LinkedQueue<Bus*> ForwardMovingBusList;
 	LinkedQueue<Bus*> BackwardMovingBusList;

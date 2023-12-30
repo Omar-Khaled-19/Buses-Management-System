@@ -177,7 +177,6 @@ void Station::LoadPassengersBWD(Bus* BBus, int& Time_count, int get_on_time, int
 	char BBusType = BBus->GetBusType();
 	if (BBusType == 'M')
 		Bus* BBus;
-	Passenger* BP;
 	BackwardBusList.peek(BBus);
 	int BMovCount = BBus->GetPassengersCount();
 	int BmaxCap = BBus->GetBusCapacity();
@@ -530,7 +529,6 @@ Bus* Station::RemoveBusFromFullForwardBusList()
 	Bus* ptr = nullptr;
 	FullForwardBusList.dequeue(ptr);
 	return ptr;
-
 }
 
 int Station::GetFullForwardBusListCount()

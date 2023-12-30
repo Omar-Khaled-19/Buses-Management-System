@@ -118,3 +118,8 @@ Time Bus::GetLastMovingTime()
 {
 	return LastMovingTime;
 }
+
+void Bus::setLastMovingTime(Time t)
+{
+	LastMovingTime = t;
+}

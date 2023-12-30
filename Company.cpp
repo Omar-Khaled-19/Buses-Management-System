@@ -129,7 +129,9 @@ void Company::UpdateForwardMovingBusList(Station* S)
 	int x = S->GetFullForwardBusListCount();
 	for (int i = 0;i < x;i++)
 	{
-		ForwardMovingBusList.enqueue(S->RemoveBusFromFullForwardBusList());
+		Bus* tempbus = S->RemoveBusFromFullForwardBusList();
+		tempbus->setLastMovingTime(clock);
+		ForwardMovingBusList.enqueue(tempbus);
 	}
 }
 
@@ -138,7 +140,9 @@ void Company::UpdateBackwardMovingBusList(Station* S)
 	int x = S->GetFullForwardBusListCount();
 	for (int i = 0;i < x;i++)
 	{
-		BackwardMovingBusList.enqueue(S->RemoveBusFromFullForwardBusList());
+		Bus* tempbus = S->RemoveBusFromFullForwardBusList();
+		tempbus->setLastMovingTime(clock);
+		BackwardMovingBusList.enqueue(tempbus);
 	}
 }
 
@@ -187,6 +191,7 @@ void Company::release_buses()
 	{
 		Bus* tempbus;
 		BusList.dequeue(tempbus);
+		tempbus->setLastMovingTime(clock);
 		ForwardMovingBusList.enqueue(tempbus);
 	}
 }
@@ -257,88 +262,27 @@ void Company::simulate(string FileName)
 		if (!BusList.isEmpty()) {
 			release_buses();
 		}
+
 		bus_enter_station();
 
-
 		for (int i = 0; i++; i <= StationNumber) {
-		//	int Num_of_ForwardBuses = StationPtrArray[i]->getnumoForwardfbuses();
-		//	int Num_of_BackwardBuses = StationPtrArray[i]->getnumoBackwardfbuses();
-
-		//	for (int i = 1; i++ i <= Num_of_ForwardBuses) {
-		//		Bus* tempbus;
-		//      int remaining_time = 60
-		//		 
-		//      tempbus  stationptrarray[i]->unload(getOfTime,remaining_time (by reference) )
-		//		////movepassengerstofinished  ******//////////////       
-		// 
-		//			//movetocheckup if any
-		// 
-		//		if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
-		//			temp StationPtrArray[i]->DequeueFirstForwardBus();
-		//			move_to_checkup(tempbus, clock);
-		//		}
-		//		else {
-		//			//boarding
-		//          //sum of get on time
-		//
-		//			//move to moving bus list ?
-		//		}
-		//		for (int i = 1; i++ i <= Num_of_BackwardBuses) {
-		//			Bus* tempbus2;
-		//			tempbus2 = StationPtrArray[i]->PeekFirstBackwardBus();
-		//			////movepassengerstofinished  ******////////////// 
-		//				//movetocheckup if any
-		//			if (tempbus->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup) {
-		//			    tempbus2 = StationPtrArray[i]->DequeueFirstBackwardBus();
-		//				move_to_checkup(tempbus, clock);
-		//			}
-		//			else {
-		//				//boarding
-		//				//move to miving bus list
-		//			}
-		//	}
-		//	}
-		//}
-
-		//////////////////////////////////////////////////////////////////////////////////////////
-		clock.printTime();
-		for (int i = 1; i <= StationNumber; i++)
-		{
-			int rand_number = generateRandom(1, 100);
-			if (rand_number <= 25)
-			{
-				P = StationPtrArray[i]->MovSP();
-				if (P != nullptr)
-				{
-					FinishedPassengerList.enqueue(P);
-					FinishedCount++;
-				}
-
-			}
-			else if (rand_number <= 60 && rand_number >= 50)
-			{
-				P = StationPtrArray[i]->MovNP();
-				if (P != nullptr)
-				{
-					FinishedPassengerList.enqueue(P);
-					FinishedCount++;
-				}
-			}
-			else if (rand_number <= 45 && rand_number >= 35)
-			{
-				P = StationPtrArray[i]->MovWC();
-				if (P != nullptr)
-				{
-					FinishedPassengerList.enqueue(P);
-					FinishedCount++;
-				}
-			}
-			StationPtrArray[i]->printStation(i);
-			printFinished();
-			cin >> x;
+			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup);
+			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber);
+			UpdateForwardMovingBusList(StationPtrArray[i]);
+			UpdateBackwardMovingBusList(StationPtrArray[i]);
 		}
+
 		++clock;
 	}
+
+
+		
+
+		
+
+		//////////////////////////////////////////////////////////////////////////////////////////
+		
+		
 }
 
 void Company:: printFinished()
@@ -367,7 +311,7 @@ void Company::CreateOutputFile()
 	int finishNP = 0;
 	int finishSP = 0; 
 	int finishWP = 0;
-	int PromotedNum = Station::numberOfPromoted;
+	int PromotedNum = 10;
 	Time totalWT;
 	Time totalTT;
 	int promotedPresentage = (PromotedNum / FinishedCount)*100;

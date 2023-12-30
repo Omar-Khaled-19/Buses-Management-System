@@ -67,7 +67,8 @@ public:
 	Bus* DequeueFirstForwardBus();
 	Bus* DequeueFirstBackwardBus();
 	void PromoteNP(Time t, int max_waiting_time);
-	static int numberOfPromoted;
+
+	 int numberOfPromoted;
 };
 
-int Station::numberOfPromoted = 0;
+
