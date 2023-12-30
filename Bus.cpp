@@ -57,7 +57,6 @@ bool Bus::GetPassengerOff(Passenger* P,int station_num) //dequeues a passenger o
 	Passengers.peek(P);
 	if (P != nullptr)
 	{
-		
 		int EndStationNum = P->get_end_station_num();
 		if (EndStationNum == station_num)
 		{
@@ -118,4 +117,19 @@ int Bus::GetNum_of_Curr_Journeys()
 Time Bus::GetLastMovingTime()
 {
 	return LastMovingTime;
+}
+
+void Bus::setLastMovingTime(Time t)
+{
+	LastMovingTime = t;
+}
+
+int Bus::GetBusId()
+{
+	return ID;
+}
+
+PriorityQueue<Passenger*>* Bus::Get_Bus_Passengers()
+{
+	return &Passengers;
 }
