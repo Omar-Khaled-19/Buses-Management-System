@@ -159,17 +159,11 @@ void Company::RemoveFromCheckup()  /////////////called each minute
 			duration = MBus_checkup_duration;
 		else
 			duration = WBus_checkup_duration;
-		Leave_time = tempBus->GetCheckStartTime() +duration;
+		Leave_time = tempBus->GetCheckStartTime() + duration;
 		if (Leave_time == clock) {
 			CheckupBusList.dequeue(tempBus);
-			if (tempBus->GetNextStation() > tempBus->GetCurrStation()) {
-				tempBus->setLastMovingTime(clock);
-				ForwardMovingBusList.enqueue(tempBus);
-			}
-			else if (tempBus->GetNextStation() < tempBus->GetCurrStation()) {
-				tempBus->setLastMovingTime(clock);
-				BackwardMovingBusList.enqueue(tempBus);
-			}
+			tempBus->setLastMovingTime(clock);
+			StationPtrArray[1]->AddForwardBus(tempBus);
 		}
 		else return;
 	}
