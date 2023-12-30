@@ -67,7 +67,7 @@ public:
 	Bus* DequeueFirstForwardBus();
 	Bus* DequeueFirstBackwardBus();
 	void PromoteNP(Time t, int max_waiting_time);
-	static int numberOfPromoted;
+    int numberOfPromoted;
 	PriorityQueue<Passenger*>* Get_FwdSP(); 
 	PriorityQueue<Passenger*>* Get_BckSP();
 	ModifiedQueue<Passenger*>* Get_FwdNP(); 
