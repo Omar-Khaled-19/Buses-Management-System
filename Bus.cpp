@@ -177,3 +177,10 @@ float Bus::get_utilization()
 {
 	return Utilization_time;
 }
+
+bool Bus::isEmpltyBus()
+{
+	if (Passengers.isEmpty())
+		return true;
+	return false;
+}

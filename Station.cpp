@@ -442,3 +442,21 @@ int Station::Get_numberOfPromoted()
 {
 	return numberOfPromoted;
 }
+
+
+void Station::Remove_all_Passengers()
+{
+	Passenger* tempP = nullptr;
+	while (WP_ForwardWaiting.dequeue(tempP))
+		delete tempP;
+	while (WP_BackwardWaiting.dequeue(tempP))
+		delete tempP;
+	while (NP_ForwardWaiting.dequeue(tempP))
+		delete tempP;
+	while (NP_BackwardWaiting.dequeue(tempP))
+		delete tempP;
+	while (SP_ForwardWaiting.dequeue(tempP))
+		delete tempP;
+	while (SP_BackwardWaiting.dequeue(tempP))
+		delete tempP;
+}

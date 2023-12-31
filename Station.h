@@ -17,7 +17,6 @@ private:
 	LinkedQueue<Bus*> NeedsCheckupBusList;
 	LinkedQueue<Passenger*> GoToFinishedPassengerList;
 	
-	
 	/*******************Waiting Passengers Lists***************************/
 	LinkedQueue<Passenger*> WP_ForwardWaiting;
 	LinkedQueue<Passenger*> WP_BackwardWaiting;
@@ -31,9 +30,6 @@ public:
 	Station(int stationNum);
 
 	int GetStationNum();
-
-
-	
 	/**************************** Buses Operations ********************************/
 	void AddForwardBus(Bus* newBus);
 	void AddBackwardBus(Bus* newBus);
@@ -73,6 +69,9 @@ public:
 	LinkedQueue<Bus*>* Get_BckBus(); 
 	LinkedQueue<Bus*>* Get_FwdBus2();
 	LinkedQueue<Bus*>* Get_BckBus2();
+
+	/**************************End of the day*******************/
+	void Remove_all_Passengers();
 };
 
 

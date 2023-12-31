@@ -50,5 +50,8 @@ public:
 	void set_busyTime();
 	float get_busyTime();
 	void set_utilization();
+	int get_utilization();
+	bool isEmpltyBus();
+
 	float get_utilization();
 };

@@ -218,7 +218,7 @@ void UI:: InteractiveInterface(Time clockk,int stationn, Station* stationptr, Li
 			tempQ8 = tempQ8->getNext();
 		}
 		
-		cout << "\n----------------------------------------------------------------------------------------------------\n";
+		/*cout << "\n----------------------------------------------------------------------------------------------------\n";
 
 		Node<Bus*>* tempQ15 = FWDBusList->getHead();
 		int FWDmoving_count = FWDBusList->getCount();

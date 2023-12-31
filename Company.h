@@ -48,7 +48,7 @@ public:
 	/*************************Checkup Bus********************************/
 	void UpdateCheckupBusList(Station* S);
 	void RemoveFromCheckup();
-	
+	void updateMovingBusesEndDay();
 	/*************************Printing Data*******************************/
 	void BusBusyTime();
 	void BusUtiTime();
@@ -56,7 +56,7 @@ public:
 	void TotalUtiTime();
 	void UpdateFinishedList(Station* S);
 	void CreateOutputFile();
-
+	void RemoveFromCheckupEndDay();
 	~Company();
 	
 };
