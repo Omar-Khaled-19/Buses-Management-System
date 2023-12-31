@@ -21,7 +21,7 @@ private:
 	Time Ch_time;
 	Time Ch_duration;
 	int Busy_time;
-	int Utilization_time;
+	float Utilization_time;
 	PriorityQueue<Passenger*> Passengers;
 	int DeliveryTrips;
 
@@ -48,7 +48,7 @@ public:
 	void increment_journeys();
 	void reset_journeys();
 	void set_busyTime();
-	int get_busyTime();
+	float get_busyTime();
 	void set_utilization();
-	int get_utilization();
+	float get_utilization();
 };

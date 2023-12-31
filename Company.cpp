@@ -300,6 +300,7 @@ void Company::SilentSimulate(string FileName)
 		BusEnterStation();
 
 		for (int i = 1; i <= StationNumber; i++) {
+			StationPtrArray[i]->PromoteNP(clock, MaxWaitingTime);
 			RemoveFromCheckup();
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup, clock);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber, clock);
@@ -387,7 +388,7 @@ void Company::TotalUtiTime()
 	LinkedQueue<Bus*> tempQB;
 	while (AllBusList.dequeue(bustemp))
 	{
-		int busyTime = bustemp->get_busyTime();
+		float busyTime = bustemp->get_utilization();
 		TotalUtilization = TotalUtilization + busyTime;
 		tempQB.enqueue(bustemp);
 	}
@@ -483,7 +484,9 @@ void Company::CreateOutputFile()
 		avgWT_min = avgWT_min - 60;
 		avgWT_hr++;
 	}
-	int AvgBusy = AllBusesBusyTime;
+	float AvgBusy = AllBusesBusyTime/BusCount;
+	int AvgTotalBusy = (AvgBusy / 1080) * 100;
+	float AvgUti = float(TotalUtilization * 100) / BusCount;
 	Outfile << "\n......................................\n......................................\n";
 	Outfile << "Passengers: "<< FinishCount <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
 	Outfile << "]\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
@@ -491,8 +494,8 @@ void Company::CreateOutputFile()
 	Outfile << "\nnAuto-promoted passengers: "<<promotedPresentage<<"%"; 
 	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
 	Outfile << "\nAvg Busy time = "<<AvgBusy<<"minutes"; 
-	Outfile << "\nAvg Busy time = " << (AvgBusy/1080)*100  << "%";      //1080=18*60 -> total simulation minutes
-	Outfile << "\nAvg utilization = "<< TotalUtilization*100 / BusCount <<"%";  
+	Outfile << "\nAvg Busy time = " << AvgTotalBusy  << "%";      //1080=18*60 -> total simulation minutes
+	Outfile << "\nAvg utilization = "<< AvgUti <<"%";  
 	Outfile.close();
 }
 

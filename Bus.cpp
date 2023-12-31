@@ -155,17 +155,25 @@ void Bus::set_busyTime()
 		Busy_time++;
 }
 
-int Bus::get_busyTime()
+float Bus::get_busyTime()
 {
 	return Busy_time;
 }
 
 void Bus::set_utilization()
 {
-	Utilization_time = (total_passengers_transported / (Capacity * DeliveryTrips)) * (Busy_time / 1080);
+	if (DeliveryTrips == 0)
+		Utilization_time = 0;
+	else
+	{
+		float x = float((Capacity * DeliveryTrips));
+		float y = float((total_passengers_transported) / x);
+		float z = float(float(Busy_time) / 1080.00);
+		Utilization_time = y * z;
+	}
 }
 
-int Bus::get_utilization()
+float Bus::get_utilization()
 {
 	return Utilization_time;
 }

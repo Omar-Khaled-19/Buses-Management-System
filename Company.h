@@ -20,7 +20,7 @@ private:
 	int MBusCount;
 	int MaxWaitingTime;
 	int AllBusesBusyTime;
-	int TotalUtilization;
+	float TotalUtilization;
 
 	Station** StationPtrArray = new Station * [StationNumber];
 	LinkedQueue<Event*> EventPtrList;
