@@ -45,13 +45,13 @@ public:
 	/*************************Checkup Bus********************************/
 	void UpdateCheckupBusList(Station* S);
 	void RemoveFromCheckup();
-	
+	void updateMovingBusesEndDay();
 	/*************************Printing Data*******************************/
 	void BusBusyTime();
 	void TotalBusyTime();
 	void UpdateFinishedList(Station* S);
 	void CreateOutputFile();
-
+	void RemoveFromCheckupEndDay();
 	~Company();
 	
 };

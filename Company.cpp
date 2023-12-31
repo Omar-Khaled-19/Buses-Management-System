@@ -169,6 +169,63 @@ void Company::RemoveFromCheckup()  /////////////called each minute
 	}
 }
 
+
+void Company::RemoveFromCheckupEndDay()  /////////////called each minute 
+{
+	Bus* tempBus;
+	Time Leave_time;
+	char type;
+	int duration;
+	while (CheckupBusList.peek(tempBus))
+	{
+		type = tempBus->GetBusType();
+		if (type == 'M')
+			duration = MBus_checkup_duration;
+		else
+			duration = WBus_checkup_duration;
+		Leave_time = tempBus->GetCheckStartTime() + duration;
+		if (Leave_time == clock) {
+			CheckupBusList.dequeue(tempBus);
+			tempBus->setLastMovingTime(clock);
+			StationPtrArray[0]->AddForwardBus(tempBus);
+		}
+		else return;
+	}
+}
+
+void Company::updateMovingBusesEndDay()
+{
+	LinkedQueue<Bus*> tempQueue;
+	Bus* tempBUS = nullptr;
+	while (ForwardMovingBusList.dequeue(tempBUS))
+	{
+		if (tempBUS->isEmpltyBus())
+		{
+			if (tempBUS->GetNextStation() == 1 && tempBUS->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup - 1)
+				CheckupBusList.enqueue(tempBUS);
+			else
+				StationPtrArray[0]->AddForwardBus(tempBUS);
+		}
+		tempQueue.enqueue(tempBUS);
+	}
+	while (tempQueue.dequeue(tempBUS))
+		ForwardMovingBusList.enqueue(tempBUS);
+
+	while (BackwardMovingBusList.dequeue(tempBUS))
+	{
+		if (tempBUS->isEmpltyBus())
+		{
+			if (tempBUS->GetNextStation() == 1 && tempBUS->GetNum_of_Curr_Journeys() == NumofJourneystoCheckup - 1)
+				CheckupBusList.enqueue(tempBUS);
+			else
+				StationPtrArray[0]->AddForwardBus(tempBUS);
+		}
+		tempQueue.enqueue(tempBUS);
+	}
+	while (tempQueue.dequeue(tempBUS))
+		BackwardMovingBusList.enqueue(tempBUS);
+}
+
 void Company::ReleaseBuses()
 {
 	if (clock.GetMin() % 15 == 0)
@@ -232,6 +289,7 @@ void Company::Simulate(string FileName)
 	UI User;
 	Load(FileName);
 	Event* E;
+
 	while (clock.GetHour() < 22)
 	{
 		LinkedQueue<Event*> EventQueue;
@@ -263,38 +321,27 @@ void Company::Simulate(string FileName)
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
 		}
 		BusBusyTime();
-		//Bus* bustemp;
-		//LinkedQueue<Bus*> tempQB;
-		//while(ForwardMovingBusList.dequeue(bustemp))
-		//{
-		//	ForwardMovingBusList.dequeue(bustemp);
-		//	bustemp->set_busyTime();
-		//	tempQB.enqueue(bustemp);
-		//	cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
-		//}
-		//while (tempQB.dequeue(bustemp))
-		//{
-		//	tempQB.dequeue(bustemp);
-		//	ForwardMovingBusList.enqueue(bustemp);
-		//}
-
-
-		//Bus* bustemp2;
-		//LinkedQueue<Bus*> tempQB2;
-		//while (BackwardMovingBusList.dequeue(bustemp2))
-		//{
-		//	BackwardMovingBusList.dequeue(bustemp2);
-		//	bustemp2->set_busyTime();
-		//	tempQB2.enqueue(bustemp2);
-		//	cout << "BUS ID: " << bustemp2->GetBusId() << " BUSY TIME: " << bustemp2->get_busyTime() << "\t";
-		//}
-		//while (tempQB2.dequeue(bustemp2))
-		//{
-		//	tempQB2.dequeue(bustemp2);
-		//	BackwardMovingBusList.enqueue(bustemp2);
-		//}
-
 		++clock;
+	}
+	if (clock.GetHour() >= 22)
+	{
+		while (!CheckupBusList.isEmpty() || !BackwardMovingBusList.isEmpty() || !ForwardMovingBusList.isEmpty())
+		{
+			RemoveFromCheckupEndDay();
+			BusEnterStation();
+			for (int i = 1; i <= StationNumber; i++)
+			{
+				StationPtrArray[i]->Remove_all_Passengers();
+				StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup, clock);
+				StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber, clock);
+				UpdateFinishedList(StationPtrArray[i]);
+				UpdateCheckupBusList(StationPtrArray[i]);
+				User.InteractiveInterface(clock, i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
+				UpdateForwardMovingBusList(StationPtrArray[i]);
+				UpdateBackwardMovingBusList(StationPtrArray[i]);
+			}
+			++clock;
+		}
 	}
 	TotalBusyTime();
 	CreateOutputFile();
@@ -320,7 +367,6 @@ void Company::BusBusyTime()
 	}
 
 }
-
 void Company::TotalBusyTime()
 {
 	Bus* bustemp;

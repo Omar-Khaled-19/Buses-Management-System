@@ -158,3 +158,10 @@ int Bus::get_busyTime()
 {
 	return Busy_time;
 }
+
+bool Bus::isEmpltyBus()
+{
+	if (Passengers.isEmpty())
+		return true;
+	return false;
+}

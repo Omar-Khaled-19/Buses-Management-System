@@ -48,4 +48,6 @@ public:
 	void reset_journeys();
 	void set_busyTime();
 	int get_busyTime();
+	bool isEmpltyBus();
+
 };
