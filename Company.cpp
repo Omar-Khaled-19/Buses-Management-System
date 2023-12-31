@@ -324,6 +324,26 @@ void Company::InteractiveSimulate(string FileName)
 		BusBusyTime();
 		++clock;
 	}
+	if (clock.GetHour() >= 22)
+	{
+		while (!CheckupBusList.isEmpty() || !BackwardMovingBusList.isEmpty() || !ForwardMovingBusList.isEmpty())
+		{
+			RemoveFromCheckupEndDay();
+			BusEnterStation();
+			for (int i = 1; i <= StationNumber; i++)
+			{
+				StationPtrArray[i]->Remove_all_Passengers();
+				StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup, clock);
+				StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber, clock);
+				UpdateFinishedList(StationPtrArray[i]);
+				UpdateCheckupBusList(StationPtrArray[i]);
+				User.InteractiveInterface(clock, i, StationPtrArray[i], &CheckupBusList, &FinishedPassengerList, &ForwardMovingBusList, &BackwardMovingBusList);
+				UpdateForwardMovingBusList(StationPtrArray[i]);
+				UpdateBackwardMovingBusList(StationPtrArray[i]);
+			}
+			++clock;
+		}
+	}
 	BusUtiTime();
 	TotalUtiTime();
 	TotalBusyTime();
@@ -368,9 +388,6 @@ void Company::SilentSimulate(string FileName)
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
 		}
 		BusBusyTime();
-		++clock;
-	}
-	BusUtiTime();
 		++clock;
 	}
 	if (clock.GetHour() >= 22)

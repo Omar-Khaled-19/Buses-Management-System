@@ -218,36 +218,36 @@ void UI:: InteractiveInterface(Time clockk,int stationn, Station* stationptr, Li
 			tempQ8 = tempQ8->getNext();
 		}
 		
-		/*cout << "\n----------------------------------------------------------------------------------------------------\n";
+		cout << "\n----------------------------------------------------------------------------------------------------\n";
 
-		Node<Bus*>* tempQ15 = FWDBusList->getHead();
-		int FWDmoving_count = FWDBusList->getCount();
-		cout << FWDmoving_count << " Forward moving buses: ";
-		for (int i = 0; i < FWDmoving_count; i++)
-		{
-			Bus* bustemp = tempQ15->getItem();
-			if (i == FWDmoving_count - 1)
-				cout << bustemp->GetBusId();
-			else
-				cout << bustemp->GetBusId() << ", ";
-			tempQ15 = tempQ15->getNext();
-		}
-		cout << endl;
-		Node<Bus*>* tempQ17 = BCKBusList->getHead();
-		int BCKmoving_count = BCKBusList->getCount();
-		cout << BCKmoving_count << " Backwawrd moving buses: ";
-		for (int i = 0; i < BCKmoving_count; i++)
-		{
-			Bus* bustemp = tempQ17->getItem();
-			if (i == BCKmoving_count - 1)
-				cout << bustemp->GetBusId();
-			else
-				cout << bustemp->GetBusId() << ", ";
-			tempQ17 = tempQ17->getNext();
-		}
+		//Node<Bus*>* tempQ15 = FWDBusList->getHead();
+		//int FWDmoving_count = FWDBusList->getCount();
+		//cout << FWDmoving_count << " Forward moving buses: ";
+		//for (int i = 0; i < FWDmoving_count; i++)
+		//{
+		//	Bus* bustemp = tempQ15->getItem();
+		//	if (i == FWDmoving_count - 1)
+		//		cout << bustemp->GetBusId();
+		//	else
+		//		cout << bustemp->GetBusId() << ", ";
+		//	tempQ15 = tempQ15->getNext();
+		//}
+		//cout << endl;
+		//Node<Bus*>* tempQ17 = BCKBusList->getHead();
+		//int BCKmoving_count = BCKBusList->getCount();
+		//cout << BCKmoving_count << " Backwawrd moving buses: ";
+		//for (int i = 0; i < BCKmoving_count; i++)
+		//{
+		//	Bus* bustemp = tempQ17->getItem();
+		//	if (i == BCKmoving_count - 1)
+		//		cout << bustemp->GetBusId();
+		//	else
+		//		cout << bustemp->GetBusId() << ", ";
+		//	tempQ17 = tempQ17->getNext();
+		//}
 		char x;
 		cout << "\nPrint any key to display next station\n";
-		cin >> x;
+		//cin >> x;
 }
 
 
