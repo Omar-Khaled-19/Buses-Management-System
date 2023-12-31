@@ -134,7 +134,7 @@ void Company::UpdateBackwardMovingBusList(Station* S)
 void Company::UpdateCheckupBusList(Station* S)
 {
 	int x = S->GetNeedsCheckupBusListCount();
-	for (int i = 0;i < x;i++)
+	for (int i = 0; i < x; i++)
 	{
 		Bus* B = S->RemoveBusFromNeedsCheckupBusList();
 		B->set_check_start_time(clock);
@@ -263,6 +263,37 @@ void Company::Simulate(string FileName)
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
 		}
 		BusBusyTime();
+		//Bus* bustemp;
+		//LinkedQueue<Bus*> tempQB;
+		//while(ForwardMovingBusList.dequeue(bustemp))
+		//{
+		//	ForwardMovingBusList.dequeue(bustemp);
+		//	bustemp->set_busyTime();
+		//	tempQB.enqueue(bustemp);
+		//	cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
+		//}
+		//while (tempQB.dequeue(bustemp))
+		//{
+		//	tempQB.dequeue(bustemp);
+		//	ForwardMovingBusList.enqueue(bustemp);
+		//}
+
+
+		//Bus* bustemp2;
+		//LinkedQueue<Bus*> tempQB2;
+		//while (BackwardMovingBusList.dequeue(bustemp2))
+		//{
+		//	BackwardMovingBusList.dequeue(bustemp2);
+		//	bustemp2->set_busyTime();
+		//	tempQB2.enqueue(bustemp2);
+		//	cout << "BUS ID: " << bustemp2->GetBusId() << " BUSY TIME: " << bustemp2->get_busyTime() << "\t";
+		//}
+		//while (tempQB2.dequeue(bustemp2))
+		//{
+		//	tempQB2.dequeue(bustemp2);
+		//	BackwardMovingBusList.enqueue(bustemp2);
+		//}
+
 		++clock;
 	}
 	TotalBusyTime();

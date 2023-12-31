@@ -79,8 +79,10 @@ int Time:: operator -(const Time &t2)
 {
 	if (hour == t2.hour)
 		return min - t2.min;
+	else if (min > t2.min)
+		return (min - t2.min) + 60 * (hour - t2.hour);
 	else
-		return ((60 - min) + t2.min) * (hour - t2.hour);
+		return (hour - t2.hour) * 60 - (t2.min - min);
 }
 
 int Time::GetHour()
