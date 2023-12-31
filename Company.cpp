@@ -266,6 +266,8 @@ void Company::InteractiveSimulate(string FileName)
 		BusBusyTime();
 		++clock;
 	}
+	BusUtiTime();
+	TotalUtiTime();
 	TotalBusyTime();
 	CreateOutputFile();
 }
