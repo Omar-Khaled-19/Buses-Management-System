@@ -258,6 +258,6 @@ void UI::SilentStart()
 
 void UI::SilentEnd()
 {
-	cout << "Simulation ends, Output file created.";
+	cout << "\nSimulation ends, Output file created.";
 }
 
