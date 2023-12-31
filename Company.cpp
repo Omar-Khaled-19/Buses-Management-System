@@ -251,6 +251,7 @@ void Company::InteractiveSimulate(string FileName)
 		BusEnterStation();
 
 		for (int i = 1; i <= StationNumber ; i++) {
+			StationPtrArray[i]->PromoteNP(clock, MaxWaitingTime);
 			RemoveFromCheckup();
 			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup,clock);
 			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber,clock);
@@ -409,13 +410,13 @@ void Company::CreateOutputFile()
 	int BusCount = AllBusList.getCount();
 	Time totalWT;
 	Time totalTT;
-	int promotedPresentage;
+	float promotedPresentage;
 	for (int i = 1; i <= StationNumber; i++)
 	{
 		PromotedNum= PromotedNum+StationPtrArray[i]->Get_numberOfPromoted();
 	}
 	if (FinishCount != 0)
-		promotedPresentage = (PromotedNum / FinishCount) * 100;
+		promotedPresentage = PromotedNum*100 / FinishCount;
 	else
 		promotedPresentage = 0;
 	while(!FinishedPassengerList.isEmpty())
