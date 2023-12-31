@@ -34,6 +34,8 @@ public:
 	Company();  
 	
 	void Load(string FileName);
+	void SilentSimulate(string FileName);
+	void InteractiveSimulate(string FileName);
 	void Simulate(string FileName);
 	
 	/*************************Bus Movement*******************************/

@@ -226,7 +226,7 @@ void Company::BusEnterStation()
 
 ////////////////////////////////**********************************//////////////////////////////
 
-void Company::Simulate(string FileName)
+void Company::InteractiveSimulate(string FileName)
 {
 	clock.setTime(4, 00);
 	UI User;
@@ -263,37 +263,6 @@ void Company::Simulate(string FileName)
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
 		}
 		BusBusyTime();
-		//Bus* bustemp;
-		//LinkedQueue<Bus*> tempQB;
-		//while(ForwardMovingBusList.dequeue(bustemp))
-		//{
-		//	ForwardMovingBusList.dequeue(bustemp);
-		//	bustemp->set_busyTime();
-		//	tempQB.enqueue(bustemp);
-		//	cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
-		//}
-		//while (tempQB.dequeue(bustemp))
-		//{
-		//	tempQB.dequeue(bustemp);
-		//	ForwardMovingBusList.enqueue(bustemp);
-		//}
-
-
-		//Bus* bustemp2;
-		//LinkedQueue<Bus*> tempQB2;
-		//while (BackwardMovingBusList.dequeue(bustemp2))
-		//{
-		//	BackwardMovingBusList.dequeue(bustemp2);
-		//	bustemp2->set_busyTime();
-		//	tempQB2.enqueue(bustemp2);
-		//	cout << "BUS ID: " << bustemp2->GetBusId() << " BUSY TIME: " << bustemp2->get_busyTime() << "\t";
-		//}
-		//while (tempQB2.dequeue(bustemp2))
-		//{
-		//	tempQB2.dequeue(bustemp2);
-		//	BackwardMovingBusList.enqueue(bustemp2);
-		//}
-
 		++clock;
 	}
 	TotalBusyTime();
@@ -302,20 +271,75 @@ void Company::Simulate(string FileName)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
+void Company::SilentSimulate(string FileName)
+{
+	UI User;
+	User.SilentStart();
+	clock.setTime(4, 00);
+	Load(FileName);
+	Event* E;
+	while (clock.GetHour() < 22)
+	{
+		LinkedQueue<Event*> EventQueue;
+		while (EventPtrList.peek(E) && E->get_event_time() == clock)
+		{
+			EventPtrList.dequeue(E);
+			E->Excute();
+			EventQueue.enqueue(E);
+			EventPtrList.peek(E);
+		}
+
+		if (!BusList.isEmpty())
+		{
+			ReleaseBuses();
+		}
+
+		BusEnterStation();
+
+		for (int i = 1; i <= StationNumber; i++) {
+			RemoveFromCheckup();
+			StationPtrArray[i]->AllFWDBusOperation(GetOnTime, StationNumber, NumofJourneystoCheckup, clock);
+			StationPtrArray[i]->AllBWDBusOperation(GetOnTime, StationNumber, clock);
+			UpdateFinishedList(StationPtrArray[i]);
+			UpdateCheckupBusList(StationPtrArray[i]);
+			UpdateForwardMovingBusList(StationPtrArray[i]);
+			UpdateBackwardMovingBusList(StationPtrArray[i]);
+		}
+		BusBusyTime();
+		++clock;
+	}
+	TotalBusyTime();
+	CreateOutputFile();
+	User.SilentEnd();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+void Company::Simulate(string FileName)
+{
+	UI user;
+    int mode=user.ChooseMode();
+	if (mode == 1)
+		InteractiveSimulate(FileName);
+	else if (mode == 2)
+		SilentSimulate(FileName);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
 void Company::BusBusyTime()
 {
 	Bus* bustemp;
 	LinkedQueue<Bus*> tempQB;
 	while(AllBusList.dequeue(bustemp))
 	{
-		AllBusList.dequeue(bustemp);
 		bustemp->set_busyTime();
 		tempQB.enqueue(bustemp);
 		//cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
 	}
 	while (tempQB.dequeue(bustemp))
 	{
-		tempQB.dequeue(bustemp);
 		AllBusList.enqueue(bustemp);
 	}
 
@@ -327,7 +351,6 @@ void Company::TotalBusyTime()
 	LinkedQueue<Bus*> tempQB;
 	while (AllBusList.dequeue(bustemp))
 	{
-		AllBusList.dequeue(bustemp);
 		int busyTime=bustemp->get_busyTime();
 		AllBusesBusyTime = AllBusesBusyTime + busyTime;
 		tempQB.enqueue(bustemp);
@@ -335,9 +358,9 @@ void Company::TotalBusyTime()
 	}
 	while (tempQB.dequeue(bustemp))
 	{
-		tempQB.dequeue(bustemp);
 		AllBusList.enqueue(bustemp);
 	}
+	
 }
 
 void Company::CreateOutputFile()
@@ -425,7 +448,7 @@ void Company::CreateOutputFile()
 		avgWT_hr++;
 	}
 
-	int AvgBusy = AllBusesBusyTime / BusCount;
+	int AvgBusy = AllBusesBusyTime;
 	Outfile << "\n......................................\n......................................\n";
 	Outfile << "Passengers: "<< FinishCount <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
 	Outfile << "]\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
