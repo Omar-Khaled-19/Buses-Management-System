@@ -40,6 +40,6 @@ Passengers Avg wait time = 0:4
 Passenger Avg trip time = 0:3
 nAuto-promoted passengers: 0%
 Buses: 4  [WBus: 2, MBus: 2]
-Avg Busy time = 12minutes
+Avg Busy time = 80minutes
 Avg Busy time = 0%
-Avg utilization = 
+Avg utilization = 2000%

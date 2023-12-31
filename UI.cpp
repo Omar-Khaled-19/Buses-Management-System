@@ -3,7 +3,7 @@
 int UI::ChooseMode() //First thing to call in simulation
 {
 	int x;
-	cout << "PLease enter: \n(1) for 'Interactive Mode'  \n(2) for 'Silent Mode'";
+	cout << "PLease enter: \n(1) for 'Interactive Mode'  \n(2) for 'Silent Mode'\n";
 	cin >> x;
 	while (x != 1 && x != 2)
 	{
@@ -245,8 +245,9 @@ void UI:: InteractiveInterface(Time clockk,int stationn, Station* stationptr, Li
 				cout << bustemp->GetBusId() << ", ";
 			tempQ17 = tempQ17->getNext();
 		}
-
-		cout << "\nPrint any key to display next station\n";*/
+		char x;
+		cout << "\nPrint any key to display next station\n";
+		cin >> x;
 }
 
 
@@ -257,6 +258,6 @@ void UI::SilentStart()
 
 void UI::SilentEnd()
 {
-	cout << "Simulation ends, Output file created.";
+	cout << "\nSimulation ends, Output file created.";
 }
 
