@@ -19,6 +19,7 @@ private:
 	int WBusCount;
 	int MBusCount;
 	int MaxWaitingTime;
+	int AllBusesBusyTime;
 
 	Station** StationPtrArray = new Station * [StationNumber];
 	LinkedQueue<Event*> EventPtrList;
@@ -26,6 +27,7 @@ private:
 	LinkedQueue<Bus*> ForwardMovingBusList;
 	LinkedQueue<Bus*> BackwardMovingBusList;
 	LinkedQueue<Bus*> CheckupBusList;
+	LinkedQueue<Bus*> AllBusList;
 	LinkedQueue<Passenger*> FinishedPassengerList;
 	
 public:
@@ -45,6 +47,8 @@ public:
 	void RemoveFromCheckup();
 	
 	/*************************Printing Data*******************************/
+	void BusBusyTime();
+	void TotalBusyTime();
 	void UpdateFinishedList(Station* S);
 	void CreateOutputFile();
 

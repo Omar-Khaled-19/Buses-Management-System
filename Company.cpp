@@ -177,6 +177,7 @@ void Company::ReleaseBuses()
 		BusList.dequeue(tempbus);
 		tempbus->setLastMovingTime(clock);
 		ForwardMovingBusList.enqueue(tempbus);
+		AllBusList.enqueue(tempbus);
 	}
 }
 
@@ -261,46 +262,52 @@ void Company::Simulate(string FileName)
 			UpdateForwardMovingBusList(StationPtrArray[i]);
 			UpdateBackwardMovingBusList(StationPtrArray[i]);
 		}
-
-		//Bus* bustemp;
-		//LinkedQueue<Bus*> tempQB;
-		//while(ForwardMovingBusList.dequeue(bustemp))
-		//{
-		//	ForwardMovingBusList.dequeue(bustemp);
-		//	bustemp->set_busyTime();
-		//	tempQB.enqueue(bustemp);
-		//	cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
-		//}
-		//while (tempQB.dequeue(bustemp))
-		//{
-		//	tempQB.dequeue(bustemp);
-		//	ForwardMovingBusList.enqueue(bustemp);
-		//}
-
-
-		//Bus* bustemp2;
-		//LinkedQueue<Bus*> tempQB2;
-		//while (BackwardMovingBusList.dequeue(bustemp2))
-		//{
-		//	BackwardMovingBusList.dequeue(bustemp2);
-		//	bustemp2->set_busyTime();
-		//	tempQB2.enqueue(bustemp2);
-		//	cout << "BUS ID: " << bustemp2->GetBusId() << " BUSY TIME: " << bustemp2->get_busyTime() << "\t";
-		//}
-		//while (tempQB2.dequeue(bustemp2))
-		//{
-		//	tempQB2.dequeue(bustemp2);
-		//	BackwardMovingBusList.enqueue(bustemp2);
-		//}
-
+		BusBusyTime();
 		++clock;
 	}
+	TotalBusyTime();
 	CreateOutputFile();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
+void Company::BusBusyTime()
+{
+	Bus* bustemp;
+	LinkedQueue<Bus*> tempQB;
+	while(AllBusList.dequeue(bustemp))
+	{
+		AllBusList.dequeue(bustemp);
+		bustemp->set_busyTime();
+		tempQB.enqueue(bustemp);
+		//cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
+	}
+	while (tempQB.dequeue(bustemp))
+	{
+		tempQB.dequeue(bustemp);
+		AllBusList.enqueue(bustemp);
+	}
 
+}
+
+void Company::TotalBusyTime()
+{
+	Bus* bustemp;
+	LinkedQueue<Bus*> tempQB;
+	while (AllBusList.dequeue(bustemp))
+	{
+		AllBusList.dequeue(bustemp);
+		int busyTime=bustemp->get_busyTime();
+		AllBusesBusyTime = AllBusesBusyTime + busyTime;
+		tempQB.enqueue(bustemp);
+		//cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
+	}
+	while (tempQB.dequeue(bustemp))
+	{
+		tempQB.dequeue(bustemp);
+		AllBusList.enqueue(bustemp);
+	}
+}
 
 void Company::CreateOutputFile()
 {
@@ -312,6 +319,7 @@ void Company::CreateOutputFile()
 	int finishSP = 0; 
 	int finishWP = 0;
 	int PromotedNum=0;
+	int BusCount = AllBusList.getCount();
 	Time totalWT;
 	Time totalTT;
 	int promotedPresentage;
@@ -385,13 +393,16 @@ void Company::CreateOutputFile()
 		avgWT_min = avgWT_min - 60;
 		avgWT_hr++;
 	}
+
+	int AvgBusy = AllBusesBusyTime / BusCount;
 	Outfile << "\n......................................\n......................................\n";
 	Outfile << "Passengers: "<< FinishCount <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
 	Outfile << "]\nPassengers Avg wait time = "<<avgWT_hr<<":"<<avgWT_min; 
 	Outfile << "\nPassenger Avg trip time = "<<avgTT_hr<<":"<<avgTT_min;
 	Outfile << "\nnAuto-promoted passengers: "<<promotedPresentage<<"%"; 
 	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
-	Outfile << "\nAvg Busy time = "; //needs calculating
+	Outfile << "\nAvg Busy time = "<<AvgBusy<<"minutes"; 
+	Outfile << "\nAvg Busy time = " << (AvgBusy/1080)*100  << "%";      //1080=18*60 -> total simulation minutes
 	Outfile << "\nAvg utilization = ";  //needs calculating
 	Outfile.close();
 }
