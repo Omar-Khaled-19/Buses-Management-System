@@ -20,6 +20,7 @@ private:
 	int MBusCount;
 	int MaxWaitingTime;
 	int AllBusesBusyTime;
+	int TotalUtilization;
 
 	Station** StationPtrArray = new Station * [StationNumber];
 	LinkedQueue<Event*> EventPtrList;
@@ -50,7 +51,9 @@ public:
 	
 	/*************************Printing Data*******************************/
 	void BusBusyTime();
+	void BusUtiTime();
 	void TotalBusyTime();
+	void TotalUtiTime();
 	void UpdateFinishedList(Station* S);
 	void CreateOutputFile();
 

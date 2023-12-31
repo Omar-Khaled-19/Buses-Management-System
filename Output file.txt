@@ -42,4 +42,4 @@ nAuto-promoted passengers: 0%
 Buses: 4  [WBus: 2, MBus: 2]
 Avg Busy time = 80minutes
 Avg Busy time = 0%
-Avg utilization = 
+Avg utilization = 2000%

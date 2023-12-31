@@ -66,6 +66,7 @@ bool Bus::GetPassengerOff(Passenger* &P,int station_num,Time clockkk) //dequeues
 				Passengers.dequeue(P);
 				P->set_FT(clockkk);
 				total_passengers_transported++;
+				DeliveryTrips++;
 				return true;
 			}
 			else
@@ -157,4 +158,14 @@ void Bus::set_busyTime()
 int Bus::get_busyTime()
 {
 	return Busy_time;
+}
+
+void Bus::set_utilization()
+{
+	Utilization_time = (total_passengers_transported / (Capacity * DeliveryTrips)) * (Busy_time / 1080);
+}
+
+int Bus::get_utilization()
+{
+	return Utilization_time;
 }

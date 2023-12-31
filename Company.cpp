@@ -308,7 +308,9 @@ void Company::SilentSimulate(string FileName)
 		BusBusyTime();
 		++clock;
 	}
+	BusUtiTime();
 	TotalBusyTime();
+	TotalUtiTime();
 	CreateOutputFile();
 	User.SilentEnd();
 }
@@ -336,13 +338,27 @@ void Company::BusBusyTime()
 	{
 		bustemp->set_busyTime();
 		tempQB.enqueue(bustemp);
-		//cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
 	}
 	while (tempQB.dequeue(bustemp))
 	{
 		AllBusList.enqueue(bustemp);
 	}
 
+}
+
+void Company::BusUtiTime()
+{
+	Bus* bustemp;
+	LinkedQueue<Bus*> tempQB;
+	while (AllBusList.dequeue(bustemp))
+	{
+		bustemp->set_utilization();
+		tempQB.enqueue(bustemp);
+	}
+	while (tempQB.dequeue(bustemp))
+	{
+		AllBusList.enqueue(bustemp);
+	}
 }
 
 void Company::TotalBusyTime()
@@ -354,7 +370,6 @@ void Company::TotalBusyTime()
 		int busyTime=bustemp->get_busyTime();
 		AllBusesBusyTime = AllBusesBusyTime + busyTime;
 		tempQB.enqueue(bustemp);
-		//cout << "BUS ID: " << bustemp->GetBusId() << " BUSY TIME: " << bustemp->get_busyTime() << "\t";
 	}
 	while (tempQB.dequeue(bustemp))
 	{
@@ -362,6 +377,24 @@ void Company::TotalBusyTime()
 	}
 	
 }
+
+void Company::TotalUtiTime()
+{
+	Bus* bustemp;
+	LinkedQueue<Bus*> tempQB;
+	while (AllBusList.dequeue(bustemp))
+	{
+		int busyTime = bustemp->get_busyTime();
+		TotalUtilization = TotalUtilization + busyTime;
+		tempQB.enqueue(bustemp);
+	}
+	while (tempQB.dequeue(bustemp))
+	{
+		AllBusList.enqueue(bustemp);
+	}
+
+}
+
 
 void Company::CreateOutputFile()
 {
@@ -447,7 +480,6 @@ void Company::CreateOutputFile()
 		avgWT_min = avgWT_min - 60;
 		avgWT_hr++;
 	}
-
 	int AvgBusy = AllBusesBusyTime;
 	Outfile << "\n......................................\n......................................\n";
 	Outfile << "Passengers: "<< FinishCount <<"    [NP: "<<finishNP<<", SP: "<<finishSP<<", WP: "<<finishWP;
@@ -457,7 +489,7 @@ void Company::CreateOutputFile()
 	Outfile << "\nBuses: " << WBusCount + MBusCount << "  [WBus: " << WBusCount << ", MBus: " << MBusCount << "]";
 	Outfile << "\nAvg Busy time = "<<AvgBusy<<"minutes"; 
 	Outfile << "\nAvg Busy time = " << (AvgBusy/1080)*100  << "%";      //1080=18*60 -> total simulation minutes
-	Outfile << "\nAvg utilization = ";  //needs calculating
+	Outfile << "\nAvg utilization = "<< TotalUtilization*100 / BusCount <<"%";  
 	Outfile.close();
 }
 
